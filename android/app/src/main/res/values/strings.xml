@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GpMsc</string>
+    <string name="label_off">Off</string>
+    <string name="label_solid">Solid</string>
+    <string name="label_cycle">Cycle</string>
+</resources>
