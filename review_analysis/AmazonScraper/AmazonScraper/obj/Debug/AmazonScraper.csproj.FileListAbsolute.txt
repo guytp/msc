@@ -1,0 +1,11 @@
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\AmazonScraper.exe.config
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\AmazonScraper.exe
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\AmazonScraper.pdb
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\HtmlAgilityPack.dll
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\HtmlAgilityPack.pdb
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\HtmlAgilityPack.xml
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\obj\Debug\AmazonScraper.csprojResolveAssemblyReference.cache
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\obj\Debug\AmazonScraper.exe
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\obj\Debug\AmazonScraper.pdb
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\Newtonsoft.Json.dll
+D:\code\msc\review_analysis\AmazonScraper\AmazonScraper\bin\Debug\Newtonsoft.Json.xml
