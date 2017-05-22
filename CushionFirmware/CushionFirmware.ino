@@ -1,14 +1,8 @@
+
 #include <Adafruit_PWMServoDriver.h>
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 #include <SoftwareSerial.h>
-
-/*
- * ToDo
- *  - Cycle through app [10 colours, count of how many to use, duration slider, blend amount 0-200%]
- *  - Vibrate On/Off/Set pattern
- *  - Tidy up code
- */
 
 enum LightMode {
   LightModeOff = 0,
@@ -18,28 +12,40 @@ enum LightMode {
 typedef LightMode;
 
 
+struct VibrationSettingValue {
+  uint16_t Start;
+  uint16_t End;
+  uint16_t Duration;
+} typedef VibrationSettingValue;
+
+struct VibrationSetting {
+  uint8_t NumberValues;
+  VibrationSettingValue Values[5];
+} typedef VibrationSetting;
+
 // Bluetooth declarations
-SoftwareSerial _bluetoothSerial(2, 3);
-const byte _bluetoothBufferSize = 42;
+SoftwareSerial _bluetoothSerial(3, 2);
+const byte _bluetoothBufferSize = 300;
 char _bluetoothBuffer[_bluetoothBufferSize];
 byte _bluetoothBufferLength = 0;
 
 // Lighting declarations
-Adafruit_NeoPixel _lightStrip = Adafruit_NeoPixel(30, 6, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel _lightStrip = Adafruit_NeoPixel(30, 12, NEO_GRB + NEO_KHZ800);
 unsigned long _lightLoopLastTime = 0;
 LightMode _lightMode = LightModeCycle;
 uint32_t _lightSolidColour = 0xFF0000;
 uint16_t _lightCycleCurrentOffsetTime = 0; // How many ms are we into the current sequence for when we are colour cycling
-uint8_t _lightCycleColourCount = 4;
+uint8_t _lightCycleColourCount = 7;
 uint32_t _lightCycleColours[10];
-uint32_t _lightCycleDuration = 10000; // In ms
-uint32_t _lightCycleBlendAmount = _lightCycleDuration * 1; // How many different colours are visible of total amount at any time (i.e. 30 means each LED is a different colour within the cycle, 60 means the same but with every second colour skipped and 1 means everything is the same colour)
+uint32_t _lightCycleDuration = 7500; // In ms
+uint32_t _lightCycleBlendAmount = _lightCycleDuration * 0.25; // How many different colours are visible of total amount at any time (i.e. 30 means each LED is a different colour within the cycle, 60 means the same but with every second colour skipped and 1 means everything is the same colour)
 
 // Vibration declarations
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
-unsigned long _lastMotorCycle = 0;
-unsigned char _motorSequence = 0;
-
+Adafruit_PWMServoDriver _pwmDriver = Adafruit_PWMServoDriver();
+VibrationSetting _vibrationSettings[9];
+uint32_t _vibrationLoopLastTime = 0;
+uint16_t _vibrationCycleCurrentOffsetTime = 0; // How many ms are we into the current sequence for vibrating?
+uint32_t _vibrationCycleDuration = 2500; // In ms
 
 void setup() {
   // Begin serial for debugging purposes
@@ -48,32 +54,48 @@ void setup() {
 
   // Setup neopixel strip to be enabled with correct brightness and all pixels turned off
   _lightStrip.begin();
-  _lightStrip.setBrightness(64);
+  _lightStrip.setBrightness(255);
   for(uint16_t i=0; i<_lightStrip.numPixels(); i++)
     _lightStrip.setPixelColor(i, 0);
   _lightStrip.show();
   _lightCycleColours[0] = 0xFF0000;
-  _lightCycleColours[1] = 0x00FF00;
-  _lightCycleColours[2] = 0x0000FF;
-  _lightCycleColours[3] = 0xFF0000;
+  _lightCycleColours[1] = 0xFFFFFF;
+  _lightCycleColours[2] = 0x00FF00;
+  _lightCycleColours[3] = 0xFFFFFF;
+  _lightCycleColours[4] = 0x0000FF;
+  _lightCycleColours[5] = 0xFFFFFF;
+  _lightCycleColours[6] = 0xFF0000;
 
-  // Setup PWM control for motors and turn everything off to start with
-  pwm.begin();
-  pwm.setPWMFreq(40);
-  for (byte i = 0; i < 16; i++)
-    pwm.setPin(i, 0);
+  // Setup PWM control for motors and turn everything off to start with and give it a default pattern
+  _pwmDriver.begin();
+  _pwmDriver.setPWMFreq(40);
+  for (byte i = 0; i < 16; i++) {
+    _pwmDriver.setPin(i, 0);
+    if (i >= 9)
+      break;
+    _vibrationSettings[i].NumberValues = 3;
+    _vibrationSettings[i].Values[0].Start = 1500;
+    _vibrationSettings[i].Values[0].End = 2500;
+    _vibrationSettings[i].Values[0].Duration = 750;
+    _vibrationSettings[i].Values[1].Start = 2500;
+    _vibrationSettings[i].Values[1].End = 1500;
+    _vibrationSettings[i].Values[1].Duration = 750;
+    _vibrationSettings[i].Values[2].Start = 1500;
+    _vibrationSettings[i].Values[2].End = 1500;
+    _vibrationSettings[i].Values[2].Duration = 100;
+  }
 
   // Enable bluetooth interface
   _bluetoothSerial.begin(9600); 
 } 
 
 void lightPerformLoop() {
-  // Determine how long since we were last called - if we're in same millisecond then we do nothing  
-  uint64_t lastLightLoopTime = millis();
-  uint16_t timeSinceLast = (uint16_t)(lastLightLoopTime - _lightLoopLastTime);
+  // Determine how long since we were last called - if we're within threshold then we do nothing
+  uint64_t nowTime = millis();
+  uint16_t timeSinceLast = (uint16_t)(nowTime - _lightLoopLastTime);
   if (timeSinceLast < 50) // Without this arbitrary delay the lower the delay is the more likely we get serial data corruption, the joys of hard-coded assembly
     return;
-  _lightLoopLastTime = lastLightLoopTime;
+  _lightLoopLastTime = nowTime;
 
   // If lights are solid or off we can set direclty
   uint16_t pixelCount = _lightStrip.numPixels();
@@ -115,6 +137,45 @@ void lightPerformLoop() {
   _lightStrip.show();
 }
 
+void vibrationPerformLoop() {  // Determine how long since we were last called - if we're within threshold then we do nothing
+  uint64_t nowTime = millis();
+  uint16_t timeSinceLast = (uint16_t)(nowTime - _vibrationLoopLastTime);
+  if (timeSinceLast < 50) // Without this arbitrary delay the lower the delay is the more likely we get serial data corruption, the joys of hard-coded assembly
+    return;
+  _vibrationLoopLastTime = nowTime;
+
+  // We need to determine where we are in the sequence by adding the ms offset and clamping it to total duration to cope with overflow
+  _vibrationCycleCurrentOffsetTime += timeSinceLast;
+  while (_vibrationCycleCurrentOffsetTime > _vibrationCycleDuration)
+    _vibrationCycleCurrentOffsetTime -= _vibrationCycleDuration;
+  
+  // Now we enumerate through each motor's settings to determine where it currently is
+  for (uint8_t pwmChannel = 0; pwmChannel < 9; pwmChannel++) {
+    // Skip if there are no settings for this channel
+    if (_vibrationSettings[pwmChannel].NumberValues < 1)
+      continue;
+    
+    // Now based upon our current timestamp determine which value we should be using
+    uint16_t startTime = 0;
+    for (uint8_t valueIndex = 0; valueIndex < _vibrationSettings[pwmChannel].NumberValues; valueIndex++) {
+      // If we have exceeded the end time for this value, simply update our start time and continue
+      if (_vibrationCycleCurrentOffsetTime > _vibrationSettings[pwmChannel].Values[valueIndex].Duration + startTime) { 
+        startTime += _vibrationSettings[pwmChannel].Values[valueIndex].Duration;
+        continue;
+      }
+      
+      // Determine how far through this segment we are
+      float currentProgress = (float)(_vibrationCycleCurrentOffsetTime - startTime) / (float)_vibrationSettings[pwmChannel].Values[valueIndex].Duration;
+      float diff = (int32_t)_vibrationSettings[pwmChannel].Values[valueIndex].End - (int32_t)_vibrationSettings[pwmChannel].Values[valueIndex].Start;
+      uint16_t newValue = (uint16_t)(diff * currentProgress) + _vibrationSettings[pwmChannel].Values[valueIndex].Start;
+      _pwmDriver.setPin(pwmChannel, newValue < 0 ? 0 : newValue > 4095 ? 4095 : newValue);
+      
+      // We've now set the value so we can break
+      break;
+    }
+  }
+}
+
 void bluetoothParseInput() {
   // Return if no data to read
   uint32_t availableBytes = _bluetoothSerial.available();
@@ -134,6 +195,8 @@ void bluetoothParseInput() {
         continue;
 
       // Parse and reset
+      Serial.print(F("Handling command: "));
+      Serial.println(_bluetoothBuffer[0]);
       if (_bluetoothBuffer[0] == 'L')
         bluetoothLightCommand();
       else if (_bluetoothBuffer[0] == 'V')
@@ -169,12 +232,12 @@ void bluetoothLightCommand() {
     _lightCycleColourCount = _bluetoothBuffer[10] & 0xFF;
     for (int offset = 11, i = 0; i < 10; i++, offset += 3)
       _lightCycleColours[i] = (((uint32_t)(_bluetoothBuffer[offset] & 0xFF)) << 16) | (((uint32_t)(_bluetoothBuffer[offset + 1]  & 0xFF)) << 8) | ((uint32_t)(_bluetoothBuffer[offset + 2]  & 0xFF));
-    Serial.print(F("Switch to cycle with duration "));
-    Serial.print(_lightCycleDuration);
-    Serial.print(F("ms and "));
-    Serial.print(_lightCycleColourCount);
-    Serial.print(F("colours blending with "));
-    Serial.println(_lightCycleBlendAmount);
+      Serial.print(F("Switch to cycle with duration "));
+      Serial.print(_lightCycleDuration);
+      Serial.print(F("ms and "));
+      Serial.print(_lightCycleColourCount);
+      Serial.print(F("colours blending with "));
+      Serial.println(_lightCycleBlendAmount);
   }
   else if (_bluetoothBuffer[1] == 'O')
     _lightMode = LightModeOff;
@@ -192,8 +255,52 @@ void bluetoothLightCommand() {
 }
 
 void bluetoothVibrateCommand() {
+  // Each VibrationSetingValue is 6 bytes: [Start-2b][End-2b][Duration-2b]
+  // Each VibrationSetting is 31 bytes: [NumberValues-1b][Values-30b]
+  // The command itself is then formed of 281bytes: [Duration-2b][VibrationSettings x9-279b]
+  
+  // First ensure buffer length is correct
+  if (_bluetoothBufferLength != 282) {
+    Serial.print(F("Unexpected buffer length - got "));
+    Serial.print(_bluetoothBufferLength);
+    Serial.println(F(" bytes"));
+    return;
+  }
+  
+  // Read out the duration to begin
+  uint16_t offset = 1;
+  _vibrationCycleDuration = shortFromDataBuffer(offset);
+  offset += 2;
+  
+  // Now read each of the 9 motor settings out
+  for (uint8_t motorIndex = 0; motorIndex < 9; motorIndex++) {
+    // Determine the number of values to use
+    _vibrationSettings[motorIndex].NumberValues = shortFromDataBuffer(offset);
+    offset += 2;
+    
+    // Now go through the five blocks we have for values - even if we don't use them as this command is fixed-width
+    for (uint8_t valueIndex = 0; valueIndex < 5; valueIndex++) {
+      _vibrationSettings[motorIndex].Values[valueIndex].Start = shortFromDataBuffer(offset);
+      offset += 2;
+      _vibrationSettings[motorIndex].Values[valueIndex].End = shortFromDataBuffer(offset);
+      offset += 2;
+      _vibrationSettings[motorIndex].Values[valueIndex].Duration = shortFromDataBuffer(offset);
+      offset += 2;
+    }
+  }
+
+  // Finally reset our progress for the new cycle
+  _vibrationLoopLastTime = millis();
+  _vibrationCycleCurrentOffsetTime = 0;
 }
 
+uint16_t shortFromDataBuffer(int offset) {
+  uint16_t returnValue = 0;
+  returnValue |= _bluetoothBuffer[offset];
+  returnValue << 8;
+  returnValue |= _bluetoothBuffer[offset + 1];
+  return returnValue;
+}
 
 void loop() {
   // Handle any pending commands before we do anything else
@@ -202,39 +309,8 @@ void loop() {
   // Perform lighting loop if required
   lightPerformLoop();
 
-  // Determine if motors need an update
-  unsigned long motorCycles = (millis() / 10) + 1;
-  if (motorCycles > _lastMotorCycle)
-  {
-    int numberCycles = motorCycles - _lastMotorCycle;
-    for (int i = 0; i < numberCycles; i++)
-      updateMotors();
-    _lastMotorCycle = motorCycles;
-  }
-}
-
-void updateMotors() {
-  int maxSeq = 400;
-  int minVal = 1000;
-  int maxVal = 4095;
-  int range = maxVal - minVal;
-  int pauseSeqs = 300;
-
-  int thisVal = 0;
-  int incr  = range / maxSeq;
-  if (_motorSequence < maxSeq)
-    thisVal = (incr * (_motorSequence + 1)) + minVal;
-  else
-    thisVal = maxVal;
-  //  else if (_motorSequence < maxSeq * 2)
-  //    thisVal = 4095 - (incr * _motorSequence);
-  pwm.setPin(12, thisVal);
-  pwm.setPin(13, thisVal);
-
-  _motorSequence++;
-  if (_motorSequence >= maxSeq + pauseSeqs)
-    _motorSequence = 0;
-
+  // Perform vibration loop if required
+  vibrationPerformLoop();
 }
 
 uint32_t blendedColour(uint32_t startColour, uint32_t endColour, float divisions, float index) {
