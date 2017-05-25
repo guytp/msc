@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.github.danielnilsson9.colorpickerview.dialog.ColorPickerDialogFragment;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class MainActivity extends Activity implements ColorPickerDialogFragment.ColorPickerDialogListener {
@@ -29,6 +32,10 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
     GridLayout _lightCycleControls;
     RadioButton _lightSolidRedRadioButton;
     RadioButton _lightSolidCustomRadioButton;
+    Button _happyButton;
+    Button _angryButton;
+    Button _calmButton;
+    Button _attentionSeekingButton;
 
     int _solidCustomColour = 0xFFFFFFFF;
     BluetoothAdapter _bluetoothAdapter;
@@ -41,6 +48,9 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
     int _lightCycleColourCount = 4;
     int _lightCycleDuration = 1000;
     int _lightCycleBlend = 25;
+
+    VibrationSetting[] _vibrationSettings;
+    short _vibrationCycleDuration = 2500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +101,10 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
         _lightCycleButtons[7] = (Button)findViewById(R.id.cycleColour8);
         _lightCycleButtons[8] = (Button)findViewById(R.id.cycleColour9);
         _lightCycleButtons[9] = (Button)findViewById(R.id.cycleColour10);
+        _happyButton = (Button)findViewById(R.id.happyButton);
+        _angryButton = (Button)findViewById(R.id.angryButton);
+        _calmButton = (Button)findViewById(R.id.calmButton);
+        _attentionSeekingButton = (Button)findViewById(R.id.attentionSeekingButton);
 
         // Handle any of the cycle colour buttons being pressed
         for (int i = 0; i < 10; i++) {
@@ -175,6 +189,33 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
             }
         });
 
+        // Handle the preset mood buttons being clicked
+        View.OnClickListener moodButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button[] buttons = new Button[] { _happyButton, _calmButton, _angryButton, _attentionSeekingButton };
+                for (int i = 0; i < 4; i++) {
+                    Button b = buttons[i];
+                    if (b == v)
+                        b.setBackgroundColor(Color.GREEN);
+                    else
+                        b.setBackground(null);
+                }
+                if (v == _happyButton)
+                    setMoodHappy();
+                else if (v == _calmButton)
+                    setMoodCalm();
+                else if (v == _angryButton)
+                    setMoodAngry();
+                else
+                    setMoodAttentionSeeking();
+            }
+        };
+        _happyButton.setOnClickListener(moodButtonListener);
+        _calmButton.setOnClickListener(moodButtonListener);
+        _angryButton.setOnClickListener(moodButtonListener);
+        _attentionSeekingButton.setOnClickListener(moodButtonListener);
+
         // Setup support for custom colours for solid light pattern
         Button lightSolidCustomRadioButton = (Button)findViewById(R.id.lightSolidCustomRadioButton);
         lightSolidCustomRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +251,21 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
         updateSolidColourButtonBackground();
         _lightSolidColourRadioGroup.setVisibility(View.GONE);
         _lightCycleControls.setVisibility(View.VISIBLE);
+        _vibrationSettings = new VibrationSetting[9];
+        for (int i = 0; i < 9; i++) {
+            _vibrationSettings[i] = new VibrationSetting();
+            _vibrationSettings[i].numberValues = 3;
+            _vibrationSettings[i].values[0].start = 1500;
+            _vibrationSettings[i].values[0].end = 2500;
+            _vibrationSettings[i].values[0].duration = 750;
+            _vibrationSettings[i].values[1].start = 2500;
+            _vibrationSettings[i].values[1].end = 1500;
+            _vibrationSettings[i].values[1].duration = 750;
+            _vibrationSettings[i].values[2].start = 1500;
+            _vibrationSettings[i].values[2].end = 1500;
+            _vibrationSettings[i].values[2].duration = 100;
+        }
+        sendVibrationSettings();
     }
 
     private void updateLightCycleColourBoxes() {
@@ -251,11 +307,16 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
 
     private void sendBluetoothCommand(byte[] command) {
         try {
-            _bluetoothOutputStream.write(command);
+            for (int i = 0; i < command.length; i++) {
+                _bluetoothOutputStream.write(command[i]);
+                Thread.sleep(2);
+            }
             _bluetoothOutputStream.write("\n".getBytes());
         } catch (IOException e) {
             exitWithMessage("Error writing to bluetooth device\r\n" + e.getMessage());
             return;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -318,5 +379,160 @@ public class MainActivity extends Activity implements ColorPickerDialogFragment.
 
     private void updateSolidColourButtonBackground() {
         _lightSolidCustomRadioButton.setBackgroundColor(_solidCustomColour);
+    }
+
+    private void sendVibrationSettings() {
+        byte[] buffer = new byte[282];
+        int offset = 1;
+        addShortToBuffer(_vibrationCycleDuration, buffer, offset);
+        offset += 2;
+
+        for (int motorIndex = 0 ; motorIndex < 9; motorIndex++ ) {
+            buffer[offset] = _vibrationSettings[motorIndex].numberValues;
+            offset++;
+
+            // Now add each of the five animation blocks
+            for (int i = 0; i < 5; i++) {
+                addShortToBuffer(_vibrationSettings[motorIndex].values[i].start, buffer, offset);
+                offset += 2;
+                addShortToBuffer(_vibrationSettings[motorIndex].values[i].end, buffer, offset);
+                offset += 2;
+                addShortToBuffer(_vibrationSettings[motorIndex].values[i].duration, buffer, offset);
+                offset += 2;
+            }
+        }
+        buffer[0] = 'V';
+        sendBluetoothCommand(buffer);
+    }
+
+    private void addShortToBuffer(short value, byte[] buffer, int offset) {
+        byte leftBit = (byte)((value >> 8) & 0xFF);
+        byte rightBit = (byte)(value & 0xFF);
+        buffer[offset] = leftBit;
+        buffer[offset + 1] = rightBit;
+    }
+
+    private void setMoodHappy() {
+        _lightCycleColours[0] = 0XFFFF008C;
+        _lightCycleColours[1] = 0xFFFF003F;
+        _lightCycleColours[2] = 0XFFFF008C;
+        _lightCycleColourCount = 3;
+        _lightCycleDuration = 6000;
+        _lightCycleBlend = 1;
+        _vibrationCycleDuration = 1900;
+        for (int i = 0; i < 9; i++) {
+            _vibrationSettings[i].numberValues = 4;
+            _vibrationSettings[i].values[0].start = 2800;
+            _vibrationSettings[i].values[0].end = 3500;
+            _vibrationSettings[i].values[0].duration = 800;
+            _vibrationSettings[i].values[1].start = 3500;
+            _vibrationSettings[i].values[1].end = 2800;
+            _vibrationSettings[i].values[1].duration = 600;
+            _vibrationSettings[i].values[2].start = 1500;
+            _vibrationSettings[i].values[2].end = 1500;
+            _vibrationSettings[i].values[2].duration = 400;
+            _vibrationSettings[i].values[3].start = 0;
+            _vibrationSettings[i].values[3].end = 0;
+            _vibrationSettings[i].values[3].duration = 100;
+        }
+        sendVibrationSettings();
+        sendCycleColourCommand();
+        Toast.makeText(this, "Happy cushion", Toast.LENGTH_LONG).show();
+    }
+
+    private void setMoodAngry() {
+        _lightCycleColours[0] = 0xFFFF0000;
+        _lightCycleColours[1] = 0xFFff2600;
+        _lightCycleColours[2] = 0xFFFF0000;
+        _lightCycleColourCount = 3;
+        _lightCycleDuration = 1000;
+        _lightCycleBlend = 20;
+        _vibrationCycleDuration = 1500;
+        for (int i = 0; i < 9; i++) {
+            _vibrationSettings[i].numberValues = 5;
+            _vibrationSettings[i].values[0].start = 4095;
+            _vibrationSettings[i].values[0].end = 4095;
+            _vibrationSettings[i].values[0].duration = 200;
+            _vibrationSettings[i].values[1].start = 0;
+            _vibrationSettings[i].values[1].end = 0;
+            _vibrationSettings[i].values[1].duration = 200;
+            _vibrationSettings[i].values[2].start = 4095;
+            _vibrationSettings[i].values[2].end = 4095;
+            _vibrationSettings[i].values[2].duration = 400;
+            _vibrationSettings[i].values[3].start = 0;
+            _vibrationSettings[i].values[3].end = 0;
+            _vibrationSettings[i].values[3].duration = 200;
+            _vibrationSettings[i].values[4].start = 4095;
+            _vibrationSettings[i].values[4].end = 0;
+            _vibrationSettings[i].values[4].duration = 500;
+        }
+        sendVibrationSettings();
+        sendCycleColourCommand();
+        Toast.makeText(this, "Uh oh!  Angry cushion!", Toast.LENGTH_LONG).show();
+    }
+
+    private void setMoodCalm() {
+        _lightCycleColours[0] = 0xFF00a5ff;
+        _lightCycleColours[1] = 0xFF54ff00;
+        _lightCycleColours[2] = 0xFF00a5ff;
+        _lightCycleColourCount = 3;
+        _lightCycleDuration = 6000;
+        _lightCycleBlend = 20;
+        _vibrationCycleDuration = 1500;
+        for (int i = 0; i < 9; i++) {
+            _vibrationSettings[i].numberValues = 3;
+            _vibrationSettings[i].values[0].start = 1500;
+            _vibrationSettings[i].values[0].end = 2500;
+            _vibrationSettings[i].values[0].duration = 800;
+            _vibrationSettings[i].values[1].start = 2500;
+            _vibrationSettings[i].values[1].end = 1500;
+            _vibrationSettings[i].values[1].duration = 600;
+            _vibrationSettings[i].values[2].start = 0;
+            _vibrationSettings[i].values[2].end = 0;
+            _vibrationSettings[i].values[2].duration = 100;
+        }
+        sendVibrationSettings();
+        sendCycleColourCommand();
+        Toast.makeText(this, "Cushion is zen", Toast.LENGTH_LONG).show();
+    }
+
+    private void setMoodAttentionSeeking() {
+        _lightCycleColours[0] = 0xFFc700ff;
+        _lightCycleColours[1] = 0xFFc700ff;
+        _lightCycleColours[2] = 0xFFc700ff;
+        _lightCycleColours[3] = 0xFFc700ff;
+        _lightCycleColours[4] = 0xFFc700ff;
+        _lightCycleColours[5] = 0xFFc700ff;
+        _lightCycleColours[6] = 0xFFFF0000;
+        _lightCycleColours[7] = 0xFF00FF00;
+        _lightCycleColours[8] = 0xFF0000FF;
+        _lightCycleColourCount = 9;
+        _lightCycleDuration = 2000;
+        _lightCycleBlend = 20;
+        _vibrationCycleDuration = 2000;
+        for (int i = 0; i < 9; i++) {
+            boolean isCycle1 = i == 0 || i == 3 || i == 6;
+            boolean isCycle2 = i == 1 || i == 4 || i == 7;
+            boolean isCycle3 = !isCycle1 && !isCycle2;
+            _vibrationSettings[i].numberValues = 5;
+            _vibrationSettings[i].values[0].start = 4095;
+            _vibrationSettings[i].values[0].end = 4095;
+            _vibrationSettings[i].values[0].duration = 550;
+            _vibrationSettings[i].values[1].start = 4095;
+            _vibrationSettings[i].values[1].end = 2500;
+            _vibrationSettings[i].values[1].duration = 550;
+            _vibrationSettings[i].values[2].start = (short)(isCycle1 ? 4095 : 0);
+            _vibrationSettings[i].values[2].end = (short)(isCycle1 ? 4095 : 0);
+            _vibrationSettings[i].values[2].duration = 300;
+            _vibrationSettings[i].values[3].start = (short)(isCycle2 ? 4095 : 0);
+            _vibrationSettings[i].values[3].end = (short)(isCycle2 ? 4095 : 0);
+            _vibrationSettings[i].values[3].duration = 300;
+            _vibrationSettings[i].values[4].start = (short)(isCycle3 ? 4095 : 0);
+            _vibrationSettings[i].values[4].end = (short)(isCycle3 ? 4095 : 0);
+            _vibrationSettings[i].values[4].duration = 300;
+        }
+        sendVibrationSettings();
+        sendCycleColourCommand();
+        Toast.makeText(this, "Cushion needs attention", Toast.LENGTH_LONG).show();
     }
 }

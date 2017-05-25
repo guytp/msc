@@ -311,5 +311,51 @@
 
     </GridLayout>
 
+
+        <TextView
+            android:id="@+id/moodsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="5"
+            android:text="Moods"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <GridLayout
+            android:id="@+id/moodsGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="6">
+
+            <Button
+                android:id="@+id/happyButton"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Happy" />
+            <Button
+                android:id="@+id/calmButton"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="Calm" />
+            <Button
+                android:id="@+id/attentionSeekingButton"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="Attention Seeking" />
+            <Button
+                android:id="@+id/angryButton"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="Angry" />
+            </GridLayout>
+
     </GridLayout>
 </android.support.constraint.ConstraintLayout>

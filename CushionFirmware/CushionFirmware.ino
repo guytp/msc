@@ -16,18 +16,20 @@ struct VibrationSettingValue {
   uint16_t Start;
   uint16_t End;
   uint16_t Duration;
-} typedef VibrationSettingValue;
+} 
+typedef VibrationSettingValue;
 
 struct VibrationSetting {
   uint8_t NumberValues;
   VibrationSettingValue Values[5];
-} typedef VibrationSetting;
+} 
+typedef VibrationSetting;
 
 // Bluetooth declarations
 SoftwareSerial _bluetoothSerial(3, 2);
-const byte _bluetoothBufferSize = 300;
+const uint16_t _bluetoothBufferSize = 300;
 char _bluetoothBuffer[_bluetoothBufferSize];
-byte _bluetoothBufferLength = 0;
+uint16_t _bluetoothBufferLength = 0;
 
 // Lighting declarations
 Adafruit_NeoPixel _lightStrip = Adafruit_NeoPixel(30, 12, NEO_GRB + NEO_KHZ800);
@@ -148,13 +150,13 @@ void vibrationPerformLoop() {  // Determine how long since we were last called -
   _vibrationCycleCurrentOffsetTime += timeSinceLast;
   while (_vibrationCycleCurrentOffsetTime > _vibrationCycleDuration)
     _vibrationCycleCurrentOffsetTime -= _vibrationCycleDuration;
-  
+
   // Now we enumerate through each motor's settings to determine where it currently is
   for (uint8_t pwmChannel = 0; pwmChannel < 9; pwmChannel++) {
     // Skip if there are no settings for this channel
     if (_vibrationSettings[pwmChannel].NumberValues < 1)
       continue;
-    
+
     // Now based upon our current timestamp determine which value we should be using
     uint16_t startTime = 0;
     for (uint8_t valueIndex = 0; valueIndex < _vibrationSettings[pwmChannel].NumberValues; valueIndex++) {
@@ -163,13 +165,13 @@ void vibrationPerformLoop() {  // Determine how long since we were last called -
         startTime += _vibrationSettings[pwmChannel].Values[valueIndex].Duration;
         continue;
       }
-      
+
       // Determine how far through this segment we are
       float currentProgress = (float)(_vibrationCycleCurrentOffsetTime - startTime) / (float)_vibrationSettings[pwmChannel].Values[valueIndex].Duration;
       float diff = (int32_t)_vibrationSettings[pwmChannel].Values[valueIndex].End - (int32_t)_vibrationSettings[pwmChannel].Values[valueIndex].Start;
       uint16_t newValue = (uint16_t)(diff * currentProgress) + _vibrationSettings[pwmChannel].Values[valueIndex].Start;
       _pwmDriver.setPin(pwmChannel, newValue < 0 ? 0 : newValue > 4095 ? 4095 : newValue);
-      
+
       // We've now set the value so we can break
       break;
     }
@@ -178,44 +180,70 @@ void vibrationPerformLoop() {  // Determine how long since we were last called -
 
 void bluetoothParseInput() {
   // Return if no data to read
-  uint32_t availableBytes = _bluetoothSerial.available();
-  if (availableBytes < 1)
-    return;
-
-  // Now attempt to read data a single line at a time up to a newline
-  for (uint32_t i = 0; i < availableBytes; i++)
-  {
-    char c = _bluetoothSerial.read();
-
-    // If this character is a newline, finish the string and parse it
-    if (c == '\n' || c == '\r')
+  while (true) {
+    uint32_t availableBytes = _bluetoothSerial.available();
+    if (availableBytes < 1)
+      return;
+  
+    // Now attempt to read data a single line at a time up to a newline
+    for (uint32_t i = 0; i < availableBytes; i++)
     {
-      // Skip for empty strings
-      if (_bluetoothBufferLength == 0)
+      char c = _bluetoothSerial.read();
+  
+      // If this ends command process it
+      if ((c == '\n' || c == '\r') && (_bluetoothBufferLength == 0 || (_bluetoothBuffer[0] == 'V' && _bluetoothBufferLength >= 282) || _bluetoothBuffer[0] != 'V'))
+      {
+        // Ignore newlines during a V command
+        // Skip for empty strings
+        if (_bluetoothBufferLength == 0)
+          continue;
+        
+        /*
+        Serial.print(F("Newline for cmd "));
+        Serial.print(_bluetoothBuffer[0]);
+        Serial.println((uint8_t)_bluetoothBuffer[0], HEX);
+        for (int i =0; i < _bluetoothBufferLength; i++) {
+          Serial.print(_bluetoothBuffer[i], HEX);
+          Serial.print(F("-"));
+          if (i % 16 == 0)
+            Serial.println(F(""));
+        }
+        Serial.println(F(""));
+        */
+  
+        // Parse and reset
+        Serial.print(F("Handling command: "));
+        Serial.print(_bluetoothBuffer[0]);
+        Serial.print(F(" with buffer len "));
+        Serial.println(_bluetoothBufferLength);
+        if (_bluetoothBuffer[0] == 'L')
+          bluetoothLightCommand();
+        else if (_bluetoothBuffer[0] == 'V')
+          bluetoothVibrateCommand();
+        else {
+          Serial.print(F("Unknown command: "));
+          Serial.println(_bluetoothBuffer[0]);
+        }
+        _bluetoothBufferLength = 0;
         continue;
-
-      // Parse and reset
-      Serial.print(F("Handling command: "));
-      Serial.println(_bluetoothBuffer[0]);
-      if (_bluetoothBuffer[0] == 'L')
-        bluetoothLightCommand();
-      else if (_bluetoothBuffer[0] == 'V')
-        bluetoothVibrateCommand();
-      else {
-        Serial.print(F("Unknown command: "));
-        Serial.println(_bluetoothBuffer[0]);
       }
-      _bluetoothBufferLength = 0;
-      continue;
+  
+      // If this buffer is full, discard the character
+      else if (_bluetoothBufferLength == _bluetoothBufferSize - 1)
+      {
+        Serial.print(F("Discarding extra character ("));
+        Serial.print(c);
+        Serial.print(F(") - current length is "));
+        Serial.print(_bluetoothBufferLength);
+        Serial.print(F(" of max "));
+        Serial.println(_bluetoothBufferSize - 1);
+        continue;
+      }
+  
+      // Add this to buffer and increment location
+      _bluetoothBuffer[_bluetoothBufferLength] = c;
+      _bluetoothBufferLength++;
     }
-
-    // If this buffer is full, discard the character
-    else if (_bluetoothBufferLength == _bluetoothBufferSize - 1)
-      continue;
-
-    // Add this to buffer and increment location
-    _bluetoothBuffer[_bluetoothBufferLength] = c;
-    _bluetoothBufferLength++;
   }
 }
 
@@ -232,12 +260,12 @@ void bluetoothLightCommand() {
     _lightCycleColourCount = _bluetoothBuffer[10] & 0xFF;
     for (int offset = 11, i = 0; i < 10; i++, offset += 3)
       _lightCycleColours[i] = (((uint32_t)(_bluetoothBuffer[offset] & 0xFF)) << 16) | (((uint32_t)(_bluetoothBuffer[offset + 1]  & 0xFF)) << 8) | ((uint32_t)(_bluetoothBuffer[offset + 2]  & 0xFF));
-      Serial.print(F("Switch to cycle with duration "));
-      Serial.print(_lightCycleDuration);
-      Serial.print(F("ms and "));
-      Serial.print(_lightCycleColourCount);
-      Serial.print(F("colours blending with "));
-      Serial.println(_lightCycleBlendAmount);
+    Serial.print(F("Switch to cycle with duration "));
+    Serial.print(_lightCycleDuration);
+    Serial.print(F("ms and "));
+    Serial.print(_lightCycleColourCount);
+    Serial.print(F("colours blending with "));
+    Serial.println(_lightCycleBlendAmount);
   }
   else if (_bluetoothBuffer[1] == 'O')
     _lightMode = LightModeOff;
@@ -258,7 +286,7 @@ void bluetoothVibrateCommand() {
   // Each VibrationSetingValue is 6 bytes: [Start-2b][End-2b][Duration-2b]
   // Each VibrationSetting is 31 bytes: [NumberValues-1b][Values-30b]
   // The command itself is then formed of 281bytes: [Duration-2b][VibrationSettings x9-279b]
-  
+
   // First ensure buffer length is correct
   if (_bluetoothBufferLength != 282) {
     Serial.print(F("Unexpected buffer length - got "));
@@ -266,18 +294,18 @@ void bluetoothVibrateCommand() {
     Serial.println(F(" bytes"));
     return;
   }
-  
+
   // Read out the duration to begin
   uint16_t offset = 1;
   _vibrationCycleDuration = shortFromDataBuffer(offset);
   offset += 2;
-  
+
   // Now read each of the 9 motor settings out
   for (uint8_t motorIndex = 0; motorIndex < 9; motorIndex++) {
     // Determine the number of values to use
-    _vibrationSettings[motorIndex].NumberValues = shortFromDataBuffer(offset);
-    offset += 2;
-    
+    _vibrationSettings[motorIndex].NumberValues = _bluetoothBuffer[offset];
+    offset++;
+
     // Now go through the five blocks we have for values - even if we don't use them as this command is fixed-width
     for (uint8_t valueIndex = 0; valueIndex < 5; valueIndex++) {
       _vibrationSettings[motorIndex].Values[valueIndex].Start = shortFromDataBuffer(offset);
@@ -290,21 +318,26 @@ void bluetoothVibrateCommand() {
   }
 
   // Finally reset our progress for the new cycle
+  Serial.println(F("Loaded new vibration settings"));
   _vibrationLoopLastTime = millis();
   _vibrationCycleCurrentOffsetTime = 0;
 }
 
 uint16_t shortFromDataBuffer(int offset) {
   uint16_t returnValue = 0;
-  returnValue |= _bluetoothBuffer[offset];
-  returnValue << 8;
-  returnValue |= _bluetoothBuffer[offset + 1];
+  uint8_t b1 = _bluetoothBuffer[offset];
+  uint8_t b2 = _bluetoothBuffer[offset + 1];
+  returnValue |= b1;
+  returnValue = returnValue << 8;
+  returnValue |= b2;
   return returnValue;
 }
 
 void loop() {
   // Handle any pending commands before we do anything else
   bluetoothParseInput();
+  if (_bluetoothBufferLength > 0)
+    return;
 
   // Perform lighting loop if required
   lightPerformLoop();
@@ -351,6 +384,7 @@ uint32_t blendedColour(uint32_t startColour, uint32_t endColour, float divisions
   uint32_t result =  newR|newG|newB;
   return result;
 }
+
 
 
 
