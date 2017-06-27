@@ -21,7 +21,8 @@
         <activity
             android:name=".IntroWelcome"
             android:noHistory="true" />
-        <activity android:name=".IntroDemographicsActivity"></activity>
+        <activity android:name=".IntroDemographicsActivity" />
+        <activity android:name=".IntroPanasActivity"></activity>
     </application>
 
 </manifest>
