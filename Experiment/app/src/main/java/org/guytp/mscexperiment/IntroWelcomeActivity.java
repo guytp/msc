@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class IntroWelcome extends KioskActivity {
+public class IntroWelcomeActivity extends KioskActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,6 @@ public class IntroWelcome extends KioskActivity {
 
     public void onBeginPress(View v) {
         ExperimentData.getInstance().addTimeMarker("IntroWelcome", "Finish");
-        startActivity(new Intent(IntroWelcome.this, IntroDemographicsActivity.class));
-
+        startActivity(new Intent(IntroWelcomeActivity.this, IntroDemographicsActivity.class));
     }
 }

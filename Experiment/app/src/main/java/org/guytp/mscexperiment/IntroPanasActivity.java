@@ -3,7 +3,6 @@ package org.guytp.mscexperiment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,8 +60,7 @@ public class IntroPanasActivity extends KioskActivity {
         // Move to next screen if we're done with questions
         if (_currentEmotionWordIndex == _emotionWords.length - 1)
         {
-            // TODO Move to next activity at the end here
-            //startActivity(new Intent(IntroPanasActivity.this, NextActivity.class));
+            startActivity(new Intent(IntroPanasActivity.this, Phase1IntroductionActivity.class));
             return;
         }
 

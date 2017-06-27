@@ -19,10 +19,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IntroWelcome"
+            android:name=".IntroWelcomeActivity"
             android:noHistory="true" />
-        <activity android:name=".IntroDemographicsActivity" />
-        <activity android:name=".IntroPanasActivity"></activity>
+        <activity android:name=".IntroDemographicsActivity"
+            android:noHistory="true"/>
+        <activity android:name=".IntroPanasActivity"
+            android:noHistory="true"/>
+        <activity android:name=".Phase1IntroductionActivity"
+            android:noHistory="true"/>
+        <activity android:name=".Phase1ExperimentActivity"
+            android:noHistory="true"/>
     </application>
 
 </manifest>

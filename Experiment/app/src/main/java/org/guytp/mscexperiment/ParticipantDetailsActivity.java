@@ -49,7 +49,7 @@ public class ParticipantDetailsActivity extends KioskActivity {
                         ExperimentData.getInstance().setSessionId(dateFormatted);
 
                         // Now show the experiment welcome for the participant
-                        startActivity(new Intent(ParticipantDetailsActivity.this, IntroWelcome.class));
+                        startActivity(new Intent(ParticipantDetailsActivity.this, IntroWelcomeActivity.class));
                     }
                 })
                 .setNegativeButton("No", null)

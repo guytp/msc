@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.guytp.mscexperiment.IntroWelcomeActivity"
+    tools:context="org.guytp.mscexperiment.Phase1IntroductionActivity"
     android:keepScreenOn="true">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,36 +20,22 @@
 
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="Thank you for taking part in this research."
+                android:text="We're now going to ask you to identify whether or not the cushion is acting the same or different.  The cushion will start vibrating and show some lights for 20 seconds.  It will then turn off briefly before turning back on to show another state for 20 seconds before turning off again.  You will be asked if these two states were the same or different.  Once you've answered the first question you will be shown 20 more states and asked to compare each to the last one that you saw and identify whether they were the same or different."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="The whole of this experiment will be done on this tablet - you just need to select the answers on-screen."
-                android:textSize="32sp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
-
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="We'll start with a few basic questions.  When you're ready to start press the button below."
+                android:text="Press the button below when you are ready to begin."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -63,6 +49,6 @@
                 android:padding="30dp"
                 android:text="Begin"
                 android:textSize="52sp" />
-    </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
