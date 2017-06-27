@@ -1,9 +1,6 @@
 Experiment
-	Welcome - Intro
 	Welcome - Demographics
 	Welcome - PANAS
-	Write/Update json to disk regularly
-	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
 	Phase 1 - Intro (hold cushion)
 	Phase 1 - Recognitition
 	Pause
@@ -15,3 +12,6 @@ Experiment
 	Phase 3 - Sit with cushion
 	Outro - PANAS
 	Outro - Thank you
+	Toggling out / bacl to app restores doesn't crash
+	Write/Update json to disk regularly
+	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/

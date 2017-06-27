@@ -1,0 +1,188 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.guytp.mscexperiment.IntroDemographicsActivity"
+    android:keepScreenOn="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/question1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="50dp"
+                android:text="What is your age?"
+                android:textSize="32sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ageButton1"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="18 - 24"
+                    android:textSize="32sp" />
+                <Button
+                    android:id="@+id/ageButton2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="25 - 34"
+                    android:textSize="32sp" />
+                <Button
+                    android:id="@+id/ageButton3"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="35 - 44"
+                    android:textSize="32sp" />
+                <Button
+                    android:id="@+id/ageButton4"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="45 - 54"
+                    android:textSize="32sp" />
+                <Button
+                    android:id="@+id/ageButton5"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="55 - 64"
+                    android:textSize="32sp" />
+                <Button
+                    android:id="@+id/ageButton6"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onAgeButtonPress"
+                    android:padding="10dp"
+                    android:text="65+"
+                    android:textSize="32sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Age, Gender, Ethnicity, Highest Education Level, Field of Study / Research -->
+
+
+            <LinearLayout
+                android:id="@+id/question2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:text="What gender do you identify as?"
+                    android:textSize="32sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/question3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:text="Which of the following best describes your ethnicity?"
+                    android:textSize="32sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/question4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:text="What is your highest educational level?"
+                    android:textSize="32sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/question5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:text="What is your area of research/study?"
+                    android:textSize="32sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:onClick="onNextPress"
+                android:padding="30dp"
+                android:text="Next"
+                android:textSize="52sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

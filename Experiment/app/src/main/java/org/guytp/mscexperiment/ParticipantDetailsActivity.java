@@ -25,16 +25,16 @@ public class ParticipantDetailsActivity extends KioskActivity {
         // Setup UI components
         Date date = new Date();
         _datePicker = (DatePicker)findViewById(R.id.datePicker);
-        _datePicker.updateDate(date.getYear(), date.getMonth(), date.getDay());
+        //_datePicker.updateDate(date.getYear(), date.getMonth(), date.getDay());
         _timePicker = (TimePicker)findViewById(R.id.timePicker);
         _timePicker.setIs24HourView(true);
         _timePicker.setCurrentHour(date.getHours());
-        _timePicker.setCurrentMinute(date.getMinutes());
+        //_timePicker.setCurrentMinute(date.getMinutes());
     }
 
     public void onBeginPress(View v) {
         // Determine date from spinners
-        Date date = new Date(_datePicker.getYear(), _datePicker.getMonth(), _datePicker.getDayOfMonth(), _timePicker.getCurrentHour(), _timePicker.getCurrentMinute());
+        Date date = new Date(_datePicker.getYear() - 1900, _datePicker.getMonth(), _datePicker.getDayOfMonth(), _timePicker.getCurrentHour(), _timePicker.getCurrentMinute());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         final String dateFormatted = dateFormat.format(date);
 

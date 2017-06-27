@@ -1,9 +1,9 @@
 package org.guytp.mscexperiment;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class KioskActivity extends AppCompatActivity {
+public class KioskActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

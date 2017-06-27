@@ -13,6 +13,7 @@ public class ExperimentData {
     private String _sessionId;
     private UUID _uuid;
     private List<TimeMarker> _timeMarkers = new ArrayList<TimeMarker>();
+    private List<ExperimentDataEntry> _data = new ArrayList<ExperimentDataEntry>();
 
     private ExperimentData() {
     }
@@ -28,5 +29,9 @@ public class ExperimentData {
 
     public void addTimeMarker(String category, String action) {
         _timeMarkers.add(new TimeMarker(category, action));
+    }
+
+    public void addData(String key, String value) {
+        _data.add(new ExperimentDataEntry(key, value));
     }
 }

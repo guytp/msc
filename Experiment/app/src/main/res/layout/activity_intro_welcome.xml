@@ -26,7 +26,7 @@
                 android:gravity="center_horizontal"
                 android:padding="50dp"
                 android:text="Thank you for taking part in this research."
-                android:textSize="52sp"
+                android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -38,7 +38,7 @@
                 android:gravity="center_horizontal"
                 android:padding="50dp"
                 android:text="The whole of this experiment will be done on this tablet - you just need to select the answers on-screen."
-                android:textSize="52sp"
+                android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -50,7 +50,7 @@
                 android:gravity="center_horizontal"
                 android:padding="50dp"
                 android:text="We'll start with a few basic questions.  When you're ready to start press the button below."
-                android:textSize="52sp"
+                android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -58,8 +58,6 @@
                 android:id="@+id/beginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
                 android:layout_marginTop="50dp"
                 android:onClick="onBeginPress"
                 android:padding="30dp"

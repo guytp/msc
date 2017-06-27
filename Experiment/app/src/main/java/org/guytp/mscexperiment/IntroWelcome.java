@@ -1,5 +1,6 @@
 package org.guytp.mscexperiment;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,5 +16,7 @@ public class IntroWelcome extends KioskActivity {
 
     public void onBeginPress(View v) {
         ExperimentData.getInstance().addTimeMarker("IntroWelcome", "Finish");
+        startActivity(new Intent(IntroWelcome.this, IntroDemographicsActivity.class));
+
     }
 }
