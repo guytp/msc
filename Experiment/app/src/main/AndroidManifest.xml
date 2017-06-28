@@ -12,13 +12,11 @@
         <activity
             android:name=".ParticipantDetailsActivity"
             android:noHistory="true">
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".IntroWelcomeActivity"
@@ -31,18 +29,25 @@
             android:noHistory="true" />
         <activity
             android:name=".Phase1IntroductionActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".Phase1ExperimentActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".Phase1CompleteActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".Phase2IntroductionActivity"
             android:noHistory="true">
-
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            </activity>
-        <activity
-            android:name=".Phase1ExperimentActivity"
-            android:noHistory="true" />
-        <activity android:name=".Phase1CompleteActivity"
+            -->
+        </activity>
+        <activity android:name=".Phase2ExperimentActivity"
             android:noHistory="true" />
     </application>
 
