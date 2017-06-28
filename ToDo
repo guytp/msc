@@ -1,12 +1,13 @@
 Experiment
-	Phase 1 - Recognitition
 	Pause
 	Phase 2 - Intro
+	---
 	Phase 2 - Selection
 	Pause
 	Phase 3 - Intro
 	Phase 3 - Word Matching
 	Phase 3 - Sit with cushion
+	CushionController implemented
 	Outro - PANAS
 	Outro - Thank you
 	Toggling out / bacl to app restores doesn't crash

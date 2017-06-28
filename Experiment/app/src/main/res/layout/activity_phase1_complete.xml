@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="We're now going to ask you to identify whether or not the cushion is acting the same or different.  The cushion will start vibrating and show some lights for 20 seconds.  It will then turn off briefly before turning back on to show another state for 20 seconds before turning off again.  You will be asked if these two states were the same or different.  Once you've answered the first question you will be shown more states and asked to compare each to the last one that you saw and identify whether they were the same or different."
+                android:text="Thank you, that's the first part of the experiment complete.  We have two sections left so we're about a third of the way through."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -35,19 +35,19 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="Press the button below when you are ready to begin."
+                android:text="Feel free to take a rest for a couple of minutes if you want it then press Continue below when you're ready."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
             <Button
-                android:id="@+id/beginButton"
+                android:id="@+id/continueButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:onClick="onBeginPress"
+                android:onClick="onContinuePress"
                 android:padding="30dp"
-                android:text="Begin"
+                android:text="Continue"
                 android:textSize="52sp" />
         </LinearLayout>
     </RelativeLayout>
