@@ -9,6 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Phase1ExperimentActivity extends KioskActivity {
+    private final double _stateDuration = 20;
+
+    private final double _firstSecondPause = 5;
+
+    private final int _maximumStates = 30;
+
+
     private CushionState[] _cushionStates;
 
     private int _nextStateToShow = 0;
@@ -29,12 +36,6 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     private boolean _same;
 
-    private double _stateDuration = 20;
-
-    private double _firstSecondPause = 5;
-
-    private final String[] _ordinals = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth", "Fourteenth", "Fifteenth", "Sixteenth", "Seventeenth", "Eighteenth", "Nineteenth", "Twentieth"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,12 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // Determine the order of our states - we will have five-passes of random states and get a
         // handler to cushion controller
         _cushionStates = CushionState.generateRandomStates(5, 20, 0.25);
+        if (_cushionStates.length > _maximumStates && _maximumStates > 1) {
+            CushionState[] newStates = new CushionState[_maximumStates];
+            for (int i = 0; i < _maximumStates; i++)
+                newStates[i] = _cushionStates[i];
+            _cushionStates = newStates;
+        }
         for (int i = 0; i < 20; i++)
             ExperimentData.getInstance().addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance();
@@ -71,7 +78,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
         // Display in UI
-        _label.setText("This is the " + _ordinals[_nextStateToShow] + " state.");
+        _label.setText("This is the " + Ordinals.values[_nextStateToShow] + " state.");
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
@@ -95,7 +102,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // If not the very first one transition to a "same or different phase"
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _label.setText("Were the " + _ordinals[_nextStateToShow - 2] + " and " + _ordinals[_nextStateToShow - 1] + " states the same or different?");
+        _label.setText("Were the " + Ordinals.values[_nextStateToShow - 2] + " and " + Ordinals.values[_nextStateToShow - 1] + " states the same or different?");
         _sameButton.setVisibility(View.VISIBLE);
         _differentButton.setVisibility(View.VISIBLE);
     }

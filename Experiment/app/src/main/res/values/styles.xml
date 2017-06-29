@@ -20,4 +20,12 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="tallerBarStyle" parent="Widget.AppCompat.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:maxHeight">20dip</item>
+    </style>
+
 </resources>

@@ -19,14 +19,108 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/mainLabel"
+            <LinearLayout
+                android:id="@+id/stateOnLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="Phase 2 experiment content to go here..."
-                android:textSize="32sp" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/stateOnLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:text="Please wait whilst this phase of the experiment starts..."
+                    android:textSize="32sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/answerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/questionLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:padding="50dp"
+                    android:textSize="32sp" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Low Energy"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="60"
+                        android:layout_marginRight="20dp"
+                        android:layout_row="0"
+                        android:text="High Energy"
+                        android:textSize="32sp" />
+                </GridLayout>
+
+                <SeekBar
+                    android:id="@+id/sliderEnergy"
+                    style="@style/tallerBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="150dp"
+                    android:progressDrawable="@drawable/progress_fill"
+                    android:max="200"
+                    android:progress="100"
+                    android:thumb="@drawable/thumb_image" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Unpleasant"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="60"
+                        android:layout_marginRight="20dp"
+                        android:layout_row="0"
+                        android:text="Pleasant"
+                        android:textSize="32sp" />
+                </GridLayout>
+
+                <SeekBar
+                    android:id="@+id/sliderPleasantness"
+                    style="@style/tallerBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/progress_fill"
+                    android:max="200"
+                    android:progress="100"
+                    android:thumb="@drawable/thumb_image" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:onClick="onNextPress"
+                    android:padding="30dp"
+                    android:text="Next"
+                    android:textSize="52sp" />
+            </LinearLayout>
 
         </LinearLayout>
     </RelativeLayout>

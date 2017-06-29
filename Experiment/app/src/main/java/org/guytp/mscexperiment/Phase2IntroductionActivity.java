@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class Phase2IntroductionActivity extends AppCompatActivity {
+public class Phase2IntroductionActivity extends KioskActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
