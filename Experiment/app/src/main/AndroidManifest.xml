@@ -40,12 +40,7 @@
             android:noHistory="true" />
         <activity
             android:name=".Phase2IntroductionActivity"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:noHistory="true" />
         <activity
             android:name=".Phase2ExperimentActivity"
             android:noHistory="true" />
@@ -53,6 +48,10 @@
             android:noHistory="true" />
         <activity android:name=".Phase3IntroductionActivity"
             android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Phase3ExperimentActivity"
             android:noHistory="true" />
