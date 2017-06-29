@@ -12,4 +12,12 @@ public class ExperimentDataEntry {
         _key = key;
         _value = value;
     }
+
+    public String key() {
+        return _key;
+    }
+
+    public String value() {
+        return _value;
+    }
 }

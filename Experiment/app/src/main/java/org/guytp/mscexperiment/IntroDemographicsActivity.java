@@ -108,41 +108,16 @@ public class IntroDemographicsActivity extends KioskActivity {
 
     public void onNextPress(View v) {
         // Store data from last view and ensure valid data entry
-        if (_currentQuestionIndex == 0) {
-            if (_selectedAge == null || _selectedAge.length() < 1) {
-                dataError("You must select your age");
-                return;
-            }
+        if (_currentQuestionIndex == 0)
             ExperimentData.getInstance().addData("Demographics.Age", _selectedAge);
-        }
-        else if (_currentQuestionIndex == 1) {
-            if (_selectedGender == null || _selectedGender.length() < 1) {
-                dataError("You must select which gender you identify as");
-                return;
-            }
+        else if (_currentQuestionIndex == 1)
             ExperimentData.getInstance().addData("Demographics.Gender", _selectedGender);
-        }
-        else if (_currentQuestionIndex == 2) {
-            if (_selectedEthnicity == null || _selectedEthnicity.length() < 1) {
-                dataError("You must select which ethnicity you identify as");
-                return;
-            }
+        else if (_currentQuestionIndex == 2)
             ExperimentData.getInstance().addData("Demographics.Ethnicity", _selectedEthnicity);
-        }
-        else if (_currentQuestionIndex == 3) {
-            if (_selectedEducation == null || _selectedEducation.length() < 1) {
-                dataError("You must select your highest level of education");
-                return;
-            }
+        else if (_currentQuestionIndex == 3)
             ExperimentData.getInstance().addData("Demographics.Education", _selectedEducation);
-        }
-        else if (_currentQuestionIndex == 4) {
-            if (_selectedResearchStudy == null || _selectedResearchStudy.length() < 1) {
-                dataError("You must select which area of research/study/work you partake in");
-                return;
-            }
+        else if (_currentQuestionIndex == 4)
             ExperimentData.getInstance().addData("Demographics.ResearchStudyWork", _selectedResearchStudy);
-        }
 
         // Mark this question completed for timing
         ExperimentData.getInstance().addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Finish");
@@ -206,14 +181,5 @@ public class IntroDemographicsActivity extends KioskActivity {
             btn.setBackgroundColor(btn == selectedButton ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
         }
         _nextButton.setEnabled(true);
-    }
-
-    private void dataError(String message) {
-        new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage(message)
-                .setNeutralButton("OK", null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 }

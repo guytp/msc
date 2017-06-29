@@ -34,4 +34,11 @@ public class ExperimentData {
     public void addData(String key, String value) {
         _data.add(new ExperimentDataEntry(key, value));
     }
+
+    public String getData(String key) {
+        for (int i = 0; i < _data.size(); i++)
+            if (_data.get(i).key() == key)
+                return _data.get(i).value();
+        return null;
+    }
 }

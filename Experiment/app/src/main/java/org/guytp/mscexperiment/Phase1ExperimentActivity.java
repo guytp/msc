@@ -128,6 +128,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         }
 
         // If this is the end add marker and transition
+        CushionController.getInstance().off();
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment", "Finish");
         startActivity(new Intent(Phase1ExperimentActivity.this, Phase1CompleteActivity.class));
     }

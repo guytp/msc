@@ -143,6 +143,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
         // If this is the last state move on to complete activity
         if (_nextStateToShow == _cushionStates.length) {
+            CushionController.getInstance().off();
             ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Finish");
             startActivity(new Intent(Phase2ExperimentActivity.this, Phase2CompleteActivity.class));
             return;

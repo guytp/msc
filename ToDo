@@ -1,10 +1,11 @@
 Experiment
-	Phase 3 - Word Matching
-	Phase 3 - Sit with cushion (50% angry, 50% happy)
-	Outro - PANAS
-	Outro - Thank you
 	CushionController implemented
-	Toggling out / bacl to app restores doesn't crash
+	Toggling out / bacl to app restores doesn't crash or change where it is
 	Write/Update json to disk regularly
 	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
 	Get data off it
+	Admin mode:
+		Email data
+		Jump to qu
+		Exit app
+		Back to start
