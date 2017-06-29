@@ -15,7 +15,6 @@ public class Phase2CompleteActivity extends KioskActivity {
     }
     public void onContinuePress(View v) {
         ExperimentData.getInstance().addTimeMarker("Phase2Complete", "Finish");
-        // TODO: Link to Phase 3
-        //startActivity(new Intent(Phase2CompleteActivity.this, Phase3IntroductionActivity.class));
+        startActivity(new Intent(Phase2CompleteActivity.this, Phase3IntroductionActivity.class));
     }
 }
