@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="Now the cushion will show a state for 20 seconds.  You will then be asked to select on a pair of axis how you perceived that state.  You will have to rank both how you perceived the state's energy (from low energy to high energy) and how pleasant you perceived it (from unpleasant to pleasant)."
+                android:text="Now the cushion will show a state for a few seconds.  You will then be asked to select on a pair of axis how you perceived that state.  You will have to rank both how you perceived the state's energy (from low energy to high energy) and how pleasant you perceived it (from unpleasant to pleasant)."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

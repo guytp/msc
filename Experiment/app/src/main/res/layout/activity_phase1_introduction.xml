@@ -18,13 +18,22 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:padding="50dp"
+                android:text="Please place the cushion in your lap so that you can both see and feel it when it vibrates."
+                android:textSize="32sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="We're now going to ask you to identify whether or not the cushion is acting the same or different.  The cushion will start vibrating and show some lights for 20 seconds.  It will then turn off briefly before turning back on to show another state for 20 seconds before turning off again.  You will be asked if these two states were the same or different.  Once you've answered the first question you will be shown more states and asked to compare each to the last one that you saw and identify whether they were the same or different."
+                android:text="We're now going to ask you to identify whether or not the cushion is acting the same or different.  The cushion will start vibrating and show some lights for a few seconds.  You will then be shown another state and asked if these are the same or different.  This will repeat several times."
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

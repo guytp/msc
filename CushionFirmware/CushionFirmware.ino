@@ -226,16 +226,18 @@ void bluetoothParseInput() {
         Serial.print(_bluetoothBuffer[0]);
         Serial.print(F(" with buffer len "));
         Serial.println(_bluetoothBufferLength);
+        bool success = false;
         if (_bluetoothBuffer[0] == 'L')
-          bluetoothLightCommand();
+          success = bluetoothLightCommand();
         else if (_bluetoothBuffer[0] == 'V')
-          bluetoothVibrateCommand();
+          success = bluetoothVibrateCommand();
         else if (_bluetoothBuffer[0] == 'S')
-          bluetoothStateCommand();
+          success = bluetoothStateCommand();
         else {
           Serial.print(F("Unknown command: "));
           Serial.println(_bluetoothBuffer[0]);
         }
+        _bluetoothSerial.write(success ? 1 : 0);
         _bluetoothBufferLength = 0;
         continue;
       }
@@ -259,7 +261,7 @@ void bluetoothParseInput() {
   }
 }
 
-void bluetoothStateCommand() {
+bool bluetoothStateCommand() {
   byte state = 0;
   if (_bluetoothBufferLength > 1)
     state = _bluetoothBuffer[1];
@@ -389,9 +391,10 @@ void bluetoothStateCommand() {
   _vibrationCycleCurrentOffsetTime = 0;
   _lightCycleCurrentOffsetTime = 0;
   Serial.println(F("State toggling complete"));
+  return true;
 }
 
-void bluetoothLightCommand() {
+bool bluetoothLightCommand() {
   if (_bluetoothBuffer[1] == 'C') {
     _lightMode = LightModeCycle;
     _lightCycleCurrentOffsetTime = 0;
@@ -424,9 +427,10 @@ void bluetoothLightCommand() {
       _lightSolidColour = r|g|b;
     }
   }
+  return true;
 }
 
-void bluetoothVibrateCommand() {
+bool bluetoothVibrateCommand() {
   // Each VibrationSetingValue is 6 bytes: [Start-2b][End-2b][Duration-2b]
   // Each VibrationSetting is 31 bytes: [NumberValues-1b][Values-30b]
   // The command itself is then formed of 281bytes: [Duration-2b][VibrationSettings x9-279b]
@@ -436,7 +440,7 @@ void bluetoothVibrateCommand() {
     Serial.print(F("Unexpected buffer length - got "));
     Serial.print(_bluetoothBufferLength);
     Serial.println(F(" bytes"));
-    return;
+    return false;
   }
 
   // Read out the duration to begin
@@ -466,6 +470,7 @@ void bluetoothVibrateCommand() {
   _vibrationLoopLastTime = millis();
   _vibrationCycleCurrentOffsetTime = 0;
   _isVibrationEnabled = true;
+  return true;
 }
 
 uint16_t shortFromDataBuffer(int offset) {

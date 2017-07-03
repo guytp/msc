@@ -1,13 +1,11 @@
 Experiment
-	CushionController implemented
-	Phase 1 - reduce to 10s/state
-	Instructions to say "Place cushion in lap now" at start of P2
-	Admin mode:
-		Email data
-		Jump to qu
-		Exit app
-		Back to start
 	Comms confirm (Android repeats command if not received)
+	Admin mode:
+		"Quick mode"
+		Email data
+		Jump to Phase
+		New participant
+		Exit app
 	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
 	Toggling out / bacl to app restores doesn't crash or change where it is
 	Write/Update json to disk regularly
