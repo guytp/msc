@@ -40,8 +40,16 @@ public class CushionController {
             return;
         }
         _bluetoothDevice = _bluetoothAdapter.getRemoteDevice("98:D3:31:FD:4E:FD");
+        if (_bluetoothDevice == null) {
+            displayCriticalMessage("Unable to obtain bluetooth device");
+            return;
+        }
         try {
             _bluetoothSocket = _bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+            if (_bluetoothSocket == null) {
+                displayCriticalMessage("Unable to obtain bluetooth socket");
+                return;
+            }
         } catch (IOException e) {
             displayCriticalMessage("Unable to create socket\r\n" + e.getMessage());
             return;
@@ -49,6 +57,10 @@ public class CushionController {
         try {
             _bluetoothSocket.connect();
             _bluetoothOutputStream = _bluetoothSocket.getOutputStream();
+            if (_bluetoothOutputStream == null) {
+                displayCriticalMessage("Unable to obtain bluetooth stream");
+                return;
+            }
         } catch (IOException e) {
             displayCriticalMessage("Unable to get bluetooth output stream\r\n" + e.getMessage());
             return;
@@ -62,7 +74,7 @@ public class CushionController {
         final boolean doTerminate = terminate;
         new AlertDialog.Builder(_context)
                 .setTitle("Bluetooth Error")
-                .setMessage(message)
+                .setMessage("There appears to be a problem with the cushion.  Please leave the room and get the facilitator and show this message.\r\n\r\n" + message)
                 .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -104,13 +116,15 @@ public class CushionController {
     }
 
     private void sendState(byte state) {
+        if (_bluetoothOutputStream == null)
+            return;
         try {
             byte[] bytes = new byte[2];
             bytes[0] = 0x03;
             bytes[1] = state;
             _bluetoothOutputStream.write(bytes);
         } catch (IOException e) {
-            displayCriticalMessage("There appears to be a problem with the cushion.  Please leave the room and get the facilitator and show this message.\r\n\r\n" + e.getMessage(), false);
+            displayCriticalMessage("Error sending data to cushion\r\n" + e.getMessage(), false);
             return;
         }
     }
