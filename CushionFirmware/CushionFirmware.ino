@@ -48,6 +48,7 @@ VibrationSetting _vibrationSettings[9];
 uint32_t _vibrationLoopLastTime = 0;
 uint16_t _vibrationCycleCurrentOffsetTime = 0; // How many ms are we into the current sequence for vibrating?
 uint32_t _vibrationCycleDuration = 2500; // In ms
+bool _isVibrationEnabled = true;
 
 void setup() {
   // Begin serial for debugging purposes
@@ -139,12 +140,21 @@ void lightPerformLoop() {
   _lightStrip.show();
 }
 
-void vibrationPerformLoop() {  // Determine how long since we were last called - if we're within threshold then we do nothing
+void vibrationPerformLoop() {  
+  // Determine how long since we were last called - if we're within threshold then we do nothing
   uint64_t nowTime = millis();
   uint16_t timeSinceLast = (uint16_t)(nowTime - _vibrationLoopLastTime);
   if (timeSinceLast < 50) // Without this arbitrary delay the lower the delay is the more likely we get serial data corruption, the joys of hard-coded assembly
     return;
   _vibrationLoopLastTime = nowTime;
+
+  
+  // If we're not vibrating then just set everything off
+  if (!_isVibrationEnabled) {
+    for (byte i = 0; i < 16; i++)
+      _pwmDriver.setPin(i, 0);
+    return;
+  }
 
   // We need to determine where we are in the sequence by adding the ms offset and clamping it to total duration to cope with overflow
   _vibrationCycleCurrentOffsetTime += timeSinceLast;
@@ -220,6 +230,8 @@ void bluetoothParseInput() {
           bluetoothLightCommand();
         else if (_bluetoothBuffer[0] == 'V')
           bluetoothVibrateCommand();
+        else if (_bluetoothBuffer[0] == 'S')
+          bluetoothStateCommand();
         else {
           Serial.print(F("Unknown command: "));
           Serial.println(_bluetoothBuffer[0]);
@@ -245,6 +257,138 @@ void bluetoothParseInput() {
       _bluetoothBufferLength++;
     }
   }
+}
+
+void bluetoothStateCommand() {
+  byte state = 0;
+  if (_bluetoothBufferLength > 1)
+    state = _bluetoothBuffer[1];
+  if (state > 4)
+    state = 0;
+  _isVibrationEnabled = state != 0;
+  _lightMode = state == 0 ? LightModeOff : LightModeCycle;
+  if (state == 0)
+    Serial.println(F("State to off"));
+  else if (state == 1) {
+    // Happy
+    Serial.println(F("State to happy"));
+    _lightCycleColours[0] = 0XFFFF008C;
+    _lightCycleColours[1] = 0xFFFF003F;
+    _lightCycleColours[2] = 0XFFFF008C;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 6000;
+    _lightCycleBlendAmount = 1;
+    _vibrationCycleDuration = 1900;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 4;
+        _vibrationSettings[i].Values[0].Start = 2800;
+        _vibrationSettings[i].Values[0].End = 3500;
+        _vibrationSettings[i].Values[0].Duration = 800;
+        _vibrationSettings[i].Values[1].Start = 3500;
+        _vibrationSettings[i].Values[1].End = 2800;
+        _vibrationSettings[i].Values[1].Duration = 600;
+        _vibrationSettings[i].Values[2].Start = 1500;
+        _vibrationSettings[i].Values[2].End = 1500;
+        _vibrationSettings[i].Values[2].Duration = 400;
+        _vibrationSettings[i].Values[3].Start = 0;
+        _vibrationSettings[i].Values[3].End = 0;
+        _vibrationSettings[i].Values[3].Duration = 100;
+    }
+  } else if (state == 2) {
+    // Sad
+    Serial.println(F("State to sad"));
+    _lightCycleColours[0] = 0xFFc700ff;
+    _lightCycleColours[1] = 0xFFc700ff;
+    _lightCycleColours[2] = 0xFFc700ff;
+    _lightCycleColours[3] = 0xFFc700ff;
+    _lightCycleColours[4] = 0xFFc700ff;
+    _lightCycleColours[5] = 0xFFc700ff;
+    _lightCycleColours[6] = 0xFFFF0000;
+    _lightCycleColours[7] = 0xFF00FF00;
+    _lightCycleColours[8] = 0xFF0000FF;
+    _lightCycleColourCount = 9;
+    _lightCycleDuration = 2000;
+    _lightCycleBlendAmount = 20;
+    _vibrationCycleDuration = 2000;
+    for (int i = 0; i < 9; i++) {
+        boolean isCycle1 = i == 0 || i == 3 || i == 6;
+        boolean isCycle2 = i == 1 || i == 4 || i == 7;
+        boolean isCycle3 = !isCycle1 && !isCycle2;
+        _vibrationSettings[i].NumberValues = 5;
+        _vibrationSettings[i].Values[0].Start = 4095;
+        _vibrationSettings[i].Values[0].End = 4095;
+        _vibrationSettings[i].Values[0].Duration = 550;
+        _vibrationSettings[i].Values[1].Start = 4095;
+        _vibrationSettings[i].Values[1].End = 2500;
+        _vibrationSettings[i].Values[1].Duration = 550;
+        _vibrationSettings[i].Values[2].Start = (short)(isCycle1 ? 4095 : 0);
+        _vibrationSettings[i].Values[2].End = (short)(isCycle1 ? 4095 : 0);
+        _vibrationSettings[i].Values[2].Duration = 300;
+        _vibrationSettings[i].Values[3].Start = (short)(isCycle2 ? 4095 : 0);
+        _vibrationSettings[i].Values[3].End = (short)(isCycle2 ? 4095 : 0);
+        _vibrationSettings[i].Values[3].Duration = 300;
+        _vibrationSettings[i].Values[4].Start = (short)(isCycle3 ? 4095 : 0);
+        _vibrationSettings[i].Values[4].End = (short)(isCycle3 ? 4095 : 0);
+        _vibrationSettings[i].Values[4].Duration = 300;
+    }    
+  } else if (state == 3) {
+    // Calm
+    Serial.println(F("State to calm"));
+    _lightCycleColours[0] = 0xFF00a5ff;
+    _lightCycleColours[1] = 0xFF54ff00;
+    _lightCycleColours[2] = 0xFF00a5ff;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 6000;
+    _lightCycleBlendAmount = 20;
+    _vibrationCycleDuration = 1500;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 3;
+        _vibrationSettings[i].Values[0].Start = 1500;
+        _vibrationSettings[i].Values[0].End = 2500;
+        _vibrationSettings[i].Values[0].Duration = 800;
+        _vibrationSettings[i].Values[1].Start = 2500;
+        _vibrationSettings[i].Values[1].End = 1500;
+        _vibrationSettings[i].Values[1].Duration = 600;
+        _vibrationSettings[i].Values[2].Start = 0;
+        _vibrationSettings[i].Values[2].End = 0;
+        _vibrationSettings[i].Values[2].Duration = 100;
+    }
+    
+  } else if (state == 4) {
+    // Angry
+    Serial.println(F("State to angry"));
+    _lightCycleColours[0] = 0xFFFF0000;
+    _lightCycleColours[1] = 0xFFff2600;
+    _lightCycleColours[2] = 0xFFFF0000;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 1000;
+    _lightCycleBlendAmount = 20;
+    _vibrationCycleDuration = 1500;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 5;
+        _vibrationSettings[i].Values[0].Start = 4095;
+        _vibrationSettings[i].Values[0].End = 4095;
+        _vibrationSettings[i].Values[0].Duration = 200;
+        _vibrationSettings[i].Values[1].Start = 0;
+        _vibrationSettings[i].Values[1].End = 0;
+        _vibrationSettings[i].Values[1].Duration = 200;
+        _vibrationSettings[i].Values[2].Start = 4095;
+        _vibrationSettings[i].Values[2].End = 4095;
+        _vibrationSettings[i].Values[2].Duration = 400;
+        _vibrationSettings[i].Values[3].Start = 0;
+        _vibrationSettings[i].Values[3].End = 0;
+        _vibrationSettings[i].Values[3].Duration = 200;
+        _vibrationSettings[i].Values[4].Start = 4095;
+        _vibrationSettings[i].Values[4].End = 0;
+        _vibrationSettings[i].Values[4].Duration = 500;
+    }    
+  }
+
+  // Set loops to immediately process
+  _vibrationLoopLastTime = millis();
+  _vibrationCycleCurrentOffsetTime = 0;
+  _lightCycleCurrentOffsetTime = 0;
+  Serial.println(F("State toggling complete"));
 }
 
 void bluetoothLightCommand() {
@@ -321,6 +465,7 @@ void bluetoothVibrateCommand() {
   Serial.println(F("Loaded new vibration settings"));
   _vibrationLoopLastTime = millis();
   _vibrationCycleCurrentOffsetTime = 0;
+  _isVibrationEnabled = true;
 }
 
 uint16_t shortFromDataBuffer(int offset) {

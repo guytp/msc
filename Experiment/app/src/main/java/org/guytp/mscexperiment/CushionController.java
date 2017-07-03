@@ -119,13 +119,19 @@ public class CushionController {
         if (_bluetoothOutputStream == null)
             return;
         try {
-            byte[] bytes = new byte[2];
-            bytes[0] = 0x03;
+            byte[] bytes = new byte[3];
+            bytes[0] = 0x53;
             bytes[1] = state;
-            _bluetoothOutputStream.write(bytes);
+            bytes[2] = '\n';
+            for (int i = 0; i < 3; i++) {
+                _bluetoothOutputStream.write(bytes[i]);
+                Thread.sleep(10);
+            }
         } catch (IOException e) {
             displayCriticalMessage("Error sending data to cushion\r\n" + e.getMessage(), false);
             return;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

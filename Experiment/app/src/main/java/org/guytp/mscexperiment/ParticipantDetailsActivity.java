@@ -22,8 +22,8 @@ public class ParticipantDetailsActivity extends KioskActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_details);
 
-        // Attempt to get a handle to bluetooth
-        CushionController.getInstance(this);
+        // Attempt to get a handle to bluetooth and switch off
+        CushionController.getInstance(this).off();
 
         // Setup UI components
         Date date = new Date();

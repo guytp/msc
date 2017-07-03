@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Phase1ExperimentActivity extends KioskActivity {
-    private final double _stateDuration = 20;
+    private final double _stateDuration = 1;
 
     private final double _firstSecondPause = 5;
 
@@ -57,7 +57,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
                 newStates[i] = _cushionStates[i];
             _cushionStates = newStates;
         }
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < _cushionStates.length; i++)
             ExperimentData.getInstance().addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance(this);
 
