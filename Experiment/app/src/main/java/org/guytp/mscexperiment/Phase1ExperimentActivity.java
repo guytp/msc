@@ -9,11 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Phase1ExperimentActivity extends KioskActivity {
-    private final double _stateDuration = 10;
 
-    private final double _firstSecondPause = 5;
+    public static double _stateDuration = 10;
 
-    private final int _maximumStates = 30;
+    public static double _firstSecondPause = 5;
+
+    public static int _maximumStates = 30;
 
 
     private CushionState[] _cushionStates;

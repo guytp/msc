@@ -1,10 +1,5 @@
 Experiment
-	Admin mode:
-		"Quick mode"
-		Email data
-		Jump to Phase
-		New participant
-		Exit app
+	Write/Update json to disk regularly
+	Email data from admin mode
 	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
 	Toggling out / back to app restores doesn't crash or change where it is
-	Write/Update json to disk regularly

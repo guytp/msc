@@ -12,9 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ParticipantDetailsActivity"
+            android:name="org.guytp.mscexperiment.ParticipantDetailsActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="org.guytp.mscexperiment.ParticipantDetailsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".IntroWelcomeActivity"
@@ -29,15 +37,15 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Phase1IntroductionActivity"
+            android:name="org.guytp.mscexperiment.Phase1IntroductionActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="org.guytp.mscexperiment.Phase1IntroductionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            </activity>
+        </activity>
         <activity
             android:name=".Phase1ExperimentActivity"
             android:noHistory="true"
@@ -47,9 +55,14 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Phase2IntroductionActivity"
+            android:name="org.guytp.mscexperiment.Phase2IntroductionActivity"
             android:noHistory="true"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="org.guytp.mscexperiment.Phase2IntroductionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Phase2ExperimentActivity"
             android:noHistory="true"
@@ -59,9 +72,14 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Phase3IntroductionActivity"
+            android:name="org.guytp.mscexperiment.Phase3IntroductionActivity"
             android:noHistory="true"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="org.guytp.mscexperiment.Phase3IntroductionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Phase3ExperimentActivity"
             android:noHistory="true"
