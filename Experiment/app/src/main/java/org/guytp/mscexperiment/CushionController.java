@@ -7,9 +7,12 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.UUID;
 
 public class CushionController {
@@ -20,6 +23,7 @@ public class CushionController {
     private BluetoothDevice _bluetoothDevice;
     private BluetoothSocket _bluetoothSocket;
     private OutputStream _bluetoothOutputStream;
+    private InputStream _bluetoothInputStream;
 
     private CushionController(Activity context) {
         // Store context
@@ -57,8 +61,13 @@ public class CushionController {
         try {
             _bluetoothSocket.connect();
             _bluetoothOutputStream = _bluetoothSocket.getOutputStream();
+            _bluetoothInputStream = _bluetoothSocket.getInputStream();
             if (_bluetoothOutputStream == null) {
-                displayCriticalMessage("Unable to obtain bluetooth stream");
+                displayCriticalMessage("Unable to obtain bluetooth output stream");
+                return;
+            }
+            if (_bluetoothInputStream == null) {
+                displayCriticalMessage("Unable to obtain bluetooth input stream");
                 return;
             }
         } catch (IOException e) {
@@ -116,16 +125,41 @@ public class CushionController {
     }
 
     private void sendState(byte state) {
-        if (_bluetoothOutputStream == null)
+        if (_bluetoothOutputStream == null || _bluetoothInputStream == null)
             return;
         try {
-            byte[] bytes = new byte[3];
-            bytes[0] = 0x53;
-            bytes[1] = state;
-            bytes[2] = '\n';
-            for (int i = 0; i < 3; i++) {
-                _bluetoothOutputStream.write(bytes[i]);
-                Thread.sleep(10);
+            for (int attempt = 0; attempt < 5; attempt++) {
+
+                byte[] bytes = new byte[3];
+                bytes[0] = 0x53;
+                bytes[1] = state;
+                bytes[2] = '\n';
+                for (int i = 0; i < 3; i++) {
+                    _bluetoothOutputStream.write(bytes[i]);
+                    Thread.sleep(10);
+                }
+
+                // Wait for data for up to 100ms
+                Date startWait = new Date();
+                while (_bluetoothInputStream.available() < 1) {
+                    Date now = new Date();
+                    long millis = (now.getTime()-startWait.getTime());
+                    if (millis > 500)
+                        break;
+                    Thread.sleep(10);
+                }
+
+                Boolean hasRead = false;
+                byte lastRead = 0;
+                if (_bluetoothInputStream.available() > 0) {
+                    hasRead = true;
+                    while (_bluetoothInputStream.available() > 0) {
+                        lastRead = (byte)_bluetoothInputStream.read();
+                    }
+                }
+                if (hasRead && lastRead == 1)
+                    break;
+                Log.e("MscBluetooth", "Error - retrying send");
             }
         } catch (IOException e) {
             displayCriticalMessage("Error sending data to cushion\r\n" + e.getMessage(), false);

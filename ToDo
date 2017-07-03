@@ -1,5 +1,4 @@
 Experiment
-	Comms confirm (Android repeats command if not received)
 	Admin mode:
 		"Quick mode"
 		Email data
@@ -7,6 +6,5 @@ Experiment
 		New participant
 		Exit app
 	Kiosk Mode: http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
-	Toggling out / bacl to app restores doesn't crash or change where it is
+	Toggling out / back to app restores doesn't crash or change where it is
 	Write/Update json to disk regularly
-	Get data off it
