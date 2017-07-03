@@ -115,4 +115,8 @@ public enum CushionState {
                 return "Angry";
         }
     }
+
+    public int rawValue() {
+        return _state;
+    }
 }

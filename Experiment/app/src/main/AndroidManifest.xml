@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.guytp.mscexperiment">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,43 +21,60 @@
         </activity>
         <activity
             android:name=".IntroWelcomeActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".IntroDemographicsActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".IntroPanasActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase1IntroductionActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase1ExperimentActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase1CompleteActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase2IntroductionActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase2ExperimentActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase2CompleteActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase3IntroductionActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Phase3ExperimentActivity"
-            android:noHistory="true" />
-        <activity android:name=".Phase3HoldCushionActivity"
-            android:noHistory="true" />
-        <activity android:name=".OutroPanasActivity"
-            android:noHistory="true" />
-        <activity android:name=".OutroCompletedActivity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Phase3HoldCushionActivity"
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".OutroPanasActivity"
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".OutroCompletedActivity"
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

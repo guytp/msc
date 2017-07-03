@@ -89,7 +89,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         }
         for (int i = 0; i < _cushionStates.length; i++)
             ExperimentData.getInstance().addData("Phase2Experiment.State" + (i + 1), _cushionStates[i].toString());
-        _cushionController = CushionController.getInstance();
+        _cushionController = CushionController.getInstance(this);
 
         // Hide answering UI and show first question
         _answerLayout.setVisibility(View.GONE);
@@ -143,7 +143,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
         // If this is the last state move on to complete activity
         if (_nextStateToShow == _cushionStates.length) {
-            CushionController.getInstance().off();
+            CushionController.getInstance(this).off();
             ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Finish");
             startActivity(new Intent(Phase2ExperimentActivity.this, Phase2CompleteActivity.class));
             return;

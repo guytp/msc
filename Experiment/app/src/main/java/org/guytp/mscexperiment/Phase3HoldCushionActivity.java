@@ -33,7 +33,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
             state = CushionState.Sad;
         ExperimentData.getInstance().addData("Phase3Cushion.State.Chosen", chosenStateType);
         ExperimentData.getInstance().addData("Phase3Cushion.State.DisplayAs", stateWordToUse);
-        CushionController.getInstance().setState(state);
+        CushionController.getInstance(this).setState(state);
 
         // Start a timer to move to the next screen
         _timer = new Handler();
@@ -45,7 +45,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
 
     private void transitionAway() {
         // Turn cushion off
-        CushionController.getInstance().off();
+        CushionController.getInstance(this).off();
 
         // Log this and transition away to final PANAS questionnaire
         ExperimentData.getInstance().addTimeMarker("Phase3Cushion", "Finish");

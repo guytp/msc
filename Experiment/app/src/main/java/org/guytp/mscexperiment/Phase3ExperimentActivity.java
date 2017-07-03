@@ -79,7 +79,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _nextButton.setEnabled(false);
 
         // Turn off cushion
-        CushionController.getInstance().off();
+        CushionController.getInstance(this).off();
 
         // Update counters
         _nextWord++;
@@ -104,7 +104,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _selectedState = state;
 
         // Get the cushion to change to this state
-        CushionController.getInstance().setState(state);
+        CushionController.getInstance(this).setState(state);
 
         // Log which one has been selected
         ExperimentData.getInstance().addData("Phase3Experiment.Word" + _nextWord + ".Selection" + _selectionsForWord, state.toString());
@@ -124,7 +124,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
 
         // If we're at end then transition to Phase3
         if (_nextWord == _emotionWords.length) {
-            CushionController.getInstance().off();
+            CushionController.getInstance(this).off();
             ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Finish");
             startActivity(new Intent(Phase3ExperimentActivity.this, Phase3HoldCushionActivity.class));
             return;

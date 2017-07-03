@@ -59,7 +59,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         }
         for (int i = 0; i < 20; i++)
             ExperimentData.getInstance().addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
-        _cushionController = CushionController.getInstance();
+        _cushionController = CushionController.getInstance(this);
 
         // Store the runnables used for setting a state and turning off
         _displayStateRunnable = new Runnable() { @Override public void run() { displayStateRunnable(); } };
@@ -128,7 +128,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         }
 
         // If this is the end add marker and transition
-        CushionController.getInstance().off();
+        CushionController.getInstance(this).off();
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment", "Finish");
         startActivity(new Intent(Phase1ExperimentActivity.this, Phase1CompleteActivity.class));
     }
