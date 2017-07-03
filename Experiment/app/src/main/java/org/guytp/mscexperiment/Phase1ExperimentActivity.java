@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Phase1ExperimentActivity extends KioskActivity {
-    private final double _stateDuration = 1;
+    private final double _stateDuration = 10;
 
     private final double _firstSecondPause = 5;
 
