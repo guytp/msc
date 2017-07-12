@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
@@ -24,10 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/stateOnLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:padding="50dp"
                     android:text="Please wait whilst this phase of the experiment starts..."
@@ -43,14 +44,14 @@
                 <TextView
                     android:id="@+id/questionLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:padding="50dp"
                     android:textSize="32sp" />
 
                 <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -75,14 +76,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="150dp"
-                    android:progressDrawable="@drawable/progress_fill"
                     android:max="200"
                     android:progress="100"
+                    android:progressDrawable="@drawable/progress_fill"
                     android:thumb="@drawable/thumb_image" />
 
                 <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -106,16 +107,16 @@
                     style="@style/tallerBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:progressDrawable="@drawable/progress_fill"
                     android:max="200"
                     android:progress="100"
+                    android:progressDrawable="@drawable/progress_fill"
                     android:thumb="@drawable/thumb_image" />
 
                 <Button
                     android:id="@+id/nextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="120dp"
                     android:onClick="onNextPress"
                     android:padding="30dp"
                     android:text="Next"

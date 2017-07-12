@@ -11,8 +11,8 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
@@ -52,7 +52,7 @@
                     android:id="@+id/answerButton1"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:gravity="fill_vertical"
                     android:onClick="onAnswerButtonPress"
                     android:padding="10dp"
@@ -64,7 +64,7 @@
                     android:id="@+id/answerButton2"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:gravity="fill_vertical"
                     android:onClick="onAnswerButtonPress"
                     android:padding="10dp"
@@ -76,7 +76,7 @@
                     android:id="@+id/answerButton3"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:gravity="fill_vertical"
                     android:onClick="onAnswerButtonPress"
                     android:padding="10dp"
@@ -88,7 +88,7 @@
                     android:id="@+id/answerButton4"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:gravity="fill_vertical"
                     android:onClick="onAnswerButtonPress"
                     android:padding="10dp"
@@ -100,7 +100,7 @@
                     android:id="@+id/answerButton5"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:gravity="fill_vertical"
                     android:onClick="onAnswerButtonPress"
                     android:padding="10dp"
@@ -108,12 +108,12 @@
                     android:textAlignment="center"
                     android:textSize="32sp" />
             </LinearLayout>
+
             <Button
                 android:id="@+id/nextButton"
-                android:layout_width="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="150dp"
                 android:enabled="false"
                 android:onClick="onNextPress"
                 android:padding="30dp"

@@ -11,8 +11,8 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
@@ -25,7 +25,7 @@
                 android:gravity="center_horizontal"
                 android:padding="50dp"
                 android:text="Which state corresponds best to the word below?"
-                android:textSize="32sp"/>
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/emotionWordLabel"
@@ -35,7 +35,7 @@
                 android:gravity="center_horizontal"
                 android:padding="50dp"
                 android:text="Word"
-                android:textSize="42sp"/>
+                android:textSize="42sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                     android:id="@+id/stateButton1"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
                     android:text="1"
@@ -57,7 +57,7 @@
                     android:id="@+id/stateButton2"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
                     android:text="2"
@@ -67,7 +67,7 @@
                     android:id="@+id/stateButton3"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
                     android:text="3"
@@ -77,7 +77,7 @@
                     android:id="@+id/stateButton4"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
                     android:text="4"
@@ -88,7 +88,7 @@
                 android:id="@+id/nextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_margin="170dp"
                 android:onClick="onNextPress"
                 android:padding="30dp"
                 android:text="Next"
