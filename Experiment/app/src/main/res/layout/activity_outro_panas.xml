@@ -24,7 +24,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:padding="50dp"
-                android:text="How much do you feel the word below way right now?"
+                android:text="Right now, how much do you feel the word below?"
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
