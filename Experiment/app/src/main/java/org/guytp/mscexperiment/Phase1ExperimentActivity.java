@@ -68,7 +68,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // Schedule execution very soon of first state
         _timer = new Handler();
-        _timer.postDelayed(_displayStateRunnable, 100);
+        displayStateRunnable();
 
         // Mark start of this phase
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment", "Show");
