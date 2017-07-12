@@ -100,8 +100,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _turnOffRunnable = new Runnable() { @Override public void run() { turnOffRunnable(); } };
 
         // Schedule execution very soon of first state
-        _timer = new Handler();
-        _timer.postDelayed(_displayStateRunnable, 100);
+        displayStateRunnable();
 
         // Record the start of this screen
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Show");
