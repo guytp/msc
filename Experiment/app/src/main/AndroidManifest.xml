@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,15 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.guytp.mscexperiment.ParticipantDetailsActivity"
+            android:name=".ParticipantDetailsActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.ParticipantDetailsActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,12 +40,12 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name="org.guytp.mscexperiment.Phase1IntroductionActivity"
+            android:name=".Phase1IntroductionActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
-
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase1IntroductionActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -55,11 +58,12 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name="org.guytp.mscexperiment.Phase2IntroductionActivity"
+            android:name=".Phase2IntroductionActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase2IntroductionActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -72,11 +76,12 @@
             android:noHistory="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name="org.guytp.mscexperiment.Phase3IntroductionActivity"
+            android:name=".Phase3IntroductionActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase3IntroductionActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -96,6 +101,7 @@
             android:name=".OutroCompletedActivity"
             android:noHistory="true"
             android:screenOrientation="landscape" />
+        <activity android:name=".IntroCompleteActivity"></activity>
     </application>
 
 </manifest>
