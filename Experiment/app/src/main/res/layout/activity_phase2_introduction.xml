@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• Move the sliders to represent how you perceived the state you just saw to be, then press Next"
+                android:text="• Move the sliders to represent how you perceived the state you just saw, then press Next"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

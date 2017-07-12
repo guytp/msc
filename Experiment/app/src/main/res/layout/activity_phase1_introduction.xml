@@ -118,7 +118,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• After 10 states you will be given a break and then two more repetitions for 30 total states"
+                android:text="• After 10 states, you will be given a break and then two more repetitions for 30 total states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
