@@ -84,7 +84,7 @@ public abstract class PanasActivity extends KioskActivity {
         _nextButton.setEnabled(true);
 
         // Store the fact we had a button press for this word at the specified time - we can do some analysis over how many selections made and changes then
-        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex] + "." + _selectedValue, _selectedValue);
+        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex] + ".Selection", _selectedValue);
     }
 
     private void resetButtonStates() {
