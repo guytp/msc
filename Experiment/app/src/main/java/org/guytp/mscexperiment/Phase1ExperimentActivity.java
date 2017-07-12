@@ -78,8 +78,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // Set valid state
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
-        // Display in UI
-        _label.setText("This is the next state.");
+        // Display in UI a blank screen
+        _label.setText("");
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
