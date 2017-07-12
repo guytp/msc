@@ -11,8 +11,8 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
@@ -21,22 +21,106 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="The next screen will show a word describing a feeling and have four buttons underneath it.  Each button corresponds to one of the states you've already seen.  You need to select which of the four buttons best represents the word you are shown.  You can press through all four of the buttons as many times as you like before making a decision."
-                android:textSize="32sp"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="Section 4: Feelings"
+                android:textSize="48sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="Press the button below when you are ready to begin."
-                android:textSize="32sp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• Place the cushion in your lap so you can see and feel it, you can hold it however you like"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• You will be shown a word describing a feeling or emotion"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• You need to select which of the four states that you've already encountered best describes that word"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• There are four buttons at the top of the screen - each makes the cushion exhibit one of these states"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• You can click these &quot;play&quot; buttons as many times as you want for each word"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• When you are happy with your choice confirm it with the buttons underneath then press Next"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• You will have to do this for 20 words in total"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• When you are ready, press Begin"
+                android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -44,7 +128,7 @@
                 android:id="@+id/beginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="102dp"
                 android:onClick="onBeginPress"
                 android:padding="30dp"
                 android:text="Begin"

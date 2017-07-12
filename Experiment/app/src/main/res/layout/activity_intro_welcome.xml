@@ -11,8 +11,8 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
@@ -20,37 +20,83 @@
 
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="Thank you for taking part in this research."
-                android:textSize="32sp"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="Section 1: Questionnaire"
+                android:textSize="48sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
-
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="The whole of this experiment will be done on this tablet - you just need to select the answers on-screen."
-                android:textSize="32sp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• Thank you for taking part in this research"
+                android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
-
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="We'll start with a few basic questions.  When you're ready to start press the button below."
-                android:textSize="32sp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• The whole of this experiment will be done on this tablet"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• You will be asked some questions"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• Select the answer on-screen and then press Next"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• The questions will cover demographics and your current mood"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• When you are ready, press Begin"
+                android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -58,11 +104,11 @@
                 android:id="@+id/beginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="210dp"
                 android:onClick="onBeginPress"
                 android:padding="30dp"
                 android:text="Begin"
                 android:textSize="52sp" />
-    </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
