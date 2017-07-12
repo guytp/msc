@@ -89,6 +89,7 @@ public class AdminMenu extends RelativeLayout {
             Phase1ExperimentActivity._offDelay = 2;
             Phase2ExperimentActivity._stateDuration = 10;
             Phase2ExperimentActivity._maximumStates = 20;
+            Phase2ExperimentActivity._offDelay = 2;
             _timeButton.setText("Time: Quick");
         } else {
             Phase1ExperimentActivity._offDelay = 0.5;
@@ -96,6 +97,7 @@ public class AdminMenu extends RelativeLayout {
             Phase1ExperimentActivity._firstSecondPause = 1;
             Phase2ExperimentActivity._stateDuration = 1;
             Phase2ExperimentActivity._maximumStates = 10;
+            Phase2ExperimentActivity._offDelay = 0.5;
             _timeButton.setText("Time: Normal");
         }
         ExperimentData.getInstance().addTimeMarker("AdminAction", "ToggleTime-" + (isQuickMode() ? "Quick" : "Normal"));

@@ -15,6 +15,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     public static int _maximumStates = 20;
 
+    public static double _offDelay = 2;
 
     private CushionController _cushionController;
 
@@ -32,7 +33,9 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private Handler _timer;
 
+    private Runnable _displayStateRunnable;
     private Runnable _turnOffRunnable;
+    private Runnable _turnOffRunnableCompletion;
 
     private TextView _questionLabel;
 
@@ -70,22 +73,30 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _stateOnLayout.setVisibility(View.VISIBLE);
 
         // Store the runnables used for setting a state and turning off
+        _displayStateRunnable = new Runnable() { @Override public void run() { displayStateRunnable(); } };
         _turnOffRunnable = new Runnable() { @Override public void run() { turnOffRunnable(); } };
+        _turnOffRunnableCompletion = new Runnable() { @Override public void run() { turnOffRunnableCompletion(); } };
         _timer = new Handler();
 
         // Schedule execution very soon of first state
-        displayStateRunnable();
+        preStatePauseRunnable();
 
         // Record the start of this screen
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Show");
+    }
+
+    private void preStatePauseRunnable() {
+        // Display in UI - we want a blank screen
+        _stateOnLabel.setText("");
+
+        // Wait 2s before we start the state
+        _timer.postDelayed(_displayStateRunnable, (int)(_offDelay * 1000));
     }
 
     private void displayStateRunnable() {
         // Set valid state
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
-        // Display in UI
-        _stateOnLabel.setText("This is the next state.");
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
@@ -100,6 +111,11 @@ public class Phase2ExperimentActivity extends KioskActivity {
         // Increment next state to show
         _nextStateToShow++;
 
+        // Trigger to complete turn off in 2 seconds before we begin next state
+        _timer.postDelayed(_turnOffRunnableCompletion, (int)(_offDelay * 1000));
+    }
+
+    private void turnOffRunnableCompletion() {
         // Transition to answer phase
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _questionLabel.setText("Please move the circles below to indicate how much energy you thought the state had and how pleasant it was.  Once you're done press the Next button.");
@@ -124,8 +140,8 @@ public class Phase2ExperimentActivity extends KioskActivity {
         // Hide the answer UI and start the next state along with a timer to turn it off
         _answerLayout.setVisibility(View.GONE);
         _stateOnLayout.setVisibility(View.VISIBLE);
-        displayStateRunnable();
         _sliderPleasantness.setProgress(100);
         _sliderEnergy.setProgress(100);
+        preStatePauseRunnable();
     }
 }
