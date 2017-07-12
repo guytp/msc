@@ -75,30 +75,23 @@ public enum CushionState {
         return states;
     }
 
-    public static CushionState[] generateRandomStates(int minimumPerState, int minimumOverall, double percentageChangeSameState) {
-        int[] stateCounts = new int[4];
+    public static CushionState[] generateRandomStates(int totalRequired, double percentageChangeSameState) {
         List stateList = new ArrayList();
-        int totalCount = 0;
         while (true) {
             // If this is not first one we're adding check if we should duplicate the last
-            if (totalCount > 0 && _rand.nextDouble() <= percentageChangeSameState)
-                stateList.add(stateList.get(totalCount - 1));
+            if (stateList.size() > 0 && _rand.nextDouble() < percentageChangeSameState)
+                stateList.add(stateList.get(stateList.size() - 1));
 
             // Otherwise add a randomly generated state
             else
-                stateList.add(getCushionState(_rand.nextInt((4 - 1) + 1) + 1));
-
-            // Increment counts
-            int thisValue = ((CushionState)stateList.get(totalCount))._state;
-            stateCounts[thisValue - 1]++;
-            totalCount++;
+                stateList.add(getCushionState((_rand.nextInt((400 - 1) + 1) + 1) / 100));
 
             // Are we in a good position to break?
-            if (totalCount >= minimumOverall && stateCounts[0] >= minimumPerState && stateCounts[1] >= minimumPerState && stateCounts[2] >= minimumPerState && stateCounts[3] >= minimumPerState)
+            if (stateList.size() == totalRequired)
                 break;
         }
-        CushionState[] states = new CushionState[totalCount];
-        for (int i = 0; i < totalCount; i++)
+        CushionState[] states = new CushionState[stateList.size()];
+        for (int i = 0; i < stateList.size(); i++)
             states[i] = (CushionState)stateList.get(i);
         return states;
     }
