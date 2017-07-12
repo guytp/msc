@@ -1,7 +1,9 @@
 package org.guytp.mscexperiment;
 
 import android.content.Context;
+import android.os.Environment;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +59,9 @@ public class ExperimentData {
     }
     public void writeToDisk() {
         String text = asString();
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), filename());
         try {
-            FileOutputStream outputStream = _context.openFileOutput(filename(), Context.MODE_WORLD_READABLE);
+            FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(text.getBytes());
             outputStream.close();
         } catch (Exception e) {

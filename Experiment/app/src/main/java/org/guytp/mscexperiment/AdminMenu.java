@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -115,12 +116,11 @@ public class AdminMenu extends RelativeLayout {
     }
 
     private void emailData() {
-
-        File tempFBDataFile  = new File(getContext().getFilesDir(), ExperimentData.getInstance(getContext()).filename());
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), ExperimentData.getInstance(getContext()).filename());
         Intent emailClient = new Intent(Intent.ACTION_SENDTO, Uri.parse("Guy.Powell@brl.ac.uk"));
         emailClient.putExtra(Intent.EXTRA_SUBJECT, "Participant Record JSON: " + ExperimentData.getInstance(getContext()).filename());
         emailClient.putExtra(Intent.EXTRA_TEXT, ExperimentData.getInstance(getContext()).asString());
-        emailClient.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFBDataFile));//attachment
+        emailClient.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         Intent emailChooser = Intent.createChooser(emailClient, "select email client");
         getContext().startActivity(emailChooser);
     }
