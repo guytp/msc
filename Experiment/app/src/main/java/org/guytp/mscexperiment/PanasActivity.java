@@ -40,7 +40,7 @@ public abstract class PanasActivity extends KioskActivity {
         resetButtonStates();
 
         // Signify start of first question
-        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Show");
+        ExperimentData.getInstance(this).addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Show");
     }
 
     public void onNextPress(View v) {
@@ -54,10 +54,10 @@ public abstract class PanasActivity extends KioskActivity {
                     .show();
             return;
         }
-        ExperimentData.getInstance().addData(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex], _selectedValue);
+        ExperimentData.getInstance(this).addData(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex], _selectedValue);
 
         // Mark this question completed for timing
-        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Finish");
+        ExperimentData.getInstance(this).addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Finish");
 
         // Move to next screen if we're done with questions
         if (_currentEmotionWordIndex == _emotionWords.length - 1)
@@ -71,7 +71,7 @@ public abstract class PanasActivity extends KioskActivity {
         _emotionWordLabel.setText(_emotionWords[_currentEmotionWordIndex]);
         _nextButton.setEnabled(false);
         resetButtonStates();
-        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Show");
+        ExperimentData.getInstance(this).addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Show");
     }
 
     public void onAnswerButtonPress(View v) {
@@ -84,7 +84,7 @@ public abstract class PanasActivity extends KioskActivity {
         _nextButton.setEnabled(true);
 
         // Store the fact we had a button press for this word at the specified time - we can do some analysis over how many selections made and changes then
-        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex] + ".Selection", _selectedValue);
+        ExperimentData.getInstance(this).addTimeMarker(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex] + ".Selection", _selectedValue);
     }
 
     private void resetButtonStates() {

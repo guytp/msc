@@ -51,7 +51,7 @@ public class AdminMenu extends RelativeLayout {
         _emailDataButton = (Button)findViewById(R.id.emailDataButton);
         _exitButton = (Button)findViewById(R.id.exitButton);
         _exitButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
-            ExperimentData.getInstance().addTimeMarker("AdminAction", "Exit");
+            ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "Exit");
             _dialog.dismiss();
             _activity.finish();
         } });
@@ -68,14 +68,14 @@ public class AdminMenu extends RelativeLayout {
 
     private void onNewParticipantButton() {
         _dialog.dismiss();
-        ExperimentData.getInstance().addTimeMarker("AdminAction", "NewParticipant");
+        ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "NewParticipant");
         Intent intent = new Intent();
         intent.setAction("org.guytp.mscexperiment.ParticipantDetailsActivity");
         _activity.startActivity(intent);
     }
     private void onPhaseButton(int phase) {
         _dialog.dismiss();
-        ExperimentData.getInstance().addTimeMarker("AdminAction", "Phase" + phase);
+        ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "Phase" + phase);
         Intent intent = new Intent();
         intent.setAction("org.guytp.mscexperiment.Phase" + phase + "IntroductionActivity");
         _activity.startActivity(intent);
@@ -106,7 +106,7 @@ public class AdminMenu extends RelativeLayout {
             Phase3HoldCushionActivity._fadeDuration = 1;
             _timeButton.setText("Time: Normal");
         }
-        ExperimentData.getInstance().addTimeMarker("AdminAction", "ToggleTime-" + (isQuickMode() ? "Quick" : "Normal"));
+        ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "ToggleTime-" + (isQuickMode() ? "Quick" : "Normal"));
         _dialog.dismiss();
     }
 
@@ -114,8 +114,8 @@ public class AdminMenu extends RelativeLayout {
         return Phase2ExperimentActivity._stateDuration < 10 && Phase1ExperimentActivity._stateDuration < 10;
     }
 
-    public static void displayAdminPopup(Activity activity) {
-        ExperimentData.getInstance().addTimeMarker("AdminAction", "PopupShow");
+    public static void displayAdminPopup(final Activity activity) {
+        ExperimentData.getInstance(activity).addTimeMarker("AdminAction", "PopupShow");
         final AdminMenu menu = new AdminMenu(activity);
         final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setTitle("Admin Options")
@@ -123,7 +123,7 @@ public class AdminMenu extends RelativeLayout {
                 .setNeutralButton("Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ExperimentData.getInstance().addTimeMarker("AdminAction", "PopupClose");
+                        ExperimentData.getInstance(activity).addTimeMarker("AdminAction", "PopupClose");
                     }
                 })
                 .setView(menu)

@@ -62,7 +62,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
             _cushionStates = newStates;
         }
         for (int i = 0; i < _cushionStates.length; i++)
-            ExperimentData.getInstance().addData("Phase2Experiment.State" + (i + 1), _cushionStates[i].toString());
+            ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance(this);
 
         // Hide answering UI and show first question
@@ -79,7 +79,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         preStatePauseRunnable();
 
         // Record the start of this screen
-        ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment", "Show");
     }
 
     private void preStatePauseRunnable() {
@@ -94,7 +94,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         // Set valid state
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
-        ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "On");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
         _timer.postDelayed(_turnOffRunnable, (int)(_stateDuration * 1000));
@@ -103,7 +103,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
     private void turnOffRunnable() {
         // Turn off
         _cushionController.off();
-        ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "Off");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "Off");
 
         // Increment next state to show
         _nextStateToShow++;
@@ -114,21 +114,21 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private void turnOffRunnableCompletion() {
         // Transition to answer phase
-        ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _answerLayout.setVisibility(View.VISIBLE);
         _stateOnLayout.setVisibility(View.GONE);
     }
 
     public void onNextPress(View v) {
         // Record the participant's answer
-        ExperimentData.getInstance().addData("Phase2Experiment.State" + (_nextStateToShow) + ".State", _cushionStates[_nextStateToShow - 1].toString());
-        ExperimentData.getInstance().addData("Phase2Experiment.State" + (_nextStateToShow) + ".Energy", Integer.toString(_sliderEnergy.getProgress() - 100));
-        ExperimentData.getInstance().addData("Phase2Experiment.State" + (_nextStateToShow) + ".Pleasantness", Integer.toString(_sliderPleasantness.getProgress() - 100));
+        ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".State", _cushionStates[_nextStateToShow - 1].toString());
+        ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".Energy", Integer.toString(_sliderEnergy.getProgress() - 100));
+        ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".Pleasantness", Integer.toString(_sliderPleasantness.getProgress() - 100));
 
         // If this is the last state move on to complete activity
         if (_nextStateToShow == _cushionStates.length) {
             CushionController.getInstance(this).off();
-            ExperimentData.getInstance().addTimeMarker("Phase2Experiment", "Finish");
+            ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment", "Finish");
             startActivity(new Intent(Phase2ExperimentActivity.this, Phase2CompleteActivity.class));
             return;
         }

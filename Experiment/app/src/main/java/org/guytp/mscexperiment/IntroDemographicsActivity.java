@@ -106,27 +106,27 @@ public class IntroDemographicsActivity extends KioskActivity {
         setupButtonArray(_researchStudyButtons);
 
         // Signify start of first question
-        ExperimentData.getInstance().addTimeMarker("IntroDemographics-1", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("IntroDemographics-1", "Show");
     }
 
     public void onNextPress(View v) {
         // Store data from last view and ensure valid data entry
         if (_currentQuestionIndex == 0)
-            ExperimentData.getInstance().addData("Demographics.Age", _selectedAge);
+            ExperimentData.getInstance(this).addData("Demographics.Age", _selectedAge);
         else if (_currentQuestionIndex == 1)
-            ExperimentData.getInstance().addData("Demographics.Gender", _selectedGender);
+            ExperimentData.getInstance(this).addData("Demographics.Gender", _selectedGender);
         else if (_currentQuestionIndex == 2)
-            ExperimentData.getInstance().addData("Demographics.Ethnicity", _selectedEthnicity);
+            ExperimentData.getInstance(this).addData("Demographics.Ethnicity", _selectedEthnicity);
         else if (_currentQuestionIndex == 3)
-            ExperimentData.getInstance().addData("Demographics.Education", _selectedEducation);
+            ExperimentData.getInstance(this).addData("Demographics.Education", _selectedEducation);
         else if (_currentQuestionIndex == 4) {
-            ExperimentData.getInstance().addData("Demographics.ResearchStudyWork.Count", Integer.toString(_selectedStudyAreas.size()));
+            ExperimentData.getInstance(this).addData("Demographics.ResearchStudyWork.Count", Integer.toString(_selectedStudyAreas.size()));
             for (int i = 0; i < _selectedStudyAreas.size(); i++)
-                ExperimentData.getInstance().addData("Demographics.ResearchStudyWork." + Integer.toString(i + 1), _selectedStudyAreas.get(i));
+                ExperimentData.getInstance(this).addData("Demographics.ResearchStudyWork." + Integer.toString(i + 1), _selectedStudyAreas.get(i));
         }
 
         // Mark this question completed for timing
-        ExperimentData.getInstance().addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Finish");
 
         // Move to next screen if we're done with questions
         if (_currentQuestionIndex == _totalQuestions - 1)
@@ -140,35 +140,35 @@ public class IntroDemographicsActivity extends KioskActivity {
         _currentQuestionIndex++;
         _views[_currentQuestionIndex].setVisibility(View.VISIBLE);
         _nextButton.setEnabled(false);
-        ExperimentData.getInstance().addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Show");
+        ExperimentData.getInstance(this).addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Show");
     }
 
     public void onAgeButtonPress(View v) {
         Button b = (Button)v;
         _selectedAge = b.getText().toString();
         setActiveButton(_ageButtons, b);
-        ExperimentData.getInstance().addTimeMarker("Demographics.Age.Selection", _selectedAge);
+        ExperimentData.getInstance(this).addTimeMarker("Demographics.Age.Selection", _selectedAge);
     }
 
     public void onGenderButtonPress(View v) {
         Button b = (Button)v;
         _selectedGender = b.getText().toString();
         setActiveButton(_genderButtons, b);
-        ExperimentData.getInstance().addTimeMarker("Demographics.Gender.Selection", _selectedGender);
+        ExperimentData.getInstance(this).addTimeMarker("Demographics.Gender.Selection", _selectedGender);
     }
 
     public void onEthnicityButtonPress(View v) {
         Button b = (Button)v;
         _selectedEthnicity = b.getText().toString();
         setActiveButton(_ethnicityButtons, b);
-        ExperimentData.getInstance().addTimeMarker("Demographics.Ethnicity.Selection", _selectedEthnicity);
+        ExperimentData.getInstance(this).addTimeMarker("Demographics.Ethnicity.Selection", _selectedEthnicity);
     }
 
     public void onEducationButtonPress(View v) {
         Button b = (Button)v;
         _selectedEducation = b.getText().toString();
         setActiveButton(_educationButtons, b);
-        ExperimentData.getInstance().addTimeMarker("Demographics.Education.Selection", _selectedEducation);
+        ExperimentData.getInstance(this).addTimeMarker("Demographics.Education.Selection", _selectedEducation);
     }
 
     public void onResearchStudyButtonPress(View v) {
@@ -197,7 +197,7 @@ public class IntroDemographicsActivity extends KioskActivity {
         // Update UI to match
         b.setBackgroundColor(newState? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
         _nextButton.setEnabled(_selectedStudyAreas.size() > 0);
-        ExperimentData.getInstance().addTimeMarker("Demographics.ResearchStudyWork.Selection." + (newState ? "On" : "Off"), studyArea);
+        ExperimentData.getInstance(this).addTimeMarker("Demographics.ResearchStudyWork.Selection." + (newState ? "On" : "Off"), studyArea);
     }
 
     private void setupButtonArray(Button[] buttons) {

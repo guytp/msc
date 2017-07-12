@@ -12,7 +12,7 @@ public class OutroCompletedActivity extends KioskActivity {
         setContentView(R.layout.activity_outro_completed);
 
         // Log this
-        ExperimentData.getInstance().addTimeMarker("OutroCompleted", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("OutroCompleted", "Show");
 
         // Terminate bluetooth gracefully
         CushionController.getInstance(this).terminate();

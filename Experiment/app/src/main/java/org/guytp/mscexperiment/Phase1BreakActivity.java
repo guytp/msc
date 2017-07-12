@@ -10,11 +10,11 @@ public class Phase1BreakActivity extends KioskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phase1_break);
-        ExperimentData.getInstance().addTimeMarker("Phase1Break", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Break", "Show");
     }
 
     public void onContinuePress(View v) {
-        ExperimentData.getInstance().addTimeMarker("Phase1Break", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Break", "Finish");
         startActivity(new Intent(Phase1BreakActivity.this, Phase1ExperimentActivity.class));
     }
 }

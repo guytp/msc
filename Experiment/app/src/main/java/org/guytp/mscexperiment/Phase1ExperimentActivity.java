@@ -62,7 +62,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // handler to cushion controller
         _cushionStates = CushionState.generateRandomStates(_maximumStates, 0.23);
         for (int i = 0; i < _cushionStates.length; i++)
-            ExperimentData.getInstance().addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
+            ExperimentData.getInstance(this).addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance(this);
 
         // Store the runnables used for setting a state and turning off
@@ -76,7 +76,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         displayStateRunnable();
 
         // Mark start of this phase
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment", "Show");
     }
 
     private void displayStateRunnable() {
@@ -92,7 +92,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
         // Log the time we show the state
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "On");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
         _timer.postDelayed(_turnOffRunnable, (int)(_stateDuration * 1000));
@@ -101,7 +101,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
     private void turnOffRunnable() {
         // Turn off
         _cushionController.off();
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "Off");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "Off");
 
         // Increment next state to show
         _nextStateToShow++;
@@ -120,7 +120,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         }
 
         // If not the very first one transition to a "same or different phase"
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _label.setText("Was your experience of the last two states the same or different?");
         _sameButton.setVisibility(View.VISIBLE);
         _differentButton.setVisibility(View.VISIBLE);
@@ -130,22 +130,22 @@ public class Phase1ExperimentActivity extends KioskActivity {
         _nextButton.setVisibility(View.VISIBLE);
         _sameButton.setBackgroundColor(v == _sameButton ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
         _differentButton.setBackgroundColor(v == _differentButton ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".Press", _same ? "Same" : "Different");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".Press", _same ? "Same" : "Different");
     }
 
     public void onNextPress(View v) {
         // Record the participant's answer
-        ExperimentData.getInstance().addData("Phase1Experiment.State" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".States", _cushionStates[_nextStateToShow - 2] + " - " + _cushionStates[_nextStateToShow - 1]);
-        ExperimentData.getInstance().addData("Phase1Experiment.State" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".Answer", _same ? "Same" : "Different");
+        ExperimentData.getInstance(this).addData("Phase1Experiment.State" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".States", _cushionStates[_nextStateToShow - 2] + " - " + _cushionStates[_nextStateToShow - 1]);
+        ExperimentData.getInstance(this).addData("Phase1Experiment.State" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".Answer", _same ? "Same" : "Different");
 
         // If we are not on last one then display next state
         if (_nextStateToShow < _cushionStates.length) {
             // Transition to next state
-            ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Finish");
+            ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Finish");
 
             // If we're at a break count then take a break before coming back in
             if (_nextStateToShow % _breakAfter == 0) {
-                ExperimentData.getInstance().addTimeMarker("Phase1Experiment.Break", Integer.toString(_nextStateToShow / _breakAfter));
+                ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.Break", Integer.toString(_nextStateToShow / _breakAfter));
                 startActivity(new Intent(Phase1ExperimentActivity.this, Phase1BreakActivity.class));
                 CushionController.getInstance(this).off();
                 return;
@@ -157,7 +157,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // If this is the end add marker and transition
         CushionController.getInstance(this).off();
-        ExperimentData.getInstance().addTimeMarker("Phase1Experiment", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment", "Finish");
         startActivity(new Intent(Phase1ExperimentActivity.this, Phase1CompleteActivity.class));
     }
 

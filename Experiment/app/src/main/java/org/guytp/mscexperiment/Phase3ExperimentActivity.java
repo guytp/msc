@@ -53,7 +53,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
         // Generate our cushion states in a random order and log them
         _cushionStates = CushionState.randomlyOrderedStates();
         for (int i = 0; i < _cushionStates.length; i++)
-            ExperimentData.getInstance().addData("Phase3Experiment.State" + (i + 1), _cushionStates[i].toString());
+            ExperimentData.getInstance(this).addData("Phase3Experiment.State" + (i + 1), _cushionStates[i].toString());
 
         // Randomise our emotional words with a shuffle
         Random random = new Random();
@@ -67,13 +67,13 @@ public class Phase3ExperimentActivity extends KioskActivity {
 
         // Log our word order in the data set
         for (int i = 0; i < _emotionWords.length; i++)
-            ExperimentData.getInstance().addData("Phase3Experiment.Word" + (i + 1), _emotionWords[i]);
+            ExperimentData.getInstance(this).addData("Phase3Experiment.Word" + (i + 1), _emotionWords[i]);
 
         // Setup for next word
         setupNextWord();
 
         // Setup that phase 3 experiment has started
-        ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment", "Show");
     }
 
     private void setupNextWord() {
@@ -93,7 +93,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _selectionsForWord = 0;
 
         // Log this
-        ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Show");
     }
 
     public void onPlayStateButtonPress(View v) {
@@ -107,7 +107,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
             int buttonNumber = b == _playStateButtons[0] ? 1 : b == _playStateButtons[1] ? 2 : b == _playStateButtons[2] ? 3 : 4;
             CushionState state = _cushionStates[buttonNumber - 1];
             CushionController.getInstance(this).setState(state);
-            ExperimentData.getInstance().addTimeMarker("Phase3Experiment.PlayStateStart", state.toString());
+            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.PlayStateStart", state.toString());
         } else {
             setActiveStateButton(null, _playStateButtons);
             CushionController.getInstance(this).off();
@@ -129,25 +129,25 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _selectedState = state;
 
         // Log which one has been selected
-        ExperimentData.getInstance().addData("Phase3Experiment.Word" + _nextWord + ".Selection" + _selectionsForWord, state.toString());
+        ExperimentData.getInstance(this).addData("Phase3Experiment.Word" + _nextWord + ".Selection" + _selectionsForWord, state.toString());
 
         // If this is calm or angry that has been displayed as a word then store the associated state - this is used by the final part of the
         // experiment to activate one of the two states selected for these words
         if (_emotionWords[_nextWord - 1].equals("Angry"))
-            ExperimentData.getInstance().addData("Phase3Experiment.AngryState", state.toString());
+            ExperimentData.getInstance(this).addData("Phase3Experiment.AngryState", state.toString());
         else if (_emotionWords[_nextWord - 1].equals("Calm"))
-            ExperimentData.getInstance().addData("Phase3Experiment.CalmState", state.toString());
+            ExperimentData.getInstance(this).addData("Phase3Experiment.CalmState", state.toString());
     }
 
     public void onNextPress(View v) {
         // Record the selected state
-        ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Finish");
-        ExperimentData.getInstance().addData("Phase3Experiment.Word" + _nextWord + ".Selection", _selectedState.toString());
+        ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Finish");
+        ExperimentData.getInstance(this).addData("Phase3Experiment.Word" + _nextWord + ".Selection", _selectedState.toString());
         CushionController.getInstance(this).off();
 
         // If we're at end then transition to Phase3
         if (_nextWord == _emotionWords.length) {
-            ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Finish");
+            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment", "Finish");
             startActivity(new Intent(Phase3ExperimentActivity.this, Phase3HoldCushionActivity.class));
             return;
         }

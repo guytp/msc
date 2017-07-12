@@ -11,11 +11,11 @@ public class IntroCompleteActivity extends KioskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_complete);
-        ExperimentData.getInstance().addTimeMarker("IntroComplete", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("IntroComplete", "Show");
     }
 
     public void onContinuePress(View v) {
-        ExperimentData.getInstance().addTimeMarker("IntroComplete", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("IntroComplete", "Finish");
         startActivity(new Intent(IntroCompleteActivity.this, Phase1IntroductionActivity.class));
     }
 }

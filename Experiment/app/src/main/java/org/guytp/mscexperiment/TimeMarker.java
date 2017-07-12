@@ -1,5 +1,7 @@
 package org.guytp.mscexperiment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeMarker {
@@ -11,5 +13,18 @@ public class TimeMarker {
         _category = category;
         _action = action;
         _date = new Date();
+    }
+
+    public String category() {
+        return _category;
+    }
+
+    public String action() {
+        return _action;
+    }
+
+    public String date() {
+        final DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+        return df.format(_date);
     }
 }

@@ -10,11 +10,11 @@ public class Phase1IntroductionActivity extends KioskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phase1_introduction);
-        ExperimentData.getInstance().addTimeMarker("Phase1Introduction", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Introduction", "Show");
     }
 
     public void onBeginPress(View v) {
-        ExperimentData.getInstance().addTimeMarker("Phase1Introduction", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("Phase1Introduction", "Finish");
         Phase1ExperimentActivity.resetNextStateToShow();
         startActivity(new Intent(Phase1IntroductionActivity.this, Phase1ExperimentActivity.class));
     }

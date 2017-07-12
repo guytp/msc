@@ -2,6 +2,7 @@ package org.guytp.mscexperiment;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class ParticipantDetailsActivity extends KioskActivity {
         final String dateFormatted = dateFormat.format(date);
 
         // Confirm to user
+        final Context ctx = this;
         new AlertDialog.Builder(this)
         .setTitle("Begin Session")
         .setMessage("Are you ready to begin the session with the name " + dateFormatted + "?")
@@ -49,7 +51,7 @@ public class ParticipantDetailsActivity extends KioskActivity {
                 {
                     public void onClick(DialogInterface dialog, int which) {
                         // Setup experiment data
-                        ExperimentData.getInstance().setSessionId(dateFormatted);
+                        ExperimentData.getInstance(ctx).setSessionId(dateFormatted);
 
                         // Now show the experiment welcome for the participant
                         startActivity(new Intent(ParticipantDetailsActivity.this, IntroWelcomeActivity.class));

@@ -11,11 +11,11 @@ public class IntroWelcomeActivity extends KioskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_welcome);
-        ExperimentData.getInstance().addTimeMarker("IntroWelcome", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("IntroWelcome", "Show");
     }
 
     public void onBeginPress(View v) {
-        ExperimentData.getInstance().addTimeMarker("IntroWelcome", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("IntroWelcome", "Finish");
         startActivity(new Intent(IntroWelcomeActivity.this, IntroDemographicsActivity.class));
     }
 }

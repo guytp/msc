@@ -30,7 +30,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         // Read out which states the user selected for calm and angry at random with 50% chance
         // of either being used then display this state
         String chosenStateType = new Random().nextDouble() < 0.5 ? "Angry" : "Calm";
-        String stateWordToUse = ExperimentData.getInstance().getData("Phase3Experiment." + chosenStateType + "State");
+        String stateWordToUse = ExperimentData.getInstance(this).getData("Phase3Experiment." + chosenStateType + "State");
         CushionState state;
         if (stateWordToUse.equals("Angry"))
             state = CushionState.Angry;
@@ -40,8 +40,8 @@ public class Phase3HoldCushionActivity extends KioskActivity {
             state = CushionState.Happy;
         else
             state = CushionState.Sad;
-        ExperimentData.getInstance().addData("Phase3Cushion.State.Chosen", chosenStateType);
-        ExperimentData.getInstance().addData("Phase3Cushion.State.DisplayAs", stateWordToUse);
+        ExperimentData.getInstance(this).addData("Phase3Cushion.State.Chosen", chosenStateType);
+        ExperimentData.getInstance(this).addData("Phase3Cushion.State.DisplayAs", stateWordToUse);
         CushionController.getInstance(this).setState(state);
 
         // Start a timer to move to the next screen
@@ -49,7 +49,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         _timer.postDelayed(new Runnable() { @Override public void run() { fadeLabel(); } }, (int)(_fadeAfter * 1000));
 
         // Log this
-        ExperimentData.getInstance().addTimeMarker("Phase3Cushion", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase3Cushion", "Show");
     }
 
     private void transitionAway() {
@@ -57,7 +57,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         CushionController.getInstance(this).off();
 
         // Log this and transition away to final PANAS questionnaire
-        ExperimentData.getInstance().addTimeMarker("Phase3Cushion", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("Phase3Cushion", "Finish");
         startActivity(new Intent(Phase3HoldCushionActivity.this, OutroPanasActivity.class));
     }
 

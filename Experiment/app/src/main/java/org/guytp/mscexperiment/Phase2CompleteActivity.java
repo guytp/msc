@@ -11,10 +11,10 @@ public class Phase2CompleteActivity extends KioskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phase2_complete);
-        ExperimentData.getInstance().addTimeMarker("Phase2Complete", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Complete", "Show");
     }
     public void onContinuePress(View v) {
-        ExperimentData.getInstance().addTimeMarker("Phase2Complete", "Finish");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Complete", "Finish");
         startActivity(new Intent(Phase2CompleteActivity.this, Phase3IntroductionActivity.class));
     }
 }
