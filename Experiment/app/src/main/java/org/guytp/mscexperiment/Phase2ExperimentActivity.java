@@ -37,8 +37,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
     private Runnable _turnOffRunnable;
     private Runnable _turnOffRunnableCompletion;
 
-    private TextView _questionLabel;
-
     private TextView _stateOnLabel;
 
 
@@ -54,7 +52,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _answerLayout = findViewById(R.id.answerLayout);
         _stateOnLayout = findViewById(R.id.stateOnLayout);
         _stateOnLabel = (TextView)findViewById(R.id.stateOnLabel);
-        _questionLabel = (TextView)findViewById(R.id.questionLabel);
 
         // Determine which states we will show
         _cushionStates = CushionState.randomlyOrderedStatesSets(5);
@@ -118,7 +115,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
     private void turnOffRunnableCompletion() {
         // Transition to answer phase
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _questionLabel.setText("Please move the circles below to indicate how the levels of arousal and pleasantness that you perceived in the last state.  Once you're done press the Next button.");
         _answerLayout.setVisibility(View.VISIBLE);
         _stateOnLayout.setVisibility(View.GONE);
     }

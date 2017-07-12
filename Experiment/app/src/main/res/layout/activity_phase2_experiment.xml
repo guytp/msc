@@ -44,6 +44,7 @@
 
                 <TextView
                     android:id="@+id/questionLabel"
+                    android:text="Please move the circles below to indicate how the levels of arousal and pleasantness that you perceived in the last state.  Once you're done press the Next button."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -118,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginTop="120dp"
+                    android:layout_marginTop="45dp"
                     android:onClick="onNextPress"
                     android:paddingBottom="30dp"
                     android:paddingLeft="80dp"
