@@ -52,10 +52,13 @@ public class ExperimentData {
         return null;
     }
 
+    public String filename() {
+        return _uuid.toString() + "_" + _sessionId + ".json";
+    }
     public void writeToDisk() {
         String text = asString();
         try {
-            FileOutputStream outputStream = _context.openFileOutput(_uuid.toString() + "_" + _sessionId + ".json", Context.MODE_PRIVATE);
+            FileOutputStream outputStream = _context.openFileOutput(filename(), Context.MODE_WORLD_READABLE);
             outputStream.write(text.getBytes());
             outputStream.close();
         } catch (Exception e) {

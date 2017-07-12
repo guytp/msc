@@ -5,10 +5,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import java.io.File;
 
 public class AdminMenu extends RelativeLayout {
     private Button _newParticipantButton;
@@ -49,6 +52,7 @@ public class AdminMenu extends RelativeLayout {
         _timeButton = (Button)findViewById(R.id.timeButton);
         _timeButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { toggleTimeMode(); } });
         _emailDataButton = (Button)findViewById(R.id.emailDataButton);
+        _emailDataButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { emailData(); } });
         _exitButton = (Button)findViewById(R.id.exitButton);
         _exitButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
             ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "Exit");
@@ -110,6 +114,17 @@ public class AdminMenu extends RelativeLayout {
         _dialog.dismiss();
     }
 
+    private void emailData() {
+
+        File tempFBDataFile  = new File(getContext().getFilesDir(), ExperimentData.getInstance(getContext()).filename());
+        Intent emailClient = new Intent(Intent.ACTION_SENDTO, Uri.parse("Guy.Powell@brl.ac.uk"));
+        emailClient.putExtra(Intent.EXTRA_SUBJECT, "Participant Record JSON: " + ExperimentData.getInstance(getContext()).filename());
+        emailClient.putExtra(Intent.EXTRA_TEXT, ExperimentData.getInstance(getContext()).asString());
+        emailClient.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFBDataFile));//attachment
+        Intent emailChooser = Intent.createChooser(emailClient, "select email client");
+        getContext().startActivity(emailChooser);
+    }
+
     private Boolean isQuickMode() {
         return Phase2ExperimentActivity._stateDuration < 10 && Phase1ExperimentActivity._stateDuration < 10;
     }
@@ -130,4 +145,6 @@ public class AdminMenu extends RelativeLayout {
                 .show();
         menu.setup(activity, dialog);
     }
+
+
 }
