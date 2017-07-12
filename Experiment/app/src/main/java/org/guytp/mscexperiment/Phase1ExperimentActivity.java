@@ -121,7 +121,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // If not the very first one transition to a "same or different phase"
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _label.setText("Were the last two states the same or different?");
+        _label.setText("Was your experience of the last two states the same or different?");
         _sameButton.setVisibility(View.VISIBLE);
         _differentButton.setVisibility(View.VISIBLE);
     }

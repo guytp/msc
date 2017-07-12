@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will be asked if these provided the same experience"
+                android:text="• You will be asked if your experience of both states was the same"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,7 +95,18 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will then be shown 8 more states and asked if each was the same or different experience as the previous"
+                android:text="• You will then be shown 8 more states and asked if your experience of each was the same as or different to the"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="57dp"
+                android:paddingRight="20dp"
+                android:text="previous state"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
