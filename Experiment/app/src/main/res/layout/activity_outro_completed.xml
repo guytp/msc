@@ -11,21 +11,71 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="We're done!  Thank you for participating in today's experiment.  If you leave the room the faciliator will help you remove your wristband and answer any questions you may have."
-                android:textSize="32sp"/>
+                android:padding="20dp"
+                android:text="Experiment Complete"
+                android:textSize="48sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• Thank you for your participation today"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• The experiment is now complete"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• Please leave the room and the facilitator will meet you and remove your wristband"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="• If you have any questions about the experiment please raise them with the facilitator"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
