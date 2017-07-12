@@ -118,7 +118,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
     private void turnOffRunnableCompletion() {
         // Transition to answer phase
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _questionLabel.setText("Please move the circles below to indicate how much energy you thought the state had and how pleasant it was.  Once you're done press the Next button.");
+        _questionLabel.setText("Please move the circles below to indicate how the levels of arousal and pleasantness that you perceived in the last state.  Once you're done press the Next button.");
         _answerLayout.setVisibility(View.VISIBLE);
         _stateOnLayout.setVisibility(View.GONE);
     }
