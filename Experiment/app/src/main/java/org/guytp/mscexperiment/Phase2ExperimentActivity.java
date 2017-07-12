@@ -112,7 +112,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
         // Display in UI
-        _stateOnLabel.setText("This is the " + Ordinals.values[_nextStateToShow] + " state.");
+        _stateOnLabel.setText("This is the next state.");
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
@@ -129,7 +129,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
         // Transition to answer phase
         ExperimentData.getInstance().addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _questionLabel.setText("You just saw the " + Ordinals.values[_nextStateToShow - 1] + " state.  Please move the circles below to indicate how much energy you thought the state had and how pleasant it was.  Once you're done press the Next button.");
+        _questionLabel.setText("Please move the circles below to indicate how much energy you thought the state had and how pleasant it was.  Once you're done press the Next button.");
         _answerLayout.setVisibility(View.VISIBLE);
         _stateOnLayout.setVisibility(View.GONE);
         _nextButton.setEnabled(false);
