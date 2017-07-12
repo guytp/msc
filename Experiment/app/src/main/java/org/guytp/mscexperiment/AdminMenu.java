@@ -86,7 +86,6 @@ public class AdminMenu extends RelativeLayout {
             // Revert to normal
             Phase1ExperimentActivity._stateDuration = 10;
             Phase1ExperimentActivity._firstSecondPause = 5;
-            Phase1ExperimentActivity._maximumStates = 30;
             Phase1ExperimentActivity._offDelay = 2;
             Phase2ExperimentActivity._stateDuration = 10;
             Phase2ExperimentActivity._maximumStates = 20;
@@ -95,7 +94,6 @@ public class AdminMenu extends RelativeLayout {
             Phase1ExperimentActivity._offDelay = 0.5;
             Phase1ExperimentActivity._stateDuration = 1;
             Phase1ExperimentActivity._firstSecondPause = 1;
-            Phase1ExperimentActivity._maximumStates = 10;
             Phase2ExperimentActivity._stateDuration = 1;
             Phase2ExperimentActivity._maximumStates = 10;
             _timeButton.setText("Time: Normal");

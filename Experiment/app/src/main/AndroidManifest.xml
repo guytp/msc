@@ -18,12 +18,10 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.ParticipantDetailsActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,7 +43,6 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase1IntroductionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -63,7 +60,6 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase2IntroductionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -81,7 +77,6 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="org.guytp.mscexperiment.Phase3IntroductionActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -101,7 +96,10 @@
             android:name=".OutroCompletedActivity"
             android:noHistory="true"
             android:screenOrientation="landscape" />
-        <activity android:name=".IntroCompleteActivity"></activity>
+        <activity android:name=".IntroCompleteActivity"
+            android:noHistory="true" />
+        <activity android:name=".Phase1BreakActivity"
+            android:noHistory="true" />
     </application>
 
 </manifest>

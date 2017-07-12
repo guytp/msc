@@ -18,10 +18,13 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     public static int _maximumStates = 30;
 
+    public static int _breakAfter = 10;
+
 
     private CushionState[] _cushionStates;
 
-    private int _nextStateToShow = 0;
+    private static int _nextStateToShow = 0;
+
 
     private Handler _timer;
 
@@ -40,6 +43,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
     private Button _nextButton;
 
     private boolean _same;
+
+    private boolean _isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +112,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     private void turnOffRunnableCompletion() {
         // If very first one schedule a display state in a few seconds
-        if (_nextStateToShow == 1) {
+        if (_isFirst) {
+            _isFirst = false;
             _label.setText("The next state will appear shortly.");
             _timer.postDelayed(_displayStateRunnable, (int)(_firstSecondPause * 1000));
             return;
@@ -124,6 +130,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         _nextButton.setVisibility(View.VISIBLE);
         _sameButton.setBackgroundColor(v == _sameButton ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
         _differentButton.setBackgroundColor(v == _differentButton ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
+        ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow) + ".Press", _same ? "Same" : "Different");
     }
 
     public void onNextPress(View v) {
@@ -135,6 +142,14 @@ public class Phase1ExperimentActivity extends KioskActivity {
         if (_nextStateToShow < _cushionStates.length) {
             // Transition to next state
             ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Finish");
+
+            // If we're at a break count then take a break before coming back in
+            if (_nextStateToShow % _breakAfter == 0) {
+                ExperimentData.getInstance().addTimeMarker("Phase1Experiment.Break", Integer.toString(_nextStateToShow / _breakAfter));
+                startActivity(new Intent(Phase1ExperimentActivity.this, Phase1BreakActivity.class));
+                CushionController.getInstance(this).off();
+                return;
+            }
             setButtonVisibilities(View.INVISIBLE);
             displayStateRunnable();
             return;
@@ -154,5 +169,9 @@ public class Phase1ExperimentActivity extends KioskActivity {
             _sameButton.setBackgroundColor(Color.rgb(171, 180, 186));
             _differentButton.setBackgroundColor(Color.rgb(171, 180, 186));
         }
+    }
+
+    public static void resetNextStateToShow() {
+        _nextStateToShow = 0;
     }
 }

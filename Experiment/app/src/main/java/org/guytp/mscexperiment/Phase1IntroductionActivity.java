@@ -15,6 +15,7 @@ public class Phase1IntroductionActivity extends KioskActivity {
 
     public void onBeginPress(View v) {
         ExperimentData.getInstance().addTimeMarker("Phase1Introduction", "Finish");
+        Phase1ExperimentActivity.resetNextStateToShow();
         startActivity(new Intent(Phase1IntroductionActivity.this, Phase1ExperimentActivity.class));
     }
 }
