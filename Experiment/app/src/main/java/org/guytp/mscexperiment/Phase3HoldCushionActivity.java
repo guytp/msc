@@ -1,14 +1,22 @@
 package org.guytp.mscexperiment;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import java.util.Random;
 
 public class Phase3HoldCushionActivity extends KioskActivity {
 
-    private final double _durationSeconds = 60;
+    public static double _durationSeconds = 90;
+
+    public static double _fadeAfter = 30;
+
+    public static double _fadeDuration = 10;
+
+    private TextView _label;
 
     private Handler _timer;
 
@@ -17,6 +25,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         // Hookup to UI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phase3_hold_cushion);
+        _label = (TextView)findViewById(R.id.label);
 
         // Read out which states the user selected for calm and angry at random with 50% chance
         // of either being used then display this state
@@ -37,7 +46,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
 
         // Start a timer to move to the next screen
         _timer = new Handler();
-        _timer.postDelayed(new Runnable() { @Override public void run() { transitionAway(); } }, (int)(_durationSeconds * 1000));
+        _timer.postDelayed(new Runnable() { @Override public void run() { fadeLabel(); } }, (int)(_fadeAfter * 1000));
 
         // Log this
         ExperimentData.getInstance().addTimeMarker("Phase3Cushion", "Show");
@@ -50,5 +59,15 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         // Log this and transition away to final PANAS questionnaire
         ExperimentData.getInstance().addTimeMarker("Phase3Cushion", "Finish");
         startActivity(new Intent(Phase3HoldCushionActivity.this, OutroPanasActivity.class));
+    }
+
+    private void fadeLabel() {
+        // Begin an animation to fade the label
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(_label, "alpha",  1f, 0f);
+        fadeOut.setDuration((int)(_fadeDuration * 1000));
+        fadeOut.start();
+
+        // Start a timer to move to the next screen
+        _timer.postDelayed(new Runnable() { @Override public void run() { transitionAway(); } }, (int)((_durationSeconds - _fadeAfter) * 1000));
     }
 }

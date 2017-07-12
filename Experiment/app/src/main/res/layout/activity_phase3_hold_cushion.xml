@@ -19,13 +19,13 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="Thank you.  We're almost done - there's just a couple of quick questions left.  Whilst we get them ready please just hold the cushion in its current state.  In a minute the final few questions will automatically appear."
-                android:textSize="32sp"/>
+                android:text="Sit back and experience this state of the cushion for the next minute or so."
+                android:textSize="52dp" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
