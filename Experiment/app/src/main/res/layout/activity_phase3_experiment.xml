@@ -18,13 +18,61 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/playStateButton1"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="10dp"
+                    android:text="Play One"
+                    android:textSize="52sp" />
+
+                <Button
+                    android:id="@+id/playStateButton2"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="10dp"
+                    android:text="Play Two"
+                    android:textSize="52sp" />
+
+                <Button
+                    android:id="@+id/playStateButton3"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="10dp"
+                    android:text="Play Three"
+                    android:textSize="52sp" />
+
+                <Button
+                    android:id="@+id/playStateButton4"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="10dp"
+                    android:text="Play Four"
+                    android:textSize="52sp" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:padding="50dp"
-                android:text="Which state corresponds best to the word below?"
+                android:paddingBottom="20dp"
+                android:paddingTop="40dp"
+                android:text="Which state do you think best represents the feeling or emotion word shown below?"
                 android:textSize="32sp" />
 
             <TextView
@@ -33,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:padding="50dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
                 android:text="Word"
                 android:textSize="42sp" />
 
@@ -45,8 +94,8 @@
 
                 <Button
                     android:id="@+id/stateButton1"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
@@ -55,8 +104,8 @@
 
                 <Button
                     android:id="@+id/stateButton2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
@@ -65,8 +114,8 @@
 
                 <Button
                     android:id="@+id/stateButton3"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
@@ -75,8 +124,8 @@
 
                 <Button
                     android:id="@+id/stateButton4"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_margin="20dp"
                     android:onClick="onStateButtonPress"
                     android:padding="10dp"
@@ -88,7 +137,7 @@
                 android:id="@+id/nextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="170dp"
+                android:layout_marginTop="20dp"
                 android:onClick="onNextPress"
                 android:padding="30dp"
                 android:text="Next"

@@ -37,7 +37,7 @@ public class ExperimentData {
 
     public String getData(String key) {
         for (int i = 0; i < _data.size(); i++)
-            if (_data.get(i).key() == key)
+            if (_data.get(i).key().equals(key))
                 return _data.get(i).value();
         return null;
     }

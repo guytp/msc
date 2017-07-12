@@ -23,11 +23,11 @@ public class Phase3HoldCushionActivity extends KioskActivity {
         String chosenStateType = new Random().nextDouble() < 0.5 ? "Angry" : "Calm";
         String stateWordToUse = ExperimentData.getInstance().getData("Phase3Experiment." + chosenStateType + "State");
         CushionState state;
-        if (stateWordToUse == "Angry")
+        if (stateWordToUse.equals("Angry"))
             state = CushionState.Angry;
-        else if (stateWordToUse == "Calm")
+        else if (stateWordToUse.equals("Calm"))
             state = CushionState.Calm;
-        else if (stateWordToUse == "Happy")
+        else if (stateWordToUse.equals("Happy"))
             state = CushionState.Happy;
         else
             state = CushionState.Sad;

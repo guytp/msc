@@ -20,6 +20,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
             };
             // Mix of Russell and Schubert : https://www.researchgate.net/figure/228583824_fig10_Figure-10-Ratings-of-emotion-words-in-a-two-dimensional-emotion-space-according-to
 
+    private Button[] _playStateButtons;
     private Button[] _stateButtons;
     private Button _nextButton;
     private TextView _emotionLabel;
@@ -41,6 +42,11 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _stateButtons[1] = (Button)findViewById(R.id.stateButton2);
         _stateButtons[2] = (Button)findViewById(R.id.stateButton3);
         _stateButtons[3] = (Button)findViewById(R.id.stateButton4);
+        _playStateButtons = new Button[4];
+        _playStateButtons[0] = (Button)findViewById(R.id.playStateButton1);
+        _playStateButtons[1] = (Button)findViewById(R.id.playStateButton2);
+        _playStateButtons[2] = (Button)findViewById(R.id.playStateButton3);
+        _playStateButtons[3] = (Button)findViewById(R.id.playStateButton4);
         _nextButton = (Button)findViewById(R.id.nextButton);
         _emotionLabel = (TextView)findViewById(R.id.emotionWordLabel);
 
@@ -75,7 +81,8 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _emotionLabel.setText(_emotionWords[_nextWord]);
 
         // Reset button states
-        setActiveStateButton(null);
+        setActiveStateButton(null, _stateButtons);
+        setActiveStateButton(null, _playStateButtons);
         _nextButton.setEnabled(false);
 
         // Turn off cushion
@@ -89,6 +96,24 @@ public class Phase3ExperimentActivity extends KioskActivity {
         ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Show");
     }
 
+    public void onPlayStateButtonPress(View v) {
+        // Get a handle to this button
+        Button b = (Button)v;
+        if (b.getText().toString().substring(0, 4).equals("Play")) {
+            // Update the state of all buttons
+            setActiveStateButton(b, _playStateButtons);
+
+            // Get the cushion to change to this state
+            int buttonNumber = b == _playStateButtons[0] ? 1 : b == _playStateButtons[1] ? 2 : b == _playStateButtons[2] ? 3 : 4;
+            CushionState state = _cushionStates[buttonNumber - 1];
+            CushionController.getInstance(this).setState(state);
+            ExperimentData.getInstance().addTimeMarker("Phase3Experiment.PlayStateStart", state.toString());
+        } else {
+            setActiveStateButton(null, _playStateButtons);
+            CushionController.getInstance(this).off();
+        }
+    }
+
     public void onStateButtonPress(View v) {
         // Determine which button was pressed
         Button b = (Button)v;
@@ -96,24 +121,21 @@ public class Phase3ExperimentActivity extends KioskActivity {
         CushionState state = _cushionStates[buttonNumber - 1];
 
         // Update the state of all buttons
-        setActiveStateButton(b);
+        setActiveStateButton(b, _stateButtons);
         _nextButton.setEnabled(true);
 
         // Record which one has been selected and increment selection count
         _selectionsForWord++;
         _selectedState = state;
 
-        // Get the cushion to change to this state
-        CushionController.getInstance(this).setState(state);
-
         // Log which one has been selected
         ExperimentData.getInstance().addData("Phase3Experiment.Word" + _nextWord + ".Selection" + _selectionsForWord, state.toString());
 
         // If this is calm or angry that has been displayed as a word then store the associated state - this is used by the final part of the
         // experiment to activate one of the two states selected for these words
-        if (_emotionWords[_nextWord - 1] == "Angry")
+        if (_emotionWords[_nextWord - 1].equals("Angry"))
             ExperimentData.getInstance().addData("Phase3Experiment.AngryState", state.toString());
-        else if (_emotionWords[_nextWord - 1] == "Calm")
+        else if (_emotionWords[_nextWord - 1].equals("Calm"))
             ExperimentData.getInstance().addData("Phase3Experiment.CalmState", state.toString());
     }
 
@@ -121,10 +143,10 @@ public class Phase3ExperimentActivity extends KioskActivity {
         // Record the selected state
         ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Word" + _nextWord + ".Finish");
         ExperimentData.getInstance().addData("Phase3Experiment.Word" + _nextWord + ".Selection", _selectedState.toString());
+        CushionController.getInstance(this).off();
 
         // If we're at end then transition to Phase3
         if (_nextWord == _emotionWords.length) {
-            CushionController.getInstance(this).off();
             ExperimentData.getInstance().addTimeMarker("Phase3Experiment", "Finish");
             startActivity(new Intent(Phase3ExperimentActivity.this, Phase3HoldCushionActivity.class));
             return;
@@ -134,8 +156,22 @@ public class Phase3ExperimentActivity extends KioskActivity {
         setupNextWord();
     }
 
-    private void setActiveStateButton(Button button) {
-        for (int i = 0; i < _stateButtons.length; i++)
-            _stateButtons[i].setBackgroundColor(_stateButtons[i] == button ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
+    private void setActiveStateButton(Button button, Button[] btns) {
+        for (int i = 0; i < btns.length; i++) {
+            btns[i].setBackgroundColor(btns[i] == button ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
+            if (btns == _playStateButtons) {
+                String word;
+                if (i == 0)
+                    word = "One";
+                else if (i == 1)
+                    word = "Two";
+                else if (i == 2)
+                    word = "Three";
+                else
+                    word = "Four";
+                btns[i].setText((btns[i] == button ? "Stop " : "Play ") + word);
+                btns[i].setEnabled(button == null || btns[i] == button);
+            }
+        }
     }
 }
