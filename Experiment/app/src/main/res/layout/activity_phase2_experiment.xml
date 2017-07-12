@@ -115,11 +115,15 @@
 
                 <Button
                     android:id="@+id/nextButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:layout_marginTop="120dp"
                     android:onClick="onNextPress"
-                    android:padding="30dp"
+                    android:paddingBottom="30dp"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+                    android:paddingTop="30dp"
                     android:text="Next"
                     android:textSize="52sp" />
             </LinearLayout>

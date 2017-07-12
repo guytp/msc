@@ -26,17 +26,11 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private SeekBar _sliderPleasantness;
 
-    private Boolean _isEnergyTouched = false;
-
-    private Boolean _isPleasantnessTouched = false;
-
     private View _answerLayout;
 
     private View _stateOnLayout;
 
     private Handler _timer;
-
-    private Runnable _displayStateRunnable;
 
     private Runnable _turnOffRunnable;
 
@@ -44,7 +38,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private TextView _stateOnLabel;
 
-    private Button _nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +52,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _stateOnLayout = findViewById(R.id.stateOnLayout);
         _stateOnLabel = (TextView)findViewById(R.id.stateOnLabel);
         _questionLabel = (TextView)findViewById(R.id.questionLabel);
-        _nextButton = (Button)findViewById(R.id.nextButton);
-
-        // Hookup to slider events
-        final Button nextButton = _nextButton;
-        SeekBar.OnSeekBarChangeListener seekBarChangedListener = new SeekBar.OnSeekBarChangeListener(){
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                if (seekBar == _sliderEnergy)
-                    _isEnergyTouched = true;
-                else
-                    _isPleasantnessTouched = true;
-                nextButton.setEnabled(_isEnergyTouched && _isPleasantnessTouched);
-            }
-
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){}
-        };
-        _sliderEnergy.setOnSeekBarChangeListener(seekBarChangedListener);
-        _sliderPleasantness.setOnSeekBarChangeListener(seekBarChangedListener);
 
         // Determine which states we will show
         _cushionStates = CushionState.randomlyOrderedStatesSets(5);
@@ -96,8 +70,8 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _stateOnLayout.setVisibility(View.VISIBLE);
 
         // Store the runnables used for setting a state and turning off
-        _displayStateRunnable = new Runnable() { @Override public void run() { displayStateRunnable(); } };
         _turnOffRunnable = new Runnable() { @Override public void run() { turnOffRunnable(); } };
+        _timer = new Handler();
 
         // Schedule execution very soon of first state
         displayStateRunnable();
@@ -131,7 +105,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _questionLabel.setText("Please move the circles below to indicate how much energy you thought the state had and how pleasant it was.  Once you're done press the Next button.");
         _answerLayout.setVisibility(View.VISIBLE);
         _stateOnLayout.setVisibility(View.GONE);
-        _nextButton.setEnabled(false);
     }
 
     public void onNextPress(View v) {
@@ -152,8 +125,6 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _answerLayout.setVisibility(View.GONE);
         _stateOnLayout.setVisibility(View.VISIBLE);
         displayStateRunnable();
-        _isEnergyTouched = false;
-        _isPleasantnessTouched = false;
         _sliderPleasantness.setProgress(100);
         _sliderEnergy.setProgress(100);
     }
