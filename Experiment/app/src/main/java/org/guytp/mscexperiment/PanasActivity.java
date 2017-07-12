@@ -54,7 +54,7 @@ public abstract class PanasActivity extends KioskActivity {
                     .show();
             return;
         }
-        ExperimentData.getInstance().addData("Panas." + _emotionWords[_currentEmotionWordIndex], _selectedValue);
+        ExperimentData.getInstance().addData(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex], _selectedValue);
 
         // Mark this question completed for timing
         ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas-" + _emotionWords[_currentEmotionWordIndex], "Finish");
@@ -82,6 +82,9 @@ public abstract class PanasActivity extends KioskActivity {
             btn.setBackgroundColor(btn == b ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
         }
         _nextButton.setEnabled(true);
+
+        // Store the fact we had a button press for this word at the specified time - we can do some analysis over how many selections made and changes then
+        ExperimentData.getInstance().addTimeMarker(_loggingPrefix + "Panas." + _emotionWords[_currentEmotionWordIndex] + "." + _selectedValue, _selectedValue);
     }
 
     private void resetButtonStates() {
