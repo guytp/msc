@@ -14,6 +14,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     public static double _firstSecondPause = 5;
 
+    public static double _offDelay = 2;
+
     public static int _maximumStates = 30;
 
 
@@ -26,6 +28,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
     private Runnable _displayStateRunnable;
 
     private Runnable _turnOffRunnable;
+    private Runnable _turnOffRunnableCompletion;
+    private Runnable _displayStateRunnableCompletion;
 
     private CushionController _cushionController;
 
@@ -65,6 +69,8 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // Store the runnables used for setting a state and turning off
         _displayStateRunnable = new Runnable() { @Override public void run() { displayStateRunnable(); } };
         _turnOffRunnable = new Runnable() { @Override public void run() { turnOffRunnable(); } };
+        _turnOffRunnableCompletion = new Runnable() { @Override public void run() { turnOffRunnableCompletion(); } };
+        _displayStateRunnableCompletion = new Runnable() { @Override public void run() { displayStateRunnableCompletion(); } };
 
         // Schedule execution very soon of first state
         _timer = new Handler();
@@ -75,11 +81,18 @@ public class Phase1ExperimentActivity extends KioskActivity {
     }
 
     private void displayStateRunnable() {
+        // Display in UI a blank screen
+        _label.setText("");
+
+        // Trigger to complete turn off in 2 seconds before we transition to next state
+        _timer.postDelayed(_displayStateRunnableCompletion, (int)(_offDelay * 1000));
+    }
+
+    private void displayStateRunnableCompletion() {
         // Set valid state
         _cushionController.setState(_cushionStates[_nextStateToShow]);
 
-        // Display in UI a blank screen
-        _label.setText("");
+        // Log the time we show the state
         ExperimentData.getInstance().addTimeMarker("Phase1Experiment.StateShow" + (_nextStateToShow + 1), "On");
 
         // Scheduled off in 10 seconds
@@ -94,9 +107,14 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // Increment next state to show
         _nextStateToShow++;
 
+        // Trigger to complete turn off in 2 seconds before we transition to next state
+        _timer.postDelayed(_turnOffRunnableCompletion, (int)(_offDelay * 1000));
+    }
+
+    private void turnOffRunnableCompletion() {
         // If very first one schedule a display state in a few seconds
         if (_nextStateToShow == 1) {
-            _label.setText("That was the First state, the Second state will appear shortly.");
+            _label.setText("The next state will appear shortly.");
             _timer.postDelayed(_displayStateRunnable, (int)(_firstSecondPause * 1000));
             return;
         }
