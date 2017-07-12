@@ -466,7 +466,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
                         android:padding="50dp"
-                        android:text="What is your area of research/study/work?"
+                        android:text="What are your area(s) of research/study/work?  Select as many as are appropriate."
                         android:textSize="32sp"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="0dp" />

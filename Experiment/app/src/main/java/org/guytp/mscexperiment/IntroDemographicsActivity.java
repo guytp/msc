@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IntroDemographicsActivity extends KioskActivity {
 
     private int _currentQuestionIndex = 0;
@@ -24,7 +27,7 @@ public class IntroDemographicsActivity extends KioskActivity {
     private Button[] _educationButtons;
     private String _selectedEducation= null;
     private Button[] _researchStudyButtons;
-    private String _selectedResearchStudy = null;
+    private List<String> _selectedStudyAreas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +119,11 @@ public class IntroDemographicsActivity extends KioskActivity {
             ExperimentData.getInstance().addData("Demographics.Ethnicity", _selectedEthnicity);
         else if (_currentQuestionIndex == 3)
             ExperimentData.getInstance().addData("Demographics.Education", _selectedEducation);
-        else if (_currentQuestionIndex == 4)
-            ExperimentData.getInstance().addData("Demographics.ResearchStudyWork", _selectedResearchStudy);
+        else if (_currentQuestionIndex == 4) {
+            ExperimentData.getInstance().addData("Demographics.ResearchStudyWork.Count", Integer.toString(_selectedStudyAreas.size()));
+            for (int i = 0; i < _selectedStudyAreas.size(); i++)
+                ExperimentData.getInstance().addData("Demographics.ResearchStudyWork." + Integer.toString(i + 1), _selectedStudyAreas.get(i));
+        }
 
         // Mark this question completed for timing
         ExperimentData.getInstance().addTimeMarker("IntroDemographics-" + _currentQuestionIndex, "Finish");
@@ -162,9 +168,31 @@ public class IntroDemographicsActivity extends KioskActivity {
     }
 
     public void onResearchStudyButtonPress(View v) {
+        // Get a handle to button
         Button b = (Button)v;
-        _selectedResearchStudy = b.getText().toString();
-        setActiveButton(_researchStudyButtons, b);
+        String studyArea = b.getText().toString();
+
+        // Determine if it was already selected
+        boolean isSelected = false;
+        int foundIndex = -1;
+        for (int i = 0; i < _selectedStudyAreas.size(); i++) {
+            if (_selectedStudyAreas.get(i) == studyArea) {
+                foundIndex = i;
+                isSelected = true;
+                break;
+            }
+        }
+
+        // Determine new selection state
+        boolean newState = !isSelected;
+        if (newState)
+            _selectedStudyAreas.add(studyArea);
+        else
+            _selectedStudyAreas.remove(foundIndex);
+
+        // Update UI to match
+        b.setBackgroundColor(newState? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
+        _nextButton.setEnabled(_selectedStudyAreas.size() > 0);
     }
 
     private void setupButtonArray(Button[] buttons) {
