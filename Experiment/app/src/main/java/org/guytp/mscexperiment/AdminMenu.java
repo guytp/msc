@@ -57,6 +57,7 @@ public class AdminMenu extends RelativeLayout {
         _exitButton = (Button)findViewById(R.id.exitButton);
         _exitButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
             ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "Exit");
+            android.os.Process.killProcess(android.os.Process.myPid());
             _dialog.dismiss();
             _activity.finish();
         } });
