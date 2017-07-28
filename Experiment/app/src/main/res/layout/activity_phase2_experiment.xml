@@ -44,11 +44,11 @@
 
                 <TextView
                     android:id="@+id/questionLabel"
-                    android:text="Please move the circles below to indicate how the levels of arousal and &quot;pleasantness&quot; that you perceived in the last state.  Once you're done press the Next button."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:padding="50dp"
+                    android:text="Question label"
                     android:textSize="32sp" />
 
                 <GridLayout

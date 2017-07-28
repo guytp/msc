@@ -29,6 +29,8 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private View _answerLayout;
 
+    private TextView _questionLabel;
+
     private View _stateOnLayout;
 
     private Handler _timer;
@@ -52,6 +54,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _answerLayout = findViewById(R.id.answerLayout);
         _stateOnLayout = findViewById(R.id.stateOnLayout);
         _stateOnLabel = (TextView)findViewById(R.id.stateOnLabel);
+        _questionLabel = (TextView)findViewById(R.id.questionLabel);
 
         // Determine which states we will show
         _cushionStates = CushionState.randomlyOrderedStatesSets(5);
@@ -117,6 +120,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         // Transition to answer phase
         ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _answerLayout.setVisibility(View.VISIBLE);
+        _questionLabel.setText("Please move the circles below to indicate how the levels of arousal and \"pleasantness\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  that you perceived for state " + _nextStateToShow + " of " + _cushionStates.length + ".  Once you're done press the Next button.");
         _stateOnLayout.setVisibility(View.GONE);
     }
 

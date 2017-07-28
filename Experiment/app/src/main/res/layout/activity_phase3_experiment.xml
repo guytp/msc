@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/instructionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -27,7 +27,7 @@
                 android:gravity="center_horizontal"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                android:text="Play each of the four states and select the one that best represents:"
+                android:text="Instruction text goes here"
                 android:textSize="32sp" />
 
             <TextView

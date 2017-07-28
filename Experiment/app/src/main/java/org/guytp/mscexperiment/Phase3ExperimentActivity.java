@@ -24,6 +24,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
     private Button[] _stateButtons;
     private Button _nextButton;
     private TextView _emotionLabel;
+    private TextView _instructionLabel;
 
     private int _nextWord = 0;
     private int _selectionsForWord;
@@ -49,6 +50,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _playStateButtons[3] = (Button)findViewById(R.id.playStateButton4);
         _nextButton = (Button)findViewById(R.id.nextButton);
         _emotionLabel = (TextView)findViewById(R.id.emotionWordLabel);
+        _instructionLabel = (TextView)findViewById(R.id.instructionLabel);
 
         // Generate our cushion states in a random order and log them
         _cushionStates = CushionState.randomlyOrderedStates();
@@ -79,6 +81,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
     private void setupNextWord() {
         // Update text of word
         _emotionLabel.setText(_emotionWords[_nextWord]);
+        _instructionLabel.setText("Play each of the four states and select the one that best represents (" + (_nextWord + 1) + " of " + _emotionWords.length + "):");
 
         // Reset button states
         setActiveStateButton(null, _stateButtons);
