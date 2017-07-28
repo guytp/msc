@@ -74,8 +74,9 @@ public class Phase1ExperimentActivity extends KioskActivity {
     }
 
     private void displayStateRunnable() {
-        // Display in UI a blank screen
-        _label.setText("");
+        // Display in UI a "please focus" message
+        _label.setText("Now, please focus on the cushion");
+        _label.setAlpha(0.5f);
 
         // Trigger to complete turn off in 2 seconds before we transition to next state
         _timer.postDelayed(_displayStateRunnableCompletion, (int)(_offDelay * 1000));
@@ -108,6 +109,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // If we're going to the second in a pair then display the "wait a second" pause
         if (_nextStateToShow %2 != 0) {
             _label.setText("Cushion will go to the next state shortly.");
+            _label.setAlpha(1f);
             _timer.postDelayed(_displayStateRunnable, (int)(_firstSecondPause * 1000));
             return;
         }
@@ -115,6 +117,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
         // If we've finished a pair transition to a "same or different phase"
         ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _label.setText("That was pair " + (_nextStateToShow / 2) + " of " + _numberPairs + ".  Was your experience of these two states the same or different?");
+        _label.setAlpha(1f);
         _sameButton.setVisibility(View.VISIBLE);
         _differentButton.setVisibility(View.VISIBLE);
     }

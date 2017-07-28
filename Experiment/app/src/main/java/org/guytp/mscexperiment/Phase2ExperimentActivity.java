@@ -84,7 +84,8 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private void preStatePauseRunnable() {
         // Display in UI - we want a blank screen
-        _stateOnLabel.setText("");
+        _stateOnLabel.setText("Now, please focus on the cushion");
+        _stateOnLabel.setAlpha(0.5f);
 
         // Wait 2s before we start the state
         _timer.postDelayed(_displayStateRunnable, (int)(_offDelay * 1000));
