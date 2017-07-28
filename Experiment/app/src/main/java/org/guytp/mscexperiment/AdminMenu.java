@@ -90,8 +90,8 @@ public class AdminMenu extends RelativeLayout {
         if (isQuickMode()) {
             // Revert to normal
             Phase1ExperimentActivity._stateDuration = 5;
-            Phase1ExperimentActivity._firstSecondPause = 5;
-            Phase1ExperimentActivity._offDelay = 2;
+            Phase1ExperimentActivity._firstSecondPause = 3;
+            Phase1ExperimentActivity._offDelay = 0;
             Phase2ExperimentActivity._stateDuration = 10;
             Phase2ExperimentActivity._maximumStates = 20;
             Phase2ExperimentActivity._offDelay = 2;
@@ -100,9 +100,9 @@ public class AdminMenu extends RelativeLayout {
             Phase3HoldCushionActivity._fadeDuration = 10;
             _timeButton.setText("Time: Quick");
         } else {
-            Phase1ExperimentActivity._offDelay = 0.5;
             Phase1ExperimentActivity._stateDuration = 1;
-            Phase1ExperimentActivity._firstSecondPause = 1;
+            Phase1ExperimentActivity._firstSecondPause = 0.75;
+            Phase1ExperimentActivity._offDelay = 0;
             Phase2ExperimentActivity._stateDuration = 1;
             Phase2ExperimentActivity._maximumStates = 10;
             Phase2ExperimentActivity._offDelay = 0.5;

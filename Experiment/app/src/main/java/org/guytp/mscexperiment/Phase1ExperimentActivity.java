@@ -12,9 +12,9 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     public static double _stateDuration = 5;
 
-    public static double _firstSecondPause = 5;
+    public static double _firstSecondPause = 3;
 
-    public static double _offDelay = 2;
+    public static double _offDelay = 0;
 
     public static int _numberPairs = 10;
 
