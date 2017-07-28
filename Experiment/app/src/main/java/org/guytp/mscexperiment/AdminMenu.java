@@ -89,7 +89,7 @@ public class AdminMenu extends RelativeLayout {
     private void toggleTimeMode() {
         if (isQuickMode()) {
             // Revert to normal
-            Phase1ExperimentActivity._stateDuration = 10;
+            Phase1ExperimentActivity._stateDuration = 5;
             Phase1ExperimentActivity._firstSecondPause = 5;
             Phase1ExperimentActivity._offDelay = 2;
             Phase2ExperimentActivity._stateDuration = 10;
