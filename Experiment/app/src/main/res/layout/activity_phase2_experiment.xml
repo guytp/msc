@@ -44,7 +44,7 @@
 
                 <TextView
                     android:id="@+id/questionLabel"
-                    android:text="Please move the circles below to indicate how the levels of arousal and pleasantness that you perceived in the last state.  Once you're done press the Next button."
+                    android:text="Please move the circles below to indicate how the levels of arousal and &quot;pleasantness&quot; that you perceived in the last state.  Once you're done press the Next button."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text='Least "Pleasant"'
+                        android:text='Low "Pleasantness"'
                         android:textSize="32sp" />
 
                     <TextView
@@ -100,7 +100,7 @@
                         android:layout_column="60"
                         android:layout_marginRight="20dp"
                         android:layout_row="0"
-                        android:text='Most "Pleasant"'
+                        android:text='High "Pleasantness"'
                         android:textSize="32sp" />
                 </GridLayout>
 
