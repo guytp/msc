@@ -18,61 +18,16 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/playStateButton1"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="20dp"
-                    android:onClick="onPlayStateButtonPress"
-                    android:padding="10dp"
-                    android:text="Play One"
-                    android:textSize="52sp" />
-
-                <Button
-                    android:id="@+id/playStateButton2"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="20dp"
-                    android:onClick="onPlayStateButtonPress"
-                    android:padding="10dp"
-                    android:text="Play Two"
-                    android:textSize="52sp" />
-
-                <Button
-                    android:id="@+id/playStateButton3"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="20dp"
-                    android:onClick="onPlayStateButtonPress"
-                    android:padding="10dp"
-                    android:text="Play Three"
-                    android:textSize="52sp" />
-
-                <Button
-                    android:id="@+id/playStateButton4"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="20dp"
-                    android:onClick="onPlayStateButtonPress"
-                    android:padding="10dp"
-                    android:text="Play Four"
-                    android:textSize="52sp" />
-            </LinearLayout>
-
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
                 android:gravity="center_horizontal"
                 android:paddingBottom="20dp"
-                android:paddingTop="40dp"
-                android:text="Which state do you think best represents the feeling or emotion word shown below?"
+                android:paddingTop="20dp"
+                android:text="Play each of the four states and select the one that best represents:"
                 android:textSize="32sp" />
 
             <TextView
@@ -84,7 +39,7 @@
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
                 android:text="Word"
-                android:textSize="42sp" />
+                android:textSize="72sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -133,11 +88,57 @@
                     android:textSize="52sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/playStateButton1"
+                    android:layout_width="170dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="0dp"
+                    android:text="&#x25b6;"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/playStateButton2"
+                    android:layout_width="170dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="0dp"
+                    android:text="&#x25b6;"
+                    android:textSize="42sp" />
+                <Button
+                    android:id="@+id/playStateButton3"
+                    android:layout_width="170dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="0dp"
+                    android:text="&#x25b6;"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/playStateButton4"
+                    android:layout_width="170dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onPlayStateButtonPress"
+                    android:padding="0dp"
+                    android:text="&#x25b6;"
+                    android:textSize="42sp" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/nextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="52dp"
                 android:onClick="onNextPress"
                 android:padding="30dp"
                 android:text="Next"

@@ -99,7 +99,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
     public void onPlayStateButtonPress(View v) {
         // Get a handle to this button
         Button b = (Button)v;
-        if (b.getText().toString().substring(0, 4).equals("Play")) {
+        if (b.getText() == "▶") {
             // Update the state of all buttons
             setActiveStateButton(b, _playStateButtons);
 
@@ -159,19 +159,8 @@ public class Phase3ExperimentActivity extends KioskActivity {
     private void setActiveStateButton(Button button, Button[] btns) {
         for (int i = 0; i < btns.length; i++) {
             btns[i].setBackgroundColor(btns[i] == button ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
-            if (btns == _playStateButtons) {
-                String word;
-                if (i == 0)
-                    word = "One";
-                else if (i == 1)
-                    word = "Two";
-                else if (i == 2)
-                    word = "Three";
-                else
-                    word = "Four";
-                btns[i].setText((btns[i] == button ? "Stop " : "Play ") + word);
-                btns[i].setEnabled(button == null || btns[i] == button);
-            }
+            if (btns == _playStateButtons)
+                btns[i].setText(btns[i] == button ? "■" : "▶");
         }
     }
 }
