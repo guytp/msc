@@ -114,7 +114,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // If we've finished a pair transition to a "same or different phase"
         ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
-        _label.setText("Was your experience of the last two states the same or different?");
+        _label.setText("That was pair " + (_nextStateToShow / 2) + " of " + _numberPairs + ".  Was your experience of these two states the same or different?");
         _sameButton.setVisibility(View.VISIBLE);
         _differentButton.setVisibility(View.VISIBLE);
     }
