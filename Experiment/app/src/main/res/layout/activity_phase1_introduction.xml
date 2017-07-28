@@ -47,7 +47,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[2]  The cushion can show light patterns and vibrate - each of these is a state and there are four states in total"
+                android:text="[2]  Concentrate on both colour and vibration in the cushion during the experiment"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -59,7 +59,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[3]  It will start by showing you one of these states"
+                android:text="[3]  The cushion can show light patterns and vibrate - each of these is a state and there are four states in total"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[4]  It will then turn off before you are shown another state"
+                android:text="[4]  It will start by showing you one of these states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[5]  You will be asked if your experience of both states was the same"
+                android:text="[5]  It will then turn off before you are shown another state"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,18 +95,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[6]  You will then be shown 8 more states and asked if your experience of each was the same as or different to the"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />="0dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingLeft="81dp"
-                android:paddingRight="20dp"
-                android:text="previous state"
+                android:text="[6]  You will be asked if your experience of both states was the same"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -118,7 +107,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[7]  After 10 states, you will be given a break and then two more repetitions for 30 total states"
+                android:text="[7]  This will then repeat 9 more times - for 10 pairs of states in total"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -139,7 +128,7 @@
                 android:id="@+id/beginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="102dp"
                 android:onClick="onBeginPress"
                 android:padding="30dp"
                 android:text="Begin"

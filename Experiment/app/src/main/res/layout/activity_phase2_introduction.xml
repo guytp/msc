@@ -47,7 +47,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[2]  The cushion will show one of the four patterns from the previous section"
+                android:text="[2]  Concentrate on both colour and vibration in the cushion during the experiment"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -59,7 +59,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[3]  You will then be shown two sliders - one on a scale of arousal and one on a scale of &quot;pleasantness&quot;"
+                android:text="[3]  The cushion will show one of the four patterns from the previous section"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[4]  Move the sliders to represent how you perceived the state you just saw, then press Next"
+                android:text="[4]  You will then be shown two sliders - one on a scale of arousal and one on a scale of &quot;pleasantness&quot;"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[5]  You will be asked to rate your perceptions of 20 states"
+                android:text="[5]  Move the sliders to represent how you perceived the state you just saw, then press Next"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,7 +95,19 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[6]  When you are ready, press Begin"
+                android:text="[6]  You will be asked to rate your perceptions of 20 states"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:text="[7]  When you are ready, press Begin"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -104,7 +116,7 @@
                 android:id="@+id/beginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="210dp"
+                android:layout_marginTop="155dp"
                 android:onClick="onBeginPress"
                 android:padding="30dp"
                 android:text="Begin"
