@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 public class Phase2ExperimentActivity extends KioskActivity {
 
-    public static double _stateDuration = 10;
+    public static double _stateDuration = 7;
 
     public static int _maximumStates = 20;
 
-    public static double _offDelay = 2;
+    public static double _offDelay = 0;
 
     private CushionController _cushionController;
 
