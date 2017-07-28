@@ -47,7 +47,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[1]  Place the cushion in your lap so you can see and feel it, you can hold it however you like"
+                android:text="[2]  Concentrate on both colour and vibration in the cushion during the experiment"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -59,7 +59,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[3]  You will be shown a word describing a feeling or emotion"
+                android:text="[3]  You will be shown a word representing a feeling or emotion"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[4]  You need to select which of the four states that you've already encountered best describes that word"
+                android:text="[4]  You need to select which of four states best represents that word"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[5]  There are four buttons at the top of the screen - each makes the cushion exhibit one of these states"
+                android:text="[5]  There are four &quot;play&quot; buttons at the bottom of the screen - each changes the state of the cushion"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,7 +95,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[6]  You can click these &quot;play&quot; buttons as many times as you want for each word"
+                android:text="[6]  You can click these &quot;play&quot; buttons as many times as you want to move between cushion states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -107,7 +107,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[7]  When you are happy with your choice confirm it with the buttons underneath then press Next"
+                android:text="[7]  When you are happy with your choice, confirm it using the large button above &quot;play&quot;, then press Next"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
