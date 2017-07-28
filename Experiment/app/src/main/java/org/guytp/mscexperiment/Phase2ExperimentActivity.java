@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class Phase2ExperimentActivity extends KioskActivity {
 
-    public static double _stateDuration = 7;
+    public static double _stateDuration = 6;
 
     public static int _maximumStates = 20;
 

@@ -89,10 +89,10 @@ public class AdminMenu extends RelativeLayout {
     private void toggleTimeMode() {
         if (isQuickMode()) {
             // Revert to normal
-            Phase1ExperimentActivity._stateDuration = 5;
+            Phase1ExperimentActivity._stateDuration = 6;
             Phase1ExperimentActivity._firstSecondPause = 3;
             Phase1ExperimentActivity._offDelay = 0;
-            Phase2ExperimentActivity._stateDuration = 7;
+            Phase2ExperimentActivity._stateDuration = 6;
             Phase2ExperimentActivity._maximumStates = 20;
             Phase2ExperimentActivity._offDelay = 0;
             Phase3HoldCushionActivity._durationSeconds = 90;
@@ -126,7 +126,7 @@ public class AdminMenu extends RelativeLayout {
     }
 
     private Boolean isQuickMode() {
-        return Phase2ExperimentActivity._stateDuration < 7 && Phase1ExperimentActivity._stateDuration < 5;
+        return Phase2ExperimentActivity._stateDuration < 6 && Phase1ExperimentActivity._stateDuration < 6;
     }
 
     public static void displayAdminPopup(final Activity activity) {
