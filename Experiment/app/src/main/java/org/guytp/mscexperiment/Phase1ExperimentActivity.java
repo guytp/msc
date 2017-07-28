@@ -107,7 +107,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
     private void turnOffRunnableCompletion() {
         // If we're going to the second in a pair then display the "wait a second" pause
         if (_nextStateToShow %2 != 0) {
-            _label.setText("The next state will appear shortly.");
+            _label.setText("Cushion will go to the next state shortly.");
             _timer.postDelayed(_displayStateRunnable, (int)(_firstSecondPause * 1000));
             return;
         }
