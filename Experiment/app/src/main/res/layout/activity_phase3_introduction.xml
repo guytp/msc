@@ -35,7 +35,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• Place the cushion in your lap so you can see and feel it, you can hold it however you like"
+                android:text="[1]  Place the cushion in your lap so you can see and feel it, you can hold it however you like"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -47,7 +47,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will be shown a word describing a feeling or emotion"
+                android:text="[2]  You will be shown a word describing a feeling or emotion"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -59,7 +59,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You need to select which of the four states that you've already encountered best describes that word"
+                android:text="[3]  You need to select which of the four states that you've already encountered best describes that word"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• There are four buttons at the top of the screen - each makes the cushion exhibit one of these states"
+                android:text="[4]  There are four buttons at the top of the screen - each makes the cushion exhibit one of these states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You can click these &quot;play&quot; buttons as many times as you want for each word"
+                android:text="[5]  You can click these &quot;play&quot; buttons as many times as you want for each word"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,7 +95,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• When you are happy with your choice confirm it with the buttons underneath then press Next"
+                android:text="[6]  When you are happy with your choice confirm it with the buttons underneath then press Next"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -107,7 +107,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will have to do this for 20 words in total"
+                android:text="[7]  You will have to do this for 20 words in total"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -119,7 +119,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• When you are ready, press Begin"
+                android:text="[8]  When you are ready, press Begin"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

@@ -35,7 +35,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• Place the cushion in your lap so you can see and feel it, you can hold it however you like"
+                android:text="[1]  Place the cushion in your lap so you can see and feel it, you can hold it however you like"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -47,7 +47,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• The cushion can show light patterns and vibrate - each of these is a state and there are four states in total"
+                android:text="[2]  The cushion can show light patterns and vibrate - each of these is a state and there are four states in total"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -59,7 +59,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• It will start by showing you one of these states"
+                android:text="[3]  It will start by showing you one of these states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• It will then turn off before you are shown another state"
+                android:text="[4]  It will then turn off before you are shown another state"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -83,7 +83,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will be asked if your experience of both states was the same"
+                android:text="[5]  You will be asked if your experience of both states was the same"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -95,7 +95,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• You will then be shown 8 more states and asked if your experience of each was the same as or different to the"
+                android:text="[6]  You will then be shown 8 more states and asked if your experience of each was the same as or different to the"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />="0dp" />
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:paddingLeft="57dp"
+                android:paddingLeft="81dp"
                 android:paddingRight="20dp"
                 android:text="previous state"
                 android:textSize="24sp"
@@ -118,7 +118,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• After 10 states, you will be given a break and then two more repetitions for 30 total states"
+                android:text="[7]  After 10 states, you will be given a break and then two more repetitions for 30 total states"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -130,7 +130,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="• When you are ready, press Begin"
+                android:text="[8]  When you are ready, press Begin"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

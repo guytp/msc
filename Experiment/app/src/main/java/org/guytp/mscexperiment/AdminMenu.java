@@ -45,8 +45,7 @@ public class AdminMenu extends RelativeLayout {
         _newParticipantButton = (Button)findViewById(R.id.newParticipantButton);
         _newParticipantButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onNewParticipantButton(); } });
         _phase1Button = (Button)findViewById(R.id.phase1Button);
-        _phase1Button.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onPhaseButton(1); } });
-        _phase2Button = (Button)findViewById(R.id.phase2Button);
+        _phase1Button.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onPhaseButton(1); } });        _phase2Button = (Button)findViewById(R.id.phase2Button);
         _phase2Button.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onPhaseButton(2); } });
         _phase3Button = (Button)findViewById(R.id.phase3Button);
         _phase3Button.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onPhaseButton(3); } });
