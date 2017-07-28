@@ -16,15 +16,11 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     public static double _offDelay = 2;
 
-    public static int _maximumStates = 30;
-
-    public static int _breakAfter = 10;
-
+    public static int _numberPairs = 10;
 
     private CushionState[] _cushionStates;
 
-    private static int _nextStateToShow = 0;
-
+    private int _nextStateToShow = 0;
 
     private Handler _timer;
 
@@ -44,8 +40,6 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
     private boolean _same;
 
-    private boolean _isFirst = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +54,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // Determine the order of our states - we will have five-passes of random states and get a
         // handler to cushion controller
-        _cushionStates = CushionState.generateRandomStates(_maximumStates, 0.23);
+        _cushionStates = CushionState.generateRandomStates(_numberPairs * 2, 0.23);
         for (int i = 0; i < _cushionStates.length; i++)
             ExperimentData.getInstance(this).addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance(this);
@@ -111,15 +105,14 @@ public class Phase1ExperimentActivity extends KioskActivity {
     }
 
     private void turnOffRunnableCompletion() {
-        // If very first one schedule a display state in a few seconds
-        if (_isFirst) {
-            _isFirst = false;
+        // If we're going to the second in a pair then display the "wait a second" pause
+        if (_nextStateToShow %2 != 0) {
             _label.setText("The next state will appear shortly.");
             _timer.postDelayed(_displayStateRunnable, (int)(_firstSecondPause * 1000));
             return;
         }
 
-        // If not the very first one transition to a "same or different phase"
+        // If we've finished a pair transition to a "same or different phase"
         ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
         _label.setText("Was your experience of the last two states the same or different?");
         _sameButton.setVisibility(View.VISIBLE);
@@ -142,14 +135,6 @@ public class Phase1ExperimentActivity extends KioskActivity {
         if (_nextStateToShow < _cushionStates.length) {
             // Transition to next state
             ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Finish");
-
-            // If we're at a break count then take a break before coming back in
-            if (_nextStateToShow % _breakAfter == 0) {
-                ExperimentData.getInstance(this).addTimeMarker("Phase1Experiment.Break", Integer.toString(_nextStateToShow / _breakAfter));
-                startActivity(new Intent(Phase1ExperimentActivity.this, Phase1BreakActivity.class));
-                CushionController.getInstance(this).off();
-                return;
-            }
             setButtonVisibilities(View.INVISIBLE);
             displayStateRunnable();
             return;
@@ -169,9 +154,5 @@ public class Phase1ExperimentActivity extends KioskActivity {
             _sameButton.setBackgroundColor(Color.rgb(171, 180, 186));
             _differentButton.setBackgroundColor(Color.rgb(171, 180, 186));
         }
-    }
-
-    public static void resetNextStateToShow() {
-        _nextStateToShow = 0;
     }
 }
