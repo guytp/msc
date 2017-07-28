@@ -31,7 +31,7 @@
 
 
     <style name="Button" parent="@android:style/Widget.Button">
-        <item name="android:background">#555555</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:background">@drawable/button_bg</item>
     </style>
 </resources>
