@@ -275,30 +275,47 @@ bool bluetoothStateCommand() {
     // Happy
     Serial.println(F("State to happy"));
     _lightCycleColours[0] = 0XFFFF008C;
-    _lightCycleColours[1] = 0xFFFF003F;
+    _lightCycleColours[1] = 0xff219A;
     _lightCycleColours[2] = 0XFFFF008C;
     _lightCycleColourCount = 3;
-    _lightCycleDuration = 6000;
+    _lightCycleDuration = 2400;
     _lightCycleBlendAmount = 1;
-    _vibrationCycleDuration = 1900;
+    _vibrationCycleDuration = 2400;
     for (int i = 0; i < 9; i++) {
         _vibrationSettings[i].NumberValues = 4;
-        _vibrationSettings[i].Values[0].Start = 2800;
-        _vibrationSettings[i].Values[0].End = 3500;
-        _vibrationSettings[i].Values[0].Duration = 800;
-        _vibrationSettings[i].Values[1].Start = 3500;
-        _vibrationSettings[i].Values[1].End = 2800;
-        _vibrationSettings[i].Values[1].Duration = 600;
-        _vibrationSettings[i].Values[2].Start = 1500;
-        _vibrationSettings[i].Values[2].End = 1500;
-        _vibrationSettings[i].Values[2].Duration = 400;
-        _vibrationSettings[i].Values[3].Start = 0;
-        _vibrationSettings[i].Values[3].End = 0;
-        _vibrationSettings[i].Values[3].Duration = 100;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Start = 3500;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].End = 4095;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Duration = 800;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Start = 4095;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].End = 3500;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Duration = 600;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Start = 2500;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].End = 2500;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Duration = 400;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Start = 0;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].End = 0;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Duration = 600;
     }
   } else if (state == 2) {
     // Sad
     Serial.println(F("State to sad"));
+    _lightCycleColours[0] = 0XFF9242f4;
+    _lightCycleColours[1] = 0x00000000;
+    _lightCycleColours[2] = 0XFF9242f4;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 6000;
+    _lightCycleBlendAmount = 1;
+    _vibrationCycleDuration = _lightCycleDuration;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 2;
+        _vibrationSettings[i].Values[0].Start = 1800;
+        _vibrationSettings[i].Values[0].End = 0;
+        _vibrationSettings[i].Values[0].Duration = _lightCycleDuration / 2;
+        _vibrationSettings[i].Values[1].Start = 0;
+        _vibrationSettings[i].Values[1].End = 0;
+        _vibrationSettings[i].Values[1].Duration = _lightCycleDuration / 2;
+    }
+    /* This was the old quizical/attention seeking - keep this for excited
     _lightCycleColours[0] = 0xFFc700ff;
     _lightCycleColours[1] = 0xFFc700ff;
     _lightCycleColours[2] = 0xFFc700ff;
@@ -333,6 +350,7 @@ bool bluetoothStateCommand() {
         _vibrationSettings[i].Values[4].End = (short)(isCycle3 ? 4095 : 0);
         _vibrationSettings[i].Values[4].Duration = 300;
     }    
+    */
   } else if (state == 3) {
     // Calm
     Serial.println(F("State to calm"));
@@ -383,7 +401,7 @@ bool bluetoothStateCommand() {
         _vibrationSettings[i].Values[4].Start = 4095;
         _vibrationSettings[i].Values[4].End = 0;
         _vibrationSettings[i].Values[4].Duration = 500;
-    }    
+    }
   }
 
   // Set loops to immediately process
