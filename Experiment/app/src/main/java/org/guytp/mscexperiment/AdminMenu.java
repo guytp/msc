@@ -126,7 +126,7 @@ public class AdminMenu extends RelativeLayout {
     }
 
     private Boolean isQuickMode() {
-        return Phase2ExperimentActivity._stateDuration < 10 && Phase1ExperimentActivity._stateDuration < 10;
+        return Phase2ExperimentActivity._stateDuration < 7 && Phase1ExperimentActivity._stateDuration < 5;
     }
 
     public static void displayAdminPopup(final Activity activity) {
