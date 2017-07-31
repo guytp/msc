@@ -102,18 +102,16 @@ public class Phase3ExperimentActivity extends KioskActivity {
     public void onPlayStateButtonPress(View v) {
         // Get a handle to this button
         Button b = (Button)v;
+        int buttonNumber = b == _playStateButtons[0] ? 1 : b == _playStateButtons[1] ? 2 : b == _playStateButtons[2] ? 3 : 4;
+        CushionState state = _cushionStates[buttonNumber - 1];
         if (b.getText() == "▶") {
-            // Update the state of all buttons
             setActiveStateButton(b, _playStateButtons);
-
-            // Get the cushion to change to this state
-            int buttonNumber = b == _playStateButtons[0] ? 1 : b == _playStateButtons[1] ? 2 : b == _playStateButtons[2] ? 3 : 4;
-            CushionState state = _cushionStates[buttonNumber - 1];
             CushionController.getInstance(this).setState(state);
             ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.PlayStateStart", state.toString());
         } else {
             setActiveStateButton(null, _playStateButtons);
             CushionController.getInstance(this).off();
+            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.PlayStateStop", state.toString());
         }
     }
 
