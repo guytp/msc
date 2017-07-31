@@ -107,11 +107,11 @@ public class Phase3ExperimentActivity extends KioskActivity {
         if (b.getText() == "▶") {
             setActiveStateButton(b, _playStateButtons);
             CushionController.getInstance(this).setState(state);
-            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.PlayStateStart", state.toString());
+            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.Word" + _nextWord + ".PlayStateStart", state.toString());
         } else {
             setActiveStateButton(null, _playStateButtons);
             CushionController.getInstance(this).off();
-            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.PlayStateStop", state.toString());
+            ExperimentData.getInstance(this).addTimeMarker("Phase3Experiment.Word" + _nextWord + ".PlayStateStop", state.toString());
         }
     }
 

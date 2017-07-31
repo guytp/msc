@@ -1,5 +1,6 @@
 package org.guytp.mscexperiment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,29 @@ public class Phase2ExperimentActivity extends KioskActivity {
         _stateOnLayout = findViewById(R.id.stateOnLayout);
         _stateOnLabel = (TextView)findViewById(R.id.stateOnLabel);
         _questionLabel = (TextView)findViewById(R.id.questionLabel);
+
+        // Listen to slider events
+        final Context ctx = this;
+        SeekBar.OnSeekBarChangeListener sliderListener = new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                ExperimentData.getInstance(ctx).addTimeMarker("Phase2Experiment.State" + (_nextStateToShow + 1), "SlideStop." + (seekBar == _sliderEnergy ? "Energy" : "Pleasantness"));
+                ExperimentData.getInstance(ctx).addData("Phase2Experiment.State" + (_nextStateToShow + 1) + ".NonFinal." + (seekBar == _sliderEnergy ? "Energy" : "Pleasantness"), Integer.toString(_sliderEnergy.getProgress() - 100));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                ExperimentData.getInstance(ctx).addTimeMarker("Phase2Experiment.State" + (_nextStateToShow + 1), "SlideStart." + (seekBar == _sliderEnergy ? "Energy" : "Pleasantness"));
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+
+            }
+        };
+        _sliderEnergy.setOnSeekBarChangeListener(sliderListener);
+        _sliderPleasantness.setOnSeekBarChangeListener(sliderListener);
 
         // Determine which states we will show
         _cushionStates = CushionState.randomlyOrderedStatesSets(5);
@@ -118,7 +142,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     private void turnOffRunnableCompletion() {
         // Transition to answer phase
-        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow - 1) + "-" + (_nextStateToShow), "Show");
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow), "Show");
         _answerLayout.setVisibility(View.VISIBLE);
         _questionLabel.setText("Please move the circles below to indicate how the levels of arousal and \"pleasantness\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  that you perceived for state " + _nextStateToShow + " of " + _cushionStates.length + ".  Once you're done press the Next button.");
         _stateOnLayout.setVisibility(View.GONE);
@@ -126,6 +150,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
 
     public void onNextPress(View v) {
         // Record the participant's answer
+        ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow), "Finish");
         ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".State", _cushionStates[_nextStateToShow - 1].toString());
         ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".Energy", Integer.toString(_sliderEnergy.getProgress() - 100));
         ExperimentData.getInstance(this).addData("Phase2Experiment.State" + (_nextStateToShow) + ".Pleasantness", Integer.toString(_sliderPleasantness.getProgress() - 100));
