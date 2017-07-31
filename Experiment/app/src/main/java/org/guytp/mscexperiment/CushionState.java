@@ -75,24 +75,45 @@ public enum CushionState {
         return states;
     }
 
-    public static CushionState[] generateRandomStates(int totalRequired, double percentageChangeSameState) {
-        List stateList = new ArrayList();
-        while (true) {
-            // If this is not first one we're adding check if we should duplicate the last
-            if (stateList.size() > 0 && _rand.nextDouble() < percentageChangeSameState)
-                stateList.add(stateList.get(stateList.size() - 1));
-
-            // Otherwise add a randomly generated state
-            else
-                stateList.add(getCushionState((_rand.nextInt((400 - 1) + 1) + 1) / 100));
-
-            // Are we in a good position to break?
-            if (stateList.size() == totalRequired)
-                break;
+    public static CushionState[] generateRandomSamePairs(int pairsRequired, double percentageChangeSameState) {
+        // First for each pair we want to generate as many randomly ordered states as possible
+        int groupingsRequired = pairsRequired / 4;
+        if (pairsRequired % 4 != 0)
+            groupingsRequired++;
+        List firstInPairList = new ArrayList();
+        for (int i = 0; i < groupingsRequired; i++) {
+            CushionState[] groupOfStates = randomlyOrderedStates();
+            for (int j = 0; j < groupOfStates.length; j++)
+                firstInPairList.add(groupOfStates[j]);
         }
-        CushionState[] states = new CushionState[stateList.size()];
-        for (int i = 0; i < stateList.size(); i++)
-            states[i] = (CushionState)stateList.get(i);
+
+        // Now we have the first of each pair we need to go through the number of pairs required and create second pairs
+        // with random percentage of same
+        CushionState[] states = new CushionState[pairsRequired * 2];
+        for (int i = 0; i < pairsRequired; i++) {
+            CushionState firstInPair = (CushionState)firstInPairList.get(i);
+            CushionState secondInPair;
+            Boolean generateSame = _rand.nextDouble() <= percentageChangeSameState;
+            if (generateSame)
+                secondInPair = firstInPair;
+            else {
+                // We need to guarantee they are not the same now
+                final int max = 4;
+                final int min = 1;
+                while (true) {
+                    int stateNumber = _rand.nextInt((max - min) + 1) + min;
+                    CushionState candidateSecond = getCushionState(stateNumber);
+                    if (candidateSecond != firstInPair) {
+                        secondInPair = candidateSecond;
+                        break;
+                    }
+                }
+            }
+            states[i * 2] = firstInPair;
+            states[(i * 2) + 1] = secondInPair;
+        }
+
+        // Now return our values to the caller
         return states;
     }
 

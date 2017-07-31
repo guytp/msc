@@ -54,7 +54,7 @@ public class Phase1ExperimentActivity extends KioskActivity {
 
         // Determine the order of our states - we will have five-passes of random states and get a
         // handler to cushion controller
-        _cushionStates = CushionState.generateRandomStates(_numberPairs * 2, 0.23);
+        _cushionStates = CushionState.generateRandomSamePairs(_numberPairs, 0.38);
         for (int i = 0; i < _cushionStates.length; i++)
             ExperimentData.getInstance(this).addData("Phase1Experiment.State" + (i + 1), _cushionStates[i].toString());
         _cushionController = CushionController.getInstance(this);
