@@ -91,7 +91,6 @@ public abstract class PanasActivity extends KioskActivity {
         for (int i = 0; i < _answerButtons.length; i++) {
             Button btn = _answerButtons[i];
             btn.setBackgroundColor(Color.rgb(171, 180, 186));
-            btn.setTextColor(Color.BLACK);
         }
     }
 

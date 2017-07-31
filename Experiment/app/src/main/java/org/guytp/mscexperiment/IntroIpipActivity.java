@@ -1,6 +1,7 @@
 package org.guytp.mscexperiment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ public class IntroIpipActivity extends KioskActivity {
 
     private boolean[] _isScoringReverse = { false, true, false, true  };
 
-    private Button[] _buttons = new Button[4];
+    private Button[] _buttons = new Button[5];
 
     private Button _nextButton;
 
@@ -64,6 +65,12 @@ public class IntroIpipActivity extends KioskActivity {
             return;
         }
 
+        // Reset button states
+        for (int i = 0; i < _buttons.length; i++) {
+            Button btn = _buttons[i];
+            btn.setBackgroundColor(Color.rgb(171, 180, 186));
+        }
+
         // Increment to next question
         _currentQuestionIndex++;
         _nextButton.setEnabled(false);
@@ -76,6 +83,12 @@ public class IntroIpipActivity extends KioskActivity {
         ExperimentData.getInstance(this).addTimeMarker("IntroIpip", "Question" + (_currentQuestionIndex + 1) + ".Select-" + Integer.toString(GetButton((Button)v)));
         _nextButton.setEnabled(true);
         _score = GetScore((Button)v);
+
+        Button b = (Button)v;
+        for (int i = 0; i < _buttons.length; i++) {
+            Button btn = _buttons[i];
+            btn.setBackgroundColor(btn == b ? Color.rgb(57, 175, 239) : Color.rgb(171, 180, 186));
+        }
     }
 
     private int GetButton(Button b)

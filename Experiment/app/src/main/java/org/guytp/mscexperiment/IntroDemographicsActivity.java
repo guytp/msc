@@ -204,7 +204,6 @@ public class IntroDemographicsActivity extends KioskActivity {
         for (int i = 0; i < buttons.length; i++) {
             Button btn = buttons[i];
             btn.setBackgroundColor(Color.rgb(171, 180, 186));
-            btn.setTextColor(Color.BLACK);
         }
     }
 
