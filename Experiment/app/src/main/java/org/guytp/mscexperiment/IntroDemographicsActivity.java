@@ -106,7 +106,7 @@ public class IntroDemographicsActivity extends KioskActivity {
         setupButtonArray(_researchStudyButtons);
 
         // Signify start of first question
-        ExperimentData.getInstance(this).addTimeMarker("IntroDemographics-1", "Show");
+        ExperimentData.getInstance(this).addTimeMarker("IntroDemographics-0", "Show");
     }
 
     public void onNextPress(View v) {

@@ -117,7 +117,7 @@ public class AdminMenu extends RelativeLayout {
 
     private void emailData() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), ExperimentData.getInstance(getContext()).filename());
-        Intent emailClient = new Intent(Intent.ACTION_SENDTO, Uri.parse("Guy.Powell@brl.ac.uk"));
+        Intent emailClient = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:Guy.Powell@brl.ac.uk"));
         emailClient.putExtra(Intent.EXTRA_SUBJECT, "Participant Record JSON: " + ExperimentData.getInstance(getContext()).filename());
         emailClient.putExtra(Intent.EXTRA_TEXT, ExperimentData.getInstance(getContext()).asString());
         emailClient.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
