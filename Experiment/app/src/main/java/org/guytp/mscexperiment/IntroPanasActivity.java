@@ -10,6 +10,6 @@ public class IntroPanasActivity extends PanasActivity {
 
     @Override
     protected void nextActivity() {
-        startActivity(new Intent(IntroPanasActivity.this, IntroCompleteActivity.class));
+        startActivity(new Intent(IntroPanasActivity.this, IntroIpipActivity.class));
     }
 }

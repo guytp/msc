@@ -1,0 +1,124 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context="org.guytp.mscexperiment.IntroIpipActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="50dp"
+                android:text="How much do you agree with this statement about you as you generally are now, not as you wish to be in the future:"
+                android:textSize="32sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/statementLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="50dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing."
+                android:textSize="42sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="fill_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/answerButton1"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Strongly Disagree"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton2"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Somewhat Disagree"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton3"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Neither Agree nor Disagree"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton4"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Somewhat Agree"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton5"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Strongly Agree"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="110dp"
+                android:enabled="false"
+                android:onClick="onNextPress"
+                android:padding="30dp"
+                android:text="Next"
+                android:textSize="52sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
