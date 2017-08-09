@@ -144,7 +144,7 @@ public class Phase2ExperimentActivity extends KioskActivity {
         // Transition to answer phase
         ExperimentData.getInstance(this).addTimeMarker("Phase2Experiment.StateQuestion" + (_nextStateToShow), "Show");
         _answerLayout.setVisibility(View.VISIBLE);
-        _questionLabel.setText("Please move the circles below to indicate how the levels of \"excitation\" and \"pleasantness\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  that you perceived for state " + _nextStateToShow + " of " + _cushionStates.length + ".  Once you're done press the Next button.");
+        _questionLabel.setText("Please move the circles below to indicate how you perceived the levels of \"excitation\" and \"pleasantness\" for state " + _nextStateToShow + " of " + _cushionStates.length + ".  Once you're done press the Next button.");
         _stateOnLayout.setVisibility(View.GONE);
     }
 
