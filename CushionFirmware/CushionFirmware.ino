@@ -69,8 +69,8 @@ void setup() {
     _pwmDriver.setPin(i, 0);
 
   // Setup default state
-  //setQuizical();
-  setCalm();
+  setQuizical();
+  //setCalm();
 
   // Enable bluetooth interface
   _bluetoothSerial.begin(9600); 
