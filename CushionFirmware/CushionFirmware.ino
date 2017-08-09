@@ -70,7 +70,6 @@ void setup() {
 
   // Setup default state
   setQuizical();
-  //setCalm();
 
   // Enable bluetooth interface
   _bluetoothSerial.begin(9600); 
