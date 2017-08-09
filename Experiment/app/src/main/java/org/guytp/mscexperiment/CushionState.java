@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public enum CushionState {
-    Happy(1), Sad(2), Calm(3), Angry(4);
+    Happy(1), Sad(2), Calm(3), Angry(4), None(0);
 
     private int _state;
     private static Random _rand = new Random();
@@ -21,6 +21,8 @@ public enum CushionState {
 
     public static CushionState getCushionState(int forNumber) {
         switch (forNumber) {
+            case 0:
+                return None;
             case 1:
                 return Happy;
             case 2:
@@ -119,6 +121,8 @@ public enum CushionState {
 
     public String toString(){
         switch (_state) {
+            case 0:
+                return "None";
             case 1:
                 return "Happy";
             case 2:

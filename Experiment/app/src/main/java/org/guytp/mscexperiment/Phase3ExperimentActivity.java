@@ -38,11 +38,12 @@ public class Phase3ExperimentActivity extends KioskActivity {
         setContentView(R.layout.activity_phase3_experiment);
 
         // Attach to views from the UI
-        _stateButtons = new Button[4];
+        _stateButtons = new Button[5];
         _stateButtons[0] = (Button)findViewById(R.id.stateButton1);
         _stateButtons[1] = (Button)findViewById(R.id.stateButton2);
         _stateButtons[2] = (Button)findViewById(R.id.stateButton3);
         _stateButtons[3] = (Button)findViewById(R.id.stateButton4);
+        _stateButtons[4] = (Button)findViewById(R.id.stateButton5);
         _playStateButtons = new Button[4];
         _playStateButtons[0] = (Button)findViewById(R.id.playStateButton1);
         _playStateButtons[1] = (Button)findViewById(R.id.playStateButton2);
@@ -53,9 +54,13 @@ public class Phase3ExperimentActivity extends KioskActivity {
         _instructionLabel = (TextView)findViewById(R.id.instructionLabel);
 
         // Generate our cushion states in a random order and log them
-        _cushionStates = CushionState.randomlyOrderedStates();
-        for (int i = 0; i < _cushionStates.length; i++)
-            ExperimentData.getInstance(this).addData("Phase3Experiment.State" + (i + 1), _cushionStates[i].toString());
+        CushionState[] cushionStates = CushionState.randomlyOrderedStates();
+        _cushionStates = new CushionState[cushionStates.length + 1];
+        for (int i = 0; i < cushionStates.length; i++) {
+            ExperimentData.getInstance(this).addData("Phase3Experiment.State" + (i + 1), cushionStates[i].toString());
+            _cushionStates[i] = cushionStates[i];
+        }
+        _cushionStates[cushionStates.length] = CushionState.None;
 
         // Randomise our emotional words with a shuffle
         Random random = new Random();
@@ -118,7 +123,7 @@ public class Phase3ExperimentActivity extends KioskActivity {
     public void onStateButtonPress(View v) {
         // Determine which button was pressed
         Button b = (Button)v;
-        int buttonNumber = Integer.parseInt(b.getText().toString());
+        int buttonNumber = b.getText().toString().equals("None") ? 5 : Integer.parseInt(b.getText().toString());
         CushionState state = _cushionStates[buttonNumber - 1];
 
         // Update the state of all buttons
@@ -135,9 +140,9 @@ public class Phase3ExperimentActivity extends KioskActivity {
         // If this is calm or angry that has been displayed as a word then store the associated state - this is used by the final part of the
         // experiment to activate one of the two states selected for these words
         if (_emotionWords[_nextWord - 1].equals("Angry"))
-            ExperimentData.getInstance(this).addData("Phase3Experiment.AngryState", state.toString());
+            ExperimentData.getInstance(this).addData("Phase3Experiment.AngryState", (state == CushionState.None ? CushionState.Angry : state).toString());
         else if (_emotionWords[_nextWord - 1].equals("Calm"))
-            ExperimentData.getInstance(this).addData("Phase3Experiment.CalmState", state.toString());
+            ExperimentData.getInstance(this).addData("Phase3Experiment.CalmState", (state == CushionState.None ? CushionState.Calm : state).toString());
     }
 
     public void onNextPress(View v) {

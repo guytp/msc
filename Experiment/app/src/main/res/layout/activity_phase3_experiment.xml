@@ -86,6 +86,16 @@
                     android:padding="10dp"
                     android:text="4"
                     android:textSize="52sp" />
+
+                <Button
+                    android:id="@+id/stateButton5"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="20dp"
+                    android:onClick="onStateButtonPress"
+                    android:padding="20dp"
+                    android:text="None"
+                    android:textSize="52sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -131,6 +141,15 @@
                     android:onClick="onPlayStateButtonPress"
                     android:padding="0dp"
                     android:text="&#x25b6;"
+                    android:textSize="42sp" />
+                <Button
+                    android:id="@+id/playStateButton5"
+                    android:layout_width="170dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:padding="0dp"
+                    android:text="&#x25b6;"
+                    android:visibility="invisible"
                     android:textSize="42sp" />
             </LinearLayout>
 
