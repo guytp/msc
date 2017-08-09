@@ -128,7 +128,8 @@
         <activity
             android:name=".Phase1BreakActivity"
             android:noHistory="true" />
-        <activity android:name=".IntroIpipActivity"></activity>
+        <activity android:name=".IntroIpipActivity" />
+        <activity android:name=".Phase3FinalQuestionActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,89 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context="org.guytp.mscexperiment.Phase3FinalQuestionActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="50dp"
+                android:text="What did you pay more attention to?"
+                android:textSize="32sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="fill_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/answerButton1"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Answer"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton2"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Answer"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/answerButton3"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:gravity="fill_vertical"
+                    android:onClick="onAnswerButtonPress"
+                    android:padding="10dp"
+                    android:text="Neither"
+                    android:textAlignment="center"
+                    android:textSize="32sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="300dp"
+                android:enabled="false"
+                android:onClick="onNextPress"
+                android:padding="30dp"
+                android:text="Next"
+                android:textSize="52sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

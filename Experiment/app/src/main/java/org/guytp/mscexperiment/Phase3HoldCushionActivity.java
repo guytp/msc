@@ -58,7 +58,7 @@ public class Phase3HoldCushionActivity extends KioskActivity {
 
         // Log this and transition away to final PANAS questionnaire
         ExperimentData.getInstance(this).addTimeMarker("Phase3Cushion", "Finish");
-        startActivity(new Intent(Phase3HoldCushionActivity.this, OutroPanasActivity.class));
+        startActivity(new Intent(Phase3HoldCushionActivity.this, Phase3FinalQuestionActivity.class));
     }
 
     private void fadeLabel() {
