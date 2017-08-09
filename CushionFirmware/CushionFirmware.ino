@@ -70,7 +70,7 @@ void setup() {
 
   // Setup default state
   //setQuizical();
-  setHappy();
+  setCalm();
 
   // Enable bluetooth interface
   _bluetoothSerial.begin(9600); 
@@ -327,8 +327,8 @@ void setHappy() {
     _lightCycleColours[4] = 0xff4300;
     _lightCycleColours[5] = 0xff5200;
     _lightCycleColours[6] = 0xff6100;
-    _lightCycleColours[7] = 0xFF0000;
-    _lightCycleColours[8] = 0x0000FF;
+    _lightCycleColours[7] = 0x00FF00;
+    _lightCycleColours[8] = 0xff6100;
     _lightCycleColours[9] = 0xff2500;
     _lightCycleColourCount = 10;
     _lightCycleDuration = 4000;
