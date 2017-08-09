@@ -61,32 +61,16 @@ void setup() {
   for(uint16_t i=0; i<_lightStrip.numPixels(); i++)
     _lightStrip.setPixelColor(i, 0);
   _lightStrip.show();
-  _lightCycleColours[0] = 0xFF0000;
-  _lightCycleColours[1] = 0xFFFFFF;
-  _lightCycleColours[2] = 0x00FF00;
-  _lightCycleColours[3] = 0xFFFFFF;
-  _lightCycleColours[4] = 0x0000FF;
-  _lightCycleColours[5] = 0xFFFFFF;
-  _lightCycleColours[6] = 0xFF0000;
 
   // Setup PWM control for motors and turn everything off to start with and give it a default pattern
   _pwmDriver.begin();
   _pwmDriver.setPWMFreq(40);
-  for (byte i = 0; i < 16; i++) {
+  for (byte i = 0; i < 16; i++)
     _pwmDriver.setPin(i, 0);
-    if (i >= 9)
-      break;
-    _vibrationSettings[i].NumberValues = 3;
-    _vibrationSettings[i].Values[0].Start = 1500;
-    _vibrationSettings[i].Values[0].End = 2500;
-    _vibrationSettings[i].Values[0].Duration = 750;
-    _vibrationSettings[i].Values[1].Start = 2500;
-    _vibrationSettings[i].Values[1].End = 1500;
-    _vibrationSettings[i].Values[1].Duration = 750;
-    _vibrationSettings[i].Values[2].Start = 1500;
-    _vibrationSettings[i].Values[2].End = 1500;
-    _vibrationSettings[i].Values[2].Duration = 100;
-  }
+
+  // Setup default state
+  //setQuizical();
+  setHappy();
 
   // Enable bluetooth interface
   _bluetoothSerial.begin(9600); 
@@ -274,48 +258,30 @@ bool bluetoothStateCommand() {
   else if (state == 1) {
     // Happy
     Serial.println(F("State to happy"));
-    _lightCycleColours[0] = 0XFFFF008C;
-    _lightCycleColours[1] = 0xff219A;
-    _lightCycleColours[2] = 0XFFFF008C;
-    _lightCycleColourCount = 3;
-    _lightCycleDuration = 2400;
-    _lightCycleBlendAmount = 1;
-    _vibrationCycleDuration = 2400;
-    for (int i = 0; i < 9; i++) {
-        _vibrationSettings[i].NumberValues = 4;
-        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Start = 3500;
-        _vibrationSettings[i].Values[i > 4 ? 0 : 3].End = 4095;
-        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Duration = 800;
-        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Start = 4095;
-        _vibrationSettings[i].Values[i > 4 ? 1 : 2].End = 3500;
-        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Duration = 600;
-        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Start = 2500;
-        _vibrationSettings[i].Values[i > 4 ? 2 : 1].End = 2500;
-        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Duration = 400;
-        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Start = 0;
-        _vibrationSettings[i].Values[i > 4 ? 3 : 0].End = 0;
-        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Duration = 600;
-    }
+    setHappy();
   } else if (state == 2) {
     // Sad
     Serial.println(F("State to sad"));
-    _lightCycleColours[0] = 0XFF9242f4;
-    _lightCycleColours[1] = 0x00000000;
-    _lightCycleColours[2] = 0XFF9242f4;
-    _lightCycleColourCount = 3;
-    _lightCycleDuration = 6000;
-    _lightCycleBlendAmount = 1;
-    _vibrationCycleDuration = _lightCycleDuration;
-    for (int i = 0; i < 9; i++) {
-        _vibrationSettings[i].NumberValues = 2;
-        _vibrationSettings[i].Values[0].Start = 1800;
-        _vibrationSettings[i].Values[0].End = 0;
-        _vibrationSettings[i].Values[0].Duration = _lightCycleDuration / 2;
-        _vibrationSettings[i].Values[1].Start = 0;
-        _vibrationSettings[i].Values[1].End = 0;
-        _vibrationSettings[i].Values[1].Duration = _lightCycleDuration / 2;
-    }
-    /* This was the old quizical/attention seeking - keep this for excited
+    setSad();
+  } else if (state == 3) {
+    // Calm
+    Serial.println(F("State to calm"));
+    setCalm();    
+  } else if (state == 4) {
+    // Angry
+    Serial.println(F("State to angry"));
+    setAngry();
+  }
+
+  // Set loops to immediately process
+  _vibrationLoopLastTime = millis();
+  _vibrationCycleCurrentOffsetTime = 0;
+  _lightCycleCurrentOffsetTime = 0;
+  Serial.println(F("State toggling complete"));
+  return true;
+}
+
+void setQuizical() {  
     _lightCycleColours[0] = 0xFFc700ff;
     _lightCycleColours[1] = 0xFFc700ff;
     _lightCycleColours[2] = 0xFFc700ff;
@@ -350,10 +316,82 @@ bool bluetoothStateCommand() {
         _vibrationSettings[i].Values[4].End = (short)(isCycle3 ? 4095 : 0);
         _vibrationSettings[i].Values[4].Duration = 300;
     }    
+}
+
+void setHappy() {
+  
+    _lightCycleColours[0] = 0xff2500;
+    _lightCycleColours[1] = 0xff2500;
+    _lightCycleColours[2] = 0xff2500;
+    _lightCycleColours[3] = 0xff3400;
+    _lightCycleColours[4] = 0xff4300;
+    _lightCycleColours[5] = 0xff5200;
+    _lightCycleColours[6] = 0xff6100;
+    _lightCycleColours[7] = 0xFF0000;
+    _lightCycleColours[8] = 0x0000FF;
+    _lightCycleColours[9] = 0xff2500;
+    _lightCycleColourCount = 10;
+    _lightCycleDuration = 4000;
+    _lightCycleBlendAmount = 20;
+    _vibrationCycleDuration = 4000;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 3;
+        _vibrationSettings[i].Values[0].Start = 2500;
+        _vibrationSettings[i].Values[0].End = 2500;
+        _vibrationSettings[i].Values[0].Duration = 2667;
+        _vibrationSettings[i].Values[1].Start = 2500;
+        _vibrationSettings[i].Values[1].End = 4095;
+        _vibrationSettings[i].Values[1].Duration = 1000;
+        _vibrationSettings[i].Values[2].Start = 4095;
+        _vibrationSettings[i].Values[2].End = 4095;
+        _vibrationSettings[i].Values[2].Duration = 333;
+    }    
+  /* Previouys fairly static attempt
+    _lightCycleColours[0] = 0XFFFF008C;
+    _lightCycleColours[1] = 0xff219A;
+    _lightCycleColours[2] = 0XFFFF008C;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 2400;
+    _lightCycleBlendAmount = 1;
+    _vibrationCycleDuration = 2400;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 4;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Start = 3500;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].End = 4095;
+        _vibrationSettings[i].Values[i > 4 ? 0 : 3].Duration = 800;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Start = 4095;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].End = 3500;
+        _vibrationSettings[i].Values[i > 4 ? 1 : 2].Duration = 600;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Start = 2500;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].End = 2500;
+        _vibrationSettings[i].Values[i > 4 ? 2 : 1].Duration = 400;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Start = 0;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].End = 0;
+        _vibrationSettings[i].Values[i > 4 ? 3 : 0].Duration = 600;
+    }
     */
-  } else if (state == 3) {
-    // Calm
-    Serial.println(F("State to calm"));
+}
+
+void setSad() {  
+    _lightCycleColours[0] = 0xFFc700ff;
+    _lightCycleColours[1] = 0xff19002b;
+    _lightCycleColours[2] = 0xFFc700ff;
+    _lightCycleColourCount = 3;
+    _lightCycleDuration = 12000;
+    _lightCycleBlendAmount = 1;
+    _vibrationCycleDuration = 6000;
+    for (int i = 0; i < 9; i++) {
+        _vibrationSettings[i].NumberValues = 2;
+        _vibrationSettings[i].Values[0].Start = 2500;
+        _vibrationSettings[i].Values[0].End = 0;
+        _vibrationSettings[i].Values[0].Duration = 5000;
+        _vibrationSettings[i].Values[1].Start = 0;
+        _vibrationSettings[i].Values[1].End = 0;
+        _vibrationSettings[i].Values[1].Duration = 1000;
+    }
+}
+
+void setCalm() {
     _lightCycleColours[0] = 0xFF00a5ff;
     _lightCycleColours[1] = 0xFF54ff00;
     _lightCycleColours[2] = 0xFF00a5ff;
@@ -373,10 +411,9 @@ bool bluetoothStateCommand() {
         _vibrationSettings[i].Values[2].End = 0;
         _vibrationSettings[i].Values[2].Duration = 100;
     }
-    
-  } else if (state == 4) {
-    // Angry
-    Serial.println(F("State to angry"));
+}
+
+void setAngry() {
     _lightCycleColours[0] = 0xFFFF0000;
     _lightCycleColours[1] = 0xFFff2600;
     _lightCycleColours[2] = 0xFFFF0000;
@@ -402,14 +439,6 @@ bool bluetoothStateCommand() {
         _vibrationSettings[i].Values[4].End = 0;
         _vibrationSettings[i].Values[4].Duration = 500;
     }
-  }
-
-  // Set loops to immediately process
-  _vibrationLoopLastTime = millis();
-  _vibrationCycleCurrentOffsetTime = 0;
-  _lightCycleCurrentOffsetTime = 0;
-  Serial.println(F("State toggling complete"));
-  return true;
 }
 
 bool bluetoothLightCommand() {
