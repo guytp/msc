@@ -71,7 +71,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="20dp"
                 android:paddingTop="20dp"
-                android:text="[4]  You will then be shown two sliders - one on a scale of arousal and one on a scale of &quot;pleasantness&quot;"
+                android:text="[4]  You will then be shown two sliders - one on a scale of &quot;excitation&quot; and one on a scale of &quot;pleasantness&quot;"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

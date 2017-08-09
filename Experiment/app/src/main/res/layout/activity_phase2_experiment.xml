@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="Low Arousal"
+                        android:text="Low &quot;Excitation&quot;"
                         android:textSize="32sp" />
 
                     <TextView
@@ -68,7 +68,7 @@
                         android:layout_column="60"
                         android:layout_marginRight="20dp"
                         android:layout_row="0"
-                        android:text="High Arousal"
+                        android:text="High &quot;Excitation&quot;"
                         android:textSize="32sp" />
                 </GridLayout>
 
