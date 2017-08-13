@@ -19,6 +19,7 @@ public class AdminMenu extends RelativeLayout {
     private Button _phase1Button;
     private Button _phase2Button;
     private Button _phase3Button;
+    private Button _swapCushionButton;
     private Button _timeButton;
     private Button _emailDataButton;
     private Button _exitButton;
@@ -53,6 +54,13 @@ public class AdminMenu extends RelativeLayout {
         _timeButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { toggleTimeMode(); } });
         _emailDataButton = (Button)findViewById(R.id.emailDataButton);
         _emailDataButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { emailData(); } });
+        _swapCushionButton = (Button)findViewById(R.id.swapCushionButton);
+        _swapCushionButton.setText("Swap To: " + CushionController.getInstance(_activity).getOtherCushion());
+        _swapCushionButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            _dialog.dismiss();
+            CushionController.getInstance(_activity).swapCushion();
+            _swapCushionButton.setText("Swap To: " + CushionController.getInstance(_activity).getOtherCushion());
+        } });
         _exitButton = (Button)findViewById(R.id.exitButton);
         _exitButton.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
             ExperimentData.getInstance(getContext()).addTimeMarker("AdminAction", "Exit");
