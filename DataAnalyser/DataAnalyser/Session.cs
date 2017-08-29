@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 
 namespace DataAnalyser
@@ -70,6 +72,65 @@ namespace DataAnalyser
             }
         }
 
+
+        public double Phase2AngryConsistency
+        {
+            get
+            {
+                return GetEmotionalReadingConsistency(Phase2AngryReadings);
+            }
+        }
+
+
+        public double Phase2CalmConsistency
+        {
+            get
+            {
+                return GetEmotionalReadingConsistency(Phase2CalmReadings);
+            }
+        }
+
+
+        public double Phase2HappyConsistency
+        {
+            get
+            {
+                return GetEmotionalReadingConsistency(Phase2HappyReadings);
+            }
+        }
+
+        public double Ipip => double.Parse(GetData("IntroIpip.FinalScore"));
+
+        public bool IsIpipAbnormal => Ipip < 1.5 || Ipip > 3.5;
+
+
+        public double Phase2SadConsistency
+        {
+            get
+            {
+                return GetEmotionalReadingConsistency(Phase2SadReadings);
+            }
+        }
+
+        public double Phase2OverallConsistency => (Phase2AngryConsistency + Phase2CalmConsistency + Phase2SadConsistency + Phase2HappyConsistency) / 4f;
+
+        public bool Phase2IsConsistent => Phase2OverallConsistency >= 80;
+
+        private double GetEmotionalReadingConsistency(EmotionEnergy[] energies)
+        {
+            Dictionary<EmotionQuadrant, int> dic = new Dictionary<EmotionQuadrant, int>();
+            dic.Add(EmotionQuadrant.HighEnergyHighValency, energies.Count(ee => ee.Quadrant == EmotionQuadrant.HighEnergyHighValency));
+            dic.Add(EmotionQuadrant.HighEnergyLowValency, energies.Count(ee => ee.Quadrant == EmotionQuadrant.HighEnergyLowValency));
+            dic.Add(EmotionQuadrant.LowEnergyHighValency, energies.Count(ee => ee.Quadrant == EmotionQuadrant.LowEnergyHighValency));
+            dic.Add(EmotionQuadrant.LowEnergyLowValency, energies.Count(ee => ee.Quadrant == EmotionQuadrant.LowEnergyLowValency));
+
+            int highestCount = 0;
+            foreach (EmotionQuadrant e in Enum.GetValues(typeof(EmotionQuadrant)).Cast<EmotionQuadrant>())
+                if (dic[e] > highestCount)
+                    highestCount = dic[e];
+            return Math.Round((double)highestCount / (double)energies.Length * 100f, 2);
+        }
+
         public EmotionEnergy Phase2HappyAverage
         {
             get
@@ -98,6 +159,237 @@ namespace DataAnalyser
             return new EmotionEnergy(arousal / energies.Length, valency / energies.Length);
         }
 
+        string[] _panasPositiveWords = new string[] { "Interested", "Excited", "Strong", "Enthusiastic", "Proud", "Alert", "Inspired", "Determined", "Attentive", "Active" };
+        string[] _panasNegativeWords = new string[] { "Distressed", "Upset", "Guilty", "Scared", "Hostile", "Irritable", "Ashamed", "Nervous", "Jittery", "Afraid" };
+        string[] _panasScores = new[] { "Very Slighty or Not at All", "A Little", "Moderately", "Quite a Bit", "Extremely" };
+
+        public double PanasIntroPositive
+        {
+            get
+            {
+                return GetPanasScore(_panasPositiveWords, "IntroPanas");
+            }
+        }
+        public double PanasIntroNegative
+        {
+            get
+            {
+                return GetPanasScore(_panasNegativeWords, "IntroPanas");
+            }
+        }
+        public double PanasOutroPositive
+        {
+            get
+            {
+                return GetPanasScore(_panasPositiveWords, "OutroPanas");
+            }
+        }
+        public double PanasOutroNegative
+        {
+            get
+            {
+                return GetPanasScore(_panasNegativeWords, "OutroPanas");
+            }
+        }
+
+        public double PanasDeltaPositive
+        {
+            get
+            {
+                return PanasOutroPositive - PanasIntroPositive;
+            }
+        }
+        public double PanasDeltaNegative
+        {
+            get
+            {
+                return PanasOutroNegative - PanasIntroNegative;
+            }
+        }
+
+        private double GetPanasScore(string[] words, string section)
+        {
+            int totalScore = 0;
+            foreach (string word in words)
+            {
+                string selected = GetData(section + "." + word);
+                int score = 0;
+                for (int i = 0; i < 5; i++)
+                    if (_panasScores[i] == selected)
+                    {
+                        score = i + 1;
+                        break;
+                    }
+                if (score == 0)
+                    throw new Exception("Invalid panas data");
+                totalScore += score;
+            }
+            return totalScore;
+        }
+
+
+        private bool _phase1Done = false;
+        private double _phase1CorrectPercentage;
+        private int _phase1InvolvingAngryCorrect;
+        private int _phase1InvolvingAngryIncorrect;
+        private int _phase1InvolvingCalmCorrect;
+        private int _phase1InvolvingCalmIncorrect;
+        private int _phase1InvolvingHappyCorrect;
+        private int _phase1InvolvingHappyIncorrect;
+        private int _phase1InvolvingSadCorrect;
+        private int _phase1InvolvingSadIncorrect;
+        public double Phase1CorrectPercentage
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1CorrectPercentage;
+            }
+        }
+        public double Phase1InvolvingAngryCorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingAngryCorrect;
+            }
+        }
+        public double Phase1InvolvingAngryIncorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingAngryIncorrect;
+            }
+        }
+        public double Phase1InvolvingCalmCorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingCalmCorrect;
+            }
+        }
+        public double Phase1InvolvingCalmIncorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingCalmIncorrect;
+            }
+        }
+        public double Phase1InvolvingSadCorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingSadCorrect;
+            }
+        }
+        public double Phase1InvolvingSadIncorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingSadIncorrect;
+            }
+        }
+        public double Phase1InvolvingHappyCorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingHappyCorrect;
+            }
+        }
+        public double Phase1InvolvingHappyIncorrect
+        {
+            get
+            {
+                if (!_phase1Done)
+                    SetupPhase1Readings();
+                return _phase1InvolvingHappyIncorrect;
+            }
+        }
+
+        public bool SitWithItIsAngry
+        {
+            get
+            {
+                return GetData("Phase3Cushion.State.Chosen") == "Angry";
+            }
+        }
+
+        public bool SitWithItCorrectIdentification
+        {
+            get
+            {
+                return GetData("Phase3Cushion.State.Chosen") == GetData("Phase3Cushion.State.DisplayAs");
+            }
+        }
+
+        public DateTime SitWithItStartTime
+        {
+            get
+            {
+                return GetDate("Phase3Cushion", "Show");
+            }
+        }
+
+        public DateTime StartTime
+        {
+            get
+            {
+                return GetDate("IntroWelcome", "Show");
+            }
+        }
+
+        private void SetupPhase1Readings()
+        {
+            int correctAnswers = 0;
+            for (int i = 1; i <= 19; i += 2)
+            {
+                string states = GetData("Phase1Experiment.State" + i + "-" + (i + 1) + ".States");
+                bool answerSame = GetData("Phase1Experiment.State" + i + "-" + (i + 1) + ".Answer") == "Same";
+                string firstState = (states.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0]).Replace(" ", "");
+                string secondState = (states.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[1]).Replace(" ", "");
+                bool areSame = firstState == secondState;
+                bool isMatch = areSame == answerSame;
+                if (isMatch)
+                    correctAnswers++;
+                if (firstState == "Angry" || secondState == "Angry")
+                    if (isMatch)
+                        _phase1InvolvingAngryCorrect++;
+                    else
+                        _phase1InvolvingAngryIncorrect++;
+                if (firstState == "Calm" || secondState == "Calm")
+                    if (isMatch)
+                        _phase1InvolvingCalmCorrect++;
+                    else
+                        _phase1InvolvingCalmIncorrect++;
+                if (firstState == "Happy" || secondState == "Happy")
+                    if (isMatch)
+                        _phase1InvolvingHappyCorrect++;
+                    else
+                        _phase1InvolvingHappyIncorrect++;
+                if (firstState == "Sad" || secondState == "Sad")
+                    if (isMatch)
+                        _phase1InvolvingSadCorrect++;
+                    else
+                        _phase1InvolvingSadIncorrect++;
+                //Phase1Experiment.State1 - 2.States", "Value": "Angry - Angry"}, {"Key": "Phase1Experiment.State1 - 2.Answer", "Value": "Different"}
+            }
+            _phase1CorrectPercentage = correctAnswers / 10f * 100;
+            _phase1Done = true;
+        }
 
         private void SetupPhase2Readings()
         {
@@ -128,6 +420,89 @@ namespace DataAnalyser
         public string GetData(string key)
         {
             return Data.FirstOrDefault(d => d.Key == key)?.Value;
+        }
+        public DateTime GetDate(string category, string action)
+        {
+            string value = TimeMarkers.FirstOrDefault(tm => tm.Category == category && tm.Action == action)?.Date;
+            if (value == null)
+                return new DateTime(0);
+
+            DateTime dt;
+            if (DateTime.TryParseExact(value, "yyyyMMddHHmmss.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+                return dt.Subtract(TimeSpan.FromSeconds(43));
+            return new DateTime(0);
+        }
+
+        public EdaReading[] EdaReadings { get; set; }
+
+        public double GetEdaReadingAverage(DateTime startTime, DateTime endTime)
+        {
+            if (EdaReadings == null)
+                return 0;
+            IEnumerable<EdaReading> readings = EdaReadings.Where(eda => eda.Time >= startTime && eda.Time <= endTime);
+            if (readings.Count() == 0)
+                return 0;
+            double avg = readings.Average(rdg => rdg.Value);
+            return avg;
+        }
+
+        public double SitWithItStartEda
+        {
+            get
+            {
+                double value = GetEdaReadingAverage(SitWithItStartTime.AddSeconds(-15), SitWithItStartTime.AddSeconds(-10));
+                return value;
+            }
+        }
+        public double SitWithItEndEda
+        {
+            get
+            {
+                double value = GetEdaReadingAverage(SitWithItStartTime.AddSeconds(65), SitWithItStartTime.AddSeconds(70));
+                return value;
+            }
+        }
+
+        public double SitWithItEdaDelta
+        {
+            get
+            {
+                return SitWithItEndEda == 0 || SitWithItStartEda == 0 ? 0 : SitWithItEndEda - SitWithItStartEda;
+            }
+        }
+
+        public double SitWithItEdaDeltaPercent
+        {
+            get
+            {
+                return SitWithItEdaDelta == 0 ? 0 : SitWithItEdaDelta / SitWithItStartEda * 100f;
+            }
+        }
+
+        public Session()
+        {
+
+            string[] e4DataFolders = Directory.GetDirectories(@"C:\Users\guytp\Desktop\data\e4");
+            List<EdaReading> readings = new List<EdaReading>();
+            foreach (string folder in e4DataFolders)
+            {
+                string edaFile = Path.Combine(folder, "EDA.csv");
+                if (!File.Exists(edaFile))
+                    continue;
+                string[] text = File.ReadAllLines(edaFile);
+                if (text.Length < 3)
+                    continue;
+                DateTime timestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(3600 + double.Parse(text[0]));
+                double rate = double.Parse(text[1]);
+                double msIncrement = 1000f / rate;
+                for (int i = 2; i < text.Length; i++)
+                {
+                    double reading = double.Parse(text[i]);
+                    readings.Add(new EdaReading { Time = timestamp, Value = reading });
+                    timestamp = timestamp.AddMilliseconds(msIncrement);
+                }
+            }
+            EdaReadings = readings.OrderBy(e => e.Time).ToArray();
         }
     }
 }

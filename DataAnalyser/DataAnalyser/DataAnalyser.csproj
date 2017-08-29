@@ -57,7 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EdaReading.cs" />
     <Compile Include="EmotionEnergy.cs" />
+    <Compile Include="EmotionQuadrant.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionData.cs" />
     <Compile Include="SessionTimeMarker.cs" />

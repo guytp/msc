@@ -18,6 +18,22 @@ namespace DataAnalyser
             Valency = valency;
         }
 
+        public EmotionQuadrant Quadrant
+        {
+            get
+            {
+                if (Arousal >= 0 && Valency <= 0)
+                    return EmotionQuadrant.HighEnergyLowValency;
+                else if (Arousal >= 0 && Valency >= 0)
+                    return EmotionQuadrant.HighEnergyHighValency;
+                else if (Arousal <= 0 && Valency >= 0)
+                    return EmotionQuadrant.LowEnergyHighValency;
+                else
+                    return EmotionQuadrant.LowEnergyLowValency;
+            }
+        }
+
+
         public override string ToString()
         {
             return string.Format("{0:0.00}, {1:0.00}", Valency, Arousal);
