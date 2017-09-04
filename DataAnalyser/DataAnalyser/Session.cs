@@ -16,7 +16,7 @@ namespace DataAnalyser
         List<EmotionEnergy> _phase2AngryReadings = null;
         List<EmotionEnergy> _phase2HappyReadings = null;
         List<EmotionEnergy> _phase2SadReadings = null;
-
+        
         public EmotionEnergy[] Phase2CalmReadings
         {
             get
@@ -112,6 +112,88 @@ namespace DataAnalyser
             }
         }
 
+        public string DemographicsAge => GetData("Demographics.Age");
+        public string DemographicsGender => GetData("Demographics.Gender");
+        public string DemographicsEthnicity => GetData("Demographics.Ethnicity");
+        public string DemographicsEducation => GetData("Demographics.Education");
+        public string[] DemographicsStudyWork
+        {
+            get
+            {
+                string[] res = new string[int.Parse(GetData("Demographics.ResearchStudyWork.Count"))];
+                for (int i = 0; i < res.Length; i++)
+                    res[i] = GetData("Demographics.ResearchStudyWork." + (i + 1));
+                return res;
+            }
+        }
+
+
+        public string[] Phase3HighEnergyHighValencyWords = new string[] { "Excited", "Happy", "Surprised", "Delighted", "Cheerful" };
+        public string[] Phase3LowEnergyHighValencyWords = new string[] { "Relaxed", "Calm", "Serene", "Content", "Pleased" };  // Low Energy, Pleasant
+        public string[] Phase3LowEnergyLowValencyWords = new string[] { "Sad", "Depressed", "Gloomy", "Bored", "Tired" }; // Low Energy, Unpleasant
+        public string[] Phase3HighEnergyLowValencyWords = new string[] { "Afraid", "Angry", "Annoyed", "Frustrated", "Terrified" }; // High Energy, Unpleasant
+
+        public EmotionQuadrant Phase3GetQuadrantForWord(string word)
+        {
+            int wordNumber = -1;
+            for (int i = 0; i < 20; i++)
+            {
+                string thisWord = GetData("Phase3Experiment.Word" + (i + 1));
+                if (thisWord == word)
+                {
+                    wordNumber = i;
+                    break;
+                }
+            }
+            if (wordNumber == -1)
+                throw new Exception("Not found");
+
+            string selectedState = GetData("Phase3Experiment.Word" + wordNumber + ".Selection");
+            switch (selectedState)
+            {
+                case "Calm":
+                    return EmotionQuadrant.LowEnergyHighValency;
+                case "Angry":
+                    return EmotionQuadrant.HighEnergyLowValency;
+                case "Happy":
+                    return EmotionQuadrant.HighEnergyHighValency;
+                case "Sad":
+                    return EmotionQuadrant.LowEnergyLowValency;
+                default:
+                    return EmotionQuadrant.None;
+            }
+        }
+
+        public EmotionQuadrant[] GetPhase3QuadrantsForState(EmotionQuadrant state)
+        {
+            List<EmotionQuadrant> returnValues = new List<EmotionQuadrant>();
+            string[] words;
+            switch (state)
+            {
+                case EmotionQuadrant.HighEnergyLowValency:
+                    words = Phase3HighEnergyLowValencyWords;
+                    break;
+                case EmotionQuadrant.HighEnergyHighValency:
+                    words = Phase3HighEnergyHighValencyWords;
+                    break;
+                case EmotionQuadrant.LowEnergyHighValency:
+                    words = Phase3LowEnergyHighValencyWords;
+                    break;
+                case EmotionQuadrant.LowEnergyLowValency:
+                    words = Phase3LowEnergyLowValencyWords;
+                    break;
+                default:
+                    throw new Exception("Not a valid state");
+            }
+            foreach (string word in words)
+            {
+                EmotionQuadrant quadrant = Phase3GetQuadrantForWord(word);
+                if (quadrant != EmotionQuadrant.None)
+                    returnValues.Add(quadrant);
+            }
+            return returnValues.ToArray();
+        }
+
         public double Phase2OverallConsistency => (Phase2AngryConsistency + Phase2CalmConsistency + Phase2SadConsistency + Phase2HappyConsistency) / 4f;
 
         public bool Phase2IsConsistent => Phase2OverallConsistency >= 80;
@@ -125,11 +207,33 @@ namespace DataAnalyser
             dic.Add(EmotionQuadrant.LowEnergyLowValency, energies.Count(ee => ee.Quadrant == EmotionQuadrant.LowEnergyLowValency));
 
             int highestCount = 0;
-            foreach (EmotionQuadrant e in Enum.GetValues(typeof(EmotionQuadrant)).Cast<EmotionQuadrant>())
+            foreach (EmotionQuadrant e in Enum.GetValues(typeof(EmotionQuadrant)).Cast<EmotionQuadrant>().Where(e => e != EmotionQuadrant.None))
                 if (dic[e] > highestCount)
                     highestCount = dic[e];
             return Math.Round((double)highestCount / (double)energies.Length * 100f, 2);
         }
+
+        public string[] GetPhase3CorrectQuadrantIdentifiedWords()
+        {
+            List<string> correctWords = new List<string>();
+            foreach (string[] wordList in new string[][] { Phase3HighEnergyHighValencyWords, Phase3HighEnergyLowValencyWords, Phase3LowEnergyHighValencyWords, Phase3LowEnergyLowValencyWords })
+            {
+                EmotionQuadrant intendedQuadrant;
+                if (wordList == Phase3HighEnergyHighValencyWords)
+                    intendedQuadrant = EmotionQuadrant.HighEnergyHighValency;
+                else if (wordList == Phase3HighEnergyLowValencyWords)
+                    intendedQuadrant = EmotionQuadrant.HighEnergyLowValency;
+                else if (wordList == Phase3LowEnergyHighValencyWords)
+                    intendedQuadrant = EmotionQuadrant.LowEnergyHighValency;
+                else
+                    intendedQuadrant = EmotionQuadrant.LowEnergyLowValency;
+                foreach (string word in wordList)
+                    if (Phase3GetQuadrantForWord(word) == intendedQuadrant)
+                        correctWords.Add(word);
+            }
+            return correctWords.ToArray();
+        }
+
 
         public EmotionEnergy Phase2HappyAverage
         {

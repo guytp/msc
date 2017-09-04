@@ -8,6 +8,7 @@ namespace DataAnalyser
 {
     public enum EmotionQuadrant
     {
+        None,
         HighEnergyLowValency,
         HighEnergyHighValency,
         LowEnergyHighValency,

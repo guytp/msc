@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CsvLine.cs" />
     <Compile Include="EdaReading.cs" />
     <Compile Include="EmotionEnergy.cs" />
     <Compile Include="EmotionQuadrant.cs" />

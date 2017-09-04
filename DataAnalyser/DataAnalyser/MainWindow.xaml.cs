@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 
 namespace DataAnalyser
@@ -63,8 +64,19 @@ namespace DataAnalyser
             List<double> calmEda = new List<double>();
             List<double> angryEda = new List<double>();
 
+            Dictionary<string, int> p3CorrectCounts = new Dictionary<string, int>();
+            Dictionary<string, int> p3HeHvCounts = new Dictionary<string, int>();
+            Dictionary<string, int> p3HeLvCounts = new Dictionary<string, int>();
+            Dictionary<string, int> p3LeHvCounts = new Dictionary<string, int>();
+            Dictionary<string, int> p3LeLvCounts = new Dictionary<string, int>();
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(CsvLine.Header.ToString());
+
             foreach (Session session in _sessions.OrderBy(s => s.StartTime))
             {
+                sb.AppendLine(new CsvLine(session).ToString());
+
                 // Did they prefer vibration or light?
                 string vibrationOrLight = session.GetData("Phase3.VibrationOrLight");
                 if (vibrationOrLight == "Vibration")
@@ -72,65 +84,61 @@ namespace DataAnalyser
                 else if (vibrationOrLight == "Light")
                     lightCount++;
 
-                // Only include phase 2 / 3 counts if consisteent
-                if (session.Phase2IsConsistent)
+                // Phase 3 words - where did they classify each state?
+                for (int i = 1; i <= 20; i++)
                 {
-                    // Phase 3 words - where did they classify each state?
-                    for (int i = 1; i <= 20; i++)
+                    string word = session.GetData("Phase3Experiment.Word" + i);
+                    string selection = session.GetData("Phase3Experiment.Word" + i + ".Selection");
+                    if (word == selection)
                     {
-                        string word = session.GetData("Phase3Experiment.Word" + i);
-                        string selection = session.GetData("Phase3Experiment.Word" + i + ".Selection");
-                        if (word == selection)
-                        {
-                            if (word == "Happy")
-                                phase3HappyCount++;
-                            else if (word == "Sad")
-                                phase3SadCount++;
-                            else if (word == "Calm")
-                                phase3CalmCount++;
-                            else if (word == "Angry")
-                                phase3AngryCount++;
-                        }
+                        if (word == "Happy")
+                            phase3HappyCount++;
+                        else if (word == "Sad")
+                            phase3SadCount++;
+                        else if (word == "Calm")
+                            phase3CalmCount++;
+                        else if (word == "Angry")
+                            phase3AngryCount++;
                     }
+                }
 
-                    if (session.Phase2AngryAverage.Quadrant == EmotionQuadrant.HighEnergyLowValency)
-                        phase2AngryAverageCorrectQuadrant++;
-                    if (session.Phase2CalmAverage.Quadrant == EmotionQuadrant.LowEnergyHighValency)
-                        phase2CalmAverageCorrectQuadrant++;
-                    if (session.Phase2HappyAverage.Quadrant == EmotionQuadrant.HighEnergyHighValency)
-                        phase2HappyAverageCorrectQuadrant++;
-                    if (session.Phase2SadAverage.Quadrant == EmotionQuadrant.LowEnergyLowValency)
-                        phase2SadAverageCorrectQuadrant++;
+                if (session.Phase2AngryAverage.Quadrant == EmotionQuadrant.HighEnergyLowValency)
+                    phase2AngryAverageCorrectQuadrant++;
+                if (session.Phase2CalmAverage.Quadrant == EmotionQuadrant.LowEnergyHighValency)
+                    phase2CalmAverageCorrectQuadrant++;
+                if (session.Phase2HappyAverage.Quadrant == EmotionQuadrant.HighEnergyHighValency)
+                    phase2HappyAverageCorrectQuadrant++;
+                if (session.Phase2SadAverage.Quadrant == EmotionQuadrant.LowEnergyLowValency)
+                    phase2SadAverageCorrectQuadrant++;
 
-                    phase2AngryValues.AddRange(session.Phase2AngryReadings);
-                    phase2HappyValues.AddRange(session.Phase2HappyReadings);
-                    phase2CalmValues.AddRange(session.Phase2CalmReadings);
-                    phase2SadValues.AddRange(session.Phase2SadReadings);
+                phase2AngryValues.AddRange(session.Phase2AngryReadings);
+                phase2HappyValues.AddRange(session.Phase2HappyReadings);
+                phase2CalmValues.AddRange(session.Phase2CalmReadings);
+                phase2SadValues.AddRange(session.Phase2SadReadings);
 
-                    foreach (EmotionEnergy e in session.Phase2AngryReadings)
-                    {
-                        if (e.Quadrant == EmotionQuadrant.HighEnergyLowValency)
-                            phase2AngryCorrectQuadrantCount++;
-                        phase2AngryTotalQuadrantCount++;
-                    }
-                    foreach (EmotionEnergy e in session.Phase2CalmReadings)
-                    {
-                        if (e.Quadrant == EmotionQuadrant.LowEnergyHighValency)
-                            phase2CalmCorrectQuadrantCount++;
-                        phase2CalmTotalQuadrantCount++;
-                    }
-                    foreach (EmotionEnergy e in session.Phase2SadReadings)
-                    {
-                        if (e.Quadrant == EmotionQuadrant.LowEnergyLowValency)
-                            phase2SadCorrectQuadrantCount++;
-                        phase2SadTotalQuadrantCount++;
-                    }
-                    foreach (EmotionEnergy e in session.Phase2HappyReadings)
-                    {
-                        if (e.Quadrant == EmotionQuadrant.HighEnergyHighValency)
-                            phase2HappyCorrectQuadrantCount++;
-                        phase2HappyTotalQuadrantCount++;
-                    }
+                foreach (EmotionEnergy e in session.Phase2AngryReadings)
+                {
+                    if (e.Quadrant == EmotionQuadrant.HighEnergyLowValency)
+                        phase2AngryCorrectQuadrantCount++;
+                    phase2AngryTotalQuadrantCount++;
+                }
+                foreach (EmotionEnergy e in session.Phase2CalmReadings)
+                {
+                    if (e.Quadrant == EmotionQuadrant.LowEnergyHighValency)
+                        phase2CalmCorrectQuadrantCount++;
+                    phase2CalmTotalQuadrantCount++;
+                }
+                foreach (EmotionEnergy e in session.Phase2SadReadings)
+                {
+                    if (e.Quadrant == EmotionQuadrant.LowEnergyLowValency)
+                        phase2SadCorrectQuadrantCount++;
+                    phase2SadTotalQuadrantCount++;
+                }
+                foreach (EmotionEnergy e in session.Phase2HappyReadings)
+                {
+                    if (e.Quadrant == EmotionQuadrant.HighEnergyHighValency)
+                        phase2HappyCorrectQuadrantCount++;
+                    phase2HappyTotalQuadrantCount++;
                 }
 
                 //Trace.WriteLine("Sit With: " + (session.SitWithItIsAngry ? "Angry" : "Calm ") + "   Correct Identification: " + session.SitWithItCorrectIdentification + "   Time: " + session.SitWithItStartTime + "   Session: " + session.StartTime + "    EDA: " + session.SitWithItStartEda + " -> " + session.SitWithItEndEda + " (" + session.SitWithItEdaDeltaPercent + "%)");
@@ -143,12 +151,48 @@ namespace DataAnalyser
                 else if (session.SitWithItStartEda > 0 && session.SitWithItEdaDeltaPercent > -20 && session.SitWithItEdaDeltaPercent < 20)
                     calmEda.Add(session.SitWithItEdaDeltaPercent);
 
-
                 Trace.WriteLine(session.StartTime);
                 Trace.WriteLine("Panas P: " + session.PanasIntroPositive + " -> " + session.PanasOutroPositive + " (" + session.PanasDeltaPositive + ")     N: " + session.PanasIntroNegative + " -> " + session.PanasOutroNegative + " (" + session.PanasDeltaNegative + ")    " + (session.SitWithItIsAngry ? "Angry" : "Calm"));
                 Trace.WriteLine("Phase 1 Correct: " + session.Phase1CorrectPercentage + " %    H: " + session.Phase1InvolvingHappyCorrect + "/" + session.Phase1InvolvingHappyIncorrect + "    A: " + session.Phase1InvolvingAngryCorrect + "/" + session.Phase1InvolvingAngryIncorrect + "    S: " + session.Phase1InvolvingSadCorrect + "/" + session.Phase1InvolvingSadIncorrect + "    C: " + session.Phase1InvolvingCalmCorrect + "/" + session.Phase1InvolvingCalmIncorrect);
                 Trace.WriteLine("P2 Consistency S: " + session.Phase2SadConsistency + "   C: " + session.Phase2CalmConsistency + "    H: " + session.Phase2HappyConsistency + "    A: " + session.Phase2AngryConsistency + "    " + (session.Phase2IsConsistent ? "Consistent" : "          ") + "     = " + session.Phase2OverallConsistency);
                 Trace.WriteLine("P1 Correct: " + session.Phase1CorrectPercentage + "    P2: " + session.Phase2IsConsistent + "      IPIP: " + (session.IsIpipAbnormal ? "Abnormal" : "Normal"));
+                string str = "";
+                foreach (string word in session.GetPhase3CorrectQuadrantIdentifiedWords())
+                {
+                    if (!p3CorrectCounts.ContainsKey(word))
+                        p3CorrectCounts.Add(word, 1);
+                    else
+                        p3CorrectCounts[word]++;
+                    str += (str == "" ? "" : ", ") + word;
+                }
+                foreach (string[] words in new string[][] { session.Phase3HighEnergyHighValencyWords, session.Phase3HighEnergyLowValencyWords, session.Phase3LowEnergyHighValencyWords, session.Phase3LowEnergyLowValencyWords })
+                    foreach (string word in words)
+                    {
+                        EmotionQuadrant quadrant = session.Phase3GetQuadrantForWord(word);
+                        Dictionary<string, int> dic;
+                        switch (quadrant)
+                        {
+                            case EmotionQuadrant.HighEnergyLowValency:
+                                dic = p3HeLvCounts;
+                                break;
+                            case EmotionQuadrant.HighEnergyHighValency:
+                                dic = p3HeHvCounts;
+                                break;
+                            case EmotionQuadrant.LowEnergyHighValency:
+                                dic = p3LeHvCounts;
+                                break;
+                            case EmotionQuadrant.LowEnergyLowValency:
+                                dic = p3LeLvCounts;
+                                break;
+                            default:
+                                continue;
+                        }
+                        if (!dic.ContainsKey(word))
+                            dic.Add(word, 1);
+                        else
+                            dic[word]++;
+                    }
+                Trace.WriteLine("P3 Correct: " + str);
                 Trace.WriteLine("");
             }
 
@@ -182,6 +226,42 @@ namespace DataAnalyser
             Trace.WriteLine("   Sad: " + phase2SadAverageCorrectQuadrant + " participant averages in correct quadrant of " + consistentPhase2Count + " (" + Math.Round(((double)phase2SadAverageCorrectQuadrant / (double)consistentPhase2Count) * 100f, 2) + "%)");
             Trace.WriteLine("");
 
+            Dictionary<string, int> researchWorkHisto = new Dictionary<string, int>();
+            foreach (Session s in _sessions)
+                foreach (string str in s.DemographicsStudyWork)
+                    if (researchWorkHisto.ContainsKey(str))
+                        researchWorkHisto[str]++;
+                    else
+                        researchWorkHisto.Add(str, 1);
+
+            Trace.WriteLine("Phase 3");
+            foreach (string word in p3CorrectCounts.Keys)
+            {
+                string mostCommon = "N/A";
+                int biggestCount = -1;
+                if (p3HeHvCounts[word] > biggestCount)
+                {
+                    biggestCount = p3HeHvCounts[word];
+                    mostCommon = "HeHv";
+                }
+                if (p3HeLvCounts[word] > biggestCount)
+                {
+                    biggestCount = p3HeLvCounts[word];
+                    mostCommon = "HeLv";
+                }
+                if (p3LeHvCounts[word] > biggestCount)
+                {
+                    biggestCount = p3LeHvCounts[word];
+                    mostCommon = "LeHv";
+                }
+                if (p3LeLvCounts[word] > biggestCount)
+                {
+                    biggestCount = p3LeLvCounts[word];
+                    mostCommon = "LeLv";
+                }
+                Trace.WriteLine("   " + word + ": " + p3CorrectCounts[word] + " correct (" + Math.Round((double)p3CorrectCounts[word] / (double)_sessions.Count * 100f, 2) + "%)    Most Common: " + mostCommon + " with " + biggestCount + " (" + Math.Round((double)biggestCount / (double)_sessions.Count * 100f, 2) + "%)");
+            }
+            Trace.WriteLine("");
 
             Trace.WriteLine("Sit With It");
             Trace.WriteLine("   Angry: " + satWithAngryCount + " of " + _sessions.Count + " (" + Math.Round((double)satWithAngryCount / _sessions.Count * 100f, 2) + "%)");
@@ -207,6 +287,37 @@ namespace DataAnalyser
             // Extract IPIP Values
             // TODO: Determine Ph3 % correct quandrant
             // Histogram plots and quadrant plots
+
+            File.WriteAllText("out.csv", sb.ToString());
+
+            sb = new StringBuilder();
+            sb.AppendLine("SadValency,SadArousal");
+            foreach (EmotionEnergy e in _sessions.SelectMany(s => s.Phase2SadReadings))
+                sb.AppendLine(e.Valency + "," + e.Arousal);
+            File.WriteAllText("phase2sad.csv", sb.ToString());
+
+            sb = new StringBuilder();
+            sb.AppendLine("CalmValency,CalmArousal");
+            foreach (EmotionEnergy e in _sessions.SelectMany(s => s.Phase2CalmReadings))
+                sb.AppendLine(e.Valency + "," + e.Arousal);
+            File.WriteAllText("phase2calm.csv", sb.ToString());
+
+            sb = new StringBuilder();
+            sb.AppendLine("HappyValency,HappyArousal");
+            foreach (EmotionEnergy e in _sessions.SelectMany(s => s.Phase2HappyReadings))
+                sb.AppendLine(e.Valency + "," + e.Arousal);
+            File.WriteAllText("phase2happy.csv", sb.ToString());
+
+            sb = new StringBuilder();
+            sb.AppendLine("AngryValency,AngryArousal");
+            foreach (EmotionEnergy e in _sessions.SelectMany(s => s.Phase2AngryReadings))
+                sb.AppendLine(e.Valency + "," + e.Arousal);
+            File.WriteAllText("phase2angry.csv", sb.ToString());
+
+
+            Trace.WriteLine("Description", "Count");
+            foreach (KeyValuePair<string, int> kvp in researchWorkHisto)
+                Trace.WriteLine(kvp.Key + "," + kvp.Value);
         }
 
         public Point GetPointForPhase3Word(string word)
