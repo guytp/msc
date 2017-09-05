@@ -234,6 +234,44 @@ namespace DataAnalyser
                     else
                         researchWorkHisto.Add(str, 1);
 
+            Dictionary<string, int> hvHaP3CountsByWord = new Dictionary<string, int>();
+            Dictionary<string, int> hvLaP3CountsByWord = new Dictionary<string, int>();
+            Dictionary<string, int> lvHaP3CountsByWord = new Dictionary<string, int>();
+            Dictionary<string, int> lvLaP3CountsByWord = new Dictionary<string, int>();
+            foreach (string[] wordList in new string[][] { _sessions[0].Phase3HighEnergyHighValencyWords, _sessions[0].Phase3HighEnergyLowValencyWords, _sessions[0].Phase3LowEnergyHighValencyWords, _sessions[0].Phase3LowEnergyLowValencyWords })
+                foreach (string str in wordList)
+                {
+                    hvHaP3CountsByWord.Add(str, 0);
+                    lvHaP3CountsByWord.Add(str, 0);
+                    hvLaP3CountsByWord.Add(str, 0);
+                    lvLaP3CountsByWord.Add(str, 0);
+                }
+            foreach (Session s in _sessions)
+                foreach (string[] wordList in new string[][] { s.Phase3HighEnergyHighValencyWords, s.Phase3HighEnergyLowValencyWords, s.Phase3LowEnergyHighValencyWords, s.Phase3LowEnergyLowValencyWords })
+                    foreach (string word in wordList)
+                    {
+                        EmotionQuadrant q = s.Phase3GetQuadrantForWord(word);
+                        Dictionary<string, int> dic;
+                        switch (q)
+                        {
+                            case EmotionQuadrant.HighEnergyLowValency:
+                                dic = lvHaP3CountsByWord;
+                                break;
+                            case EmotionQuadrant.HighEnergyHighValency:
+                                dic = hvHaP3CountsByWord;
+                                break;
+                            case EmotionQuadrant.LowEnergyHighValency:
+                                dic = hvLaP3CountsByWord;
+                                break;
+                            case EmotionQuadrant.LowEnergyLowValency:
+                                dic = lvLaP3CountsByWord;
+                                break;
+                            default:
+                                continue;
+                        }
+                        dic[word]++;
+                    }
+
             Trace.WriteLine("Phase 3");
             foreach (string word in p3CorrectCounts.Keys)
             {
@@ -318,6 +356,31 @@ namespace DataAnalyser
             Trace.WriteLine("Description", "Count");
             foreach (KeyValuePair<string, int> kvp in researchWorkHisto)
                 Trace.WriteLine(kvp.Key + "," + kvp.Value);
+            Trace.WriteLine("");
+
+            Trace.WriteLine("High Arousal, High Valency");
+            Trace.WriteLine("Word,Count");
+            foreach (KeyValuePair<string, int> kvp in hvHaP3CountsByWord)
+                Trace.WriteLine(kvp.Key + "," + kvp.Value);
+            Trace.WriteLine("");
+
+            Trace.WriteLine("Low Arousal, High Valency");
+            Trace.WriteLine("Word,Count");
+            foreach (KeyValuePair<string, int> kvp in hvLaP3CountsByWord)
+                Trace.WriteLine(kvp.Key + "," + kvp.Value);
+            Trace.WriteLine("");
+
+            Trace.WriteLine("Low Arousal, Low Valency");
+            Trace.WriteLine("Word,Count");
+            foreach (KeyValuePair<string, int> kvp in lvLaP3CountsByWord)
+                Trace.WriteLine(kvp.Key + "," + kvp.Value);
+            Trace.WriteLine("");
+
+            Trace.WriteLine("High Arousal, Low Valency");
+            Trace.WriteLine("Word,Count");
+            foreach (KeyValuePair<string, int> kvp in lvHaP3CountsByWord)
+                Trace.WriteLine(kvp.Key + "," + kvp.Value);
+            Trace.WriteLine("");
         }
 
         public Point GetPointForPhase3Word(string word)
